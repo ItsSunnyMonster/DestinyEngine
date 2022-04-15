@@ -8,10 +8,8 @@
 
 #pragma once
 
-#include <Destiny/Macros.hpp>
-
 namespace Destiny {
-    class DT_API Application {
+    class Application {
     public:
         Application();
         virtual ~Application();

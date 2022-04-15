@@ -4,15 +4,9 @@ project(DestinyEngine)
 
 set(CMAKE_CXX_STANDARD 20)
 
+set(UNIVERSAL_FILES src/Destiny/Application.cpp include/DestinyEngine.hpp src/Destiny/EntryPoint.hpp src/Destiny/Application.hpp src/Destiny/Log.cpp src/Destiny/Log.hpp)
 
-set(UNIVERSAL_FILES src/Destiny/Application.cpp include/DestinyEngine.hpp src/Destiny/EntryPoint.hpp src/Destiny/Macros.hpp src/Destiny/Application.hpp)
-
-if (BUILD_STATIC_LIB)
-    add_library(DestinyEngine STATIC ${UNIVERSAL_FILES})
-    target_compile_definitions(DestinyEngine PUBLIC DT_BUILD_STATIC_LIB)
-else()
-    add_library(DestinyEngine SHARED ${UNIVERSAL_FILES})
-endif()
+add_library(DestinyEngine STATIC ${UNIVERSAL_FILES})
 
 if (WIN32)
     target_compile_definitions(DestinyEngine PUBLIC DT_PLATFORM_WINDOWS)
@@ -34,5 +28,9 @@ target_compile_definitions(DestinyEngine PRIVATE
   $<$<CONFIG:Release>:DT_RELEASE>
 )
 
+add_subdirectory(vendor/spdlog)
+
+target_link_libraries(DestinyEngine PUBLIC spdlog::spdlog)
+
 target_include_directories(DestinyEngine INTERFACE ./include)
-target_include_directories(DestinyEngine PUBLIC ./src)
+target_include_directories(DestinyEngine PUBLIC ./src ./vendor/spdlog/include)

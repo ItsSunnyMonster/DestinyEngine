@@ -8,6 +8,7 @@
 
 #include <iostream>
 #include "Application.hpp"
+#include "Log.hpp"
 
 namespace Destiny {
     Application::Application() = default;
@@ -15,8 +16,8 @@ namespace Destiny {
     Application::~Application() = default;
 
     void Application::run() {
-        for (int i = 0; i < 10; ++i) {
-            std::cout << i << std::endl;
-        }
+        Log::init();
+        DT_CORE_TRACE("Hello?");
+        DT_INFO("HELLO!");
     }
 }
