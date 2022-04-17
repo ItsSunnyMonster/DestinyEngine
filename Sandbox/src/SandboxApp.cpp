@@ -11,9 +11,9 @@
 
 class SandboxApp : public Destiny::Application {
 public:
-    ~SandboxApp() override = default;
+	~SandboxApp() override = default;
 };
 
 Destiny::Application *Destiny::createApplication() {
-    return new SandboxApp();
+	return new SandboxApp();
 }
