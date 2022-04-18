@@ -46,11 +46,19 @@ Destiny::WindowsWindow::Win32WinClass::~Win32WinClass()
 Destiny::WindowsWindow::WindowsWindow(const WindowProps& props)
 	: m_Width(props.width), m_Height(props.height)
 {
-	// TODO: Use AdjustWindowRect() function to properly handle width and height
+	DWORD style = WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_SYSMENU | WS_CAPTION | WS_SIZEBOX;
+
+	RECT wr;
+	wr.left = 100;
+	wr.top = 100;
+	wr.bottom = wr.top + m_Height;
+	wr.right = wr.left + m_Width;
+	AdjustWindowRect(&wr, style, FALSE);
+
 	m_Handle = CreateWindowExW(
 		0, Win32WinClass::getName(), props.title.c_str(),
-		WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_SYSMENU | WS_CAPTION,
-		CW_USEDEFAULT, CW_USEDEFAULT, m_Width, m_Height, nullptr, nullptr, Win32WinClass::getInstance(), this
+		style,
+		300, 300, wr.right - wr.left, wr.bottom - wr.top, nullptr, nullptr, Win32WinClass::getInstance(), this
 	);
 	ShowWindow(m_Handle, SW_SHOW);
 }
