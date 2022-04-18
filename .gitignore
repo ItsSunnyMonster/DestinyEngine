@@ -444,3 +444,9 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Ignore generated Visual Studio projects
+*.vcxproj
+*.filters
+*.sln
+
