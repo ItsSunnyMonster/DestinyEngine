@@ -11,16 +11,33 @@
 #include "Destiny/Events/WindowEvent.hpp"
 #include "Destiny/Events/KeyboardEvent.hpp"
 #include "Destiny/Events/MouseEvent.hpp"
+#include "Macros.hpp"
 
 namespace Destiny {
-	Application::Application() = default;
+	Application::Application()
+		: m_Running(true) {
+		m_Window = std::unique_ptr<Window>(Window::create());
+		m_Window->setEventListener(*this);
+	}
 
 	Application::~Application() = default;
 
 	void Application::run() {
-		const int x = 0;
-		Log::init();
-		DT_CORE_TRACE("Hello?");
-		DT_INFO("HELLO!");
+		while (m_Running)
+		{
+			m_Window->onUpdate();
+		}
+	}
+
+	void Application::onEvent(Event& event)
+	{
+		EventDispatcher dispatcher = EventDispatcher(event);
+		dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::onWindowCloseEvent));
+	}
+
+	bool Application::onWindowCloseEvent(WindowCloseEvent& e)
+	{
+		m_Running = false;
+		return true;
 	}
 }

@@ -10,6 +10,9 @@
     <ClCompile Include="C:\dev\c++\Destiny Engine\DestinyEngine\src\Destiny\Log.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\dev\c++\Destiny Engine\DestinyEngine\src\Destiny\Platform\Windows\WindowsWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\dev\c++\Destiny Engine\DestinyEngine\include\DestinyEngine.hpp">
@@ -46,6 +49,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\dev\c++\Destiny Engine\DestinyEngine\src\dtpch.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\dev\c++\Destiny Engine\DestinyEngine\src\Destiny\Events\EventListener.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\dev\c++\Destiny Engine\DestinyEngine\src\Destiny\Window.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\dev\c++\Destiny Engine\DestinyEngine\src\Destiny\Platform\Windows\WindowsWindow.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="C:\dev\c++\Destiny Engine\DestinyEngine\CMakeFiles\DestinyEngine.dir\Debug\cmake_pch.hxx">

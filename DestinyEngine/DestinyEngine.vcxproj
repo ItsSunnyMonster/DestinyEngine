@@ -180,6 +180,13 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClInclude Include="C:\dev\c++\Destiny Engine\DestinyEngine\src\Destiny\Events\MouseEvent.hpp" />
     <ClInclude Include="C:\dev\c++\Destiny Engine\DestinyEngine\src\Destiny\MouseCodes.hpp" />
     <ClInclude Include="C:\dev\c++\Destiny Engine\DestinyEngine\src\dtpch.hpp" />
+    <ClInclude Include="C:\dev\c++\Destiny Engine\DestinyEngine\src\Destiny\Events\EventListener.hpp" />
+    <ClInclude Include="C:\dev\c++\Destiny Engine\DestinyEngine\src\Destiny\Window.hpp" />
+    <ClCompile Include="C:\dev\c++\Destiny Engine\DestinyEngine\src\Destiny\Platform\Windows\WindowsWindow.cpp">
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:/dev/c++/Destiny Engine/DestinyEngine/CMakeFiles/DestinyEngine.dir/Debug/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+      <ForcedIncludeFiles Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:/dev/c++/Destiny Engine/DestinyEngine/CMakeFiles/DestinyEngine.dir/Release/cmake_pch.hxx;%(ForcedIncludeFiles)</ForcedIncludeFiles>
+    </ClCompile>
+    <ClInclude Include="C:\dev\c++\Destiny Engine\DestinyEngine\src\Destiny\Platform\Windows\WindowsWindow.hpp" />
     <ClInclude Include="C:\dev\c++\Destiny Engine\DestinyEngine\CMakeFiles\DestinyEngine.dir\Debug\cmake_pch.hxx" />
     <ClInclude Include="C:\dev\c++\Destiny Engine\DestinyEngine\CMakeFiles\DestinyEngine.dir\Release\cmake_pch.hxx" />
   </ItemGroup>

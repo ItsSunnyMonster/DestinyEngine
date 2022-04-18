@@ -1,3 +1,6 @@
+// Credit to the Hazel Engine by TheCherno on Github
+// https://github.com/TheCherno/Hazel
+
 #pragma once
 
 #ifdef DT_PLATFORM_WINDOWS
