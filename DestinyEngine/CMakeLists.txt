@@ -23,6 +23,10 @@ add_library(DestinyEngine STATIC
     "src/Destiny/Window.hpp"
     "src/Destiny/Platform/Windows/WindowsWindow.cpp"
     "src/Destiny/Platform/Windows/WindowsWindow.hpp"
+    "src/Destiny/Layer/Layer.cpp"
+    "src/Destiny/Layer/Layer.hpp"
+    "src/Destiny/Layer/LayerStack.hpp"
+    "src/Destiny/Layer/LayerStack.cpp"
 )
 
 if (WIN32)

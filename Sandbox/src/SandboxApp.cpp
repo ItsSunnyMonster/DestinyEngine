@@ -7,10 +7,26 @@
 //
 
 #include <DestinyEngine.hpp>
-#include <Destiny/EntryPoint.hpp>
+
+class TestLayer : public Destiny::Layer {
+public:
+	TestLayer()
+		: Layer("Test") {}
+
+	void onUpdate() override {
+		DT_INFO("TestLayer::onUpdate");
+	}
+
+	void onEvent(Destiny::Event& event) override {
+		DT_INFO("{0}", event);
+	}
+};
 
 class SandboxApp : public Destiny::Application {
 public:
+	SandboxApp() {
+		pushLayer(new TestLayer());
+	}
 	~SandboxApp() override = default;
 };
 

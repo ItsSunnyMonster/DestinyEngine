@@ -11,6 +11,8 @@
 extern Destiny::Application *Destiny::createApplication();
 
 int main(int argc, char** argv) {
+	Destiny::Log::init();
+
 	Destiny::Application* app = Destiny::createApplication();
 	app->run();
 	delete app;

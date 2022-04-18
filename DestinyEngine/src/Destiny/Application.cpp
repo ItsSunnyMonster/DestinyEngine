@@ -25,14 +25,27 @@ namespace Destiny {
 	void Application::run() {
 		while (m_Running)
 		{
+			for (Layer* layer : m_LayerStack) {
+				layer->onUpdate();
+			}
+
 			m_Window->onUpdate();
 		}
 	}
-
 	void Application::onEvent(Event& event)
 	{
 		EventDispatcher dispatcher = EventDispatcher(event);
 		dispatcher.dispatch<WindowCloseEvent>(BIND_EVENT_FN(Application::onWindowCloseEvent));
+
+		DT_CORE_TRACE("{0}", event);
+
+		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();) {
+			// (*--it) Decrements the iterator and dereferences it
+			(*--it)->onEvent(event);
+			// If the event is handled then don't propogate anymore
+			if (event.handled)
+				break;
+		}
 	}
 
 	bool Application::onWindowCloseEvent(WindowCloseEvent& e)

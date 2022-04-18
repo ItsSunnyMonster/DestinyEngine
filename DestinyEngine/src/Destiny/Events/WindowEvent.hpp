@@ -34,6 +34,13 @@ namespace Destiny {
 	public:
 		WindowCloseEvent() = default;
 
+		std::string toString() const override
+		{
+			std::stringstream ss;
+			ss << "WindowCloseEvent";
+			return ss.str();
+		}
+
 		EVENT_CLASS_TYPE(WindowClose)
 		EVENT_CLASS_CATEGORY(EventCategoryWindow)
 	};

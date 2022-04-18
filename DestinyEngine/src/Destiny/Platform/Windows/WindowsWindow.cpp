@@ -1,3 +1,4 @@
+// TODO: Add platform macros and surround window class with it
 
 #include "WindowsWindow.hpp"
 #include "Destiny/Events/WindowEvent.hpp"
@@ -100,6 +101,7 @@ LRESULT __stdcall Destiny::WindowsWindow::handleMsgMain(HWND hWnd, UINT msg, WPA
 	return window->handleMsg(hWnd, msg, wParam, lParam);
 }
 
+// TODO: Handle more events
 LRESULT Destiny::WindowsWindow::handleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)

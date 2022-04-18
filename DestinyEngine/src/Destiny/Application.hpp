@@ -11,6 +11,7 @@
 #include "Window.hpp"
 #include "Destiny/Events/EventListener.hpp"
 #include "Destiny/Events/WindowEvent.hpp"
+#include "Destiny/Layer/LayerStack.hpp"
 
 namespace Destiny {
 	class Application : public EventListener {
@@ -19,9 +20,12 @@ namespace Destiny {
 		virtual ~Application();
 		void run();
 		void onEvent(Event& event) override;
+		void pushLayer(Layer* layer) { m_LayerStack.pushLayer(layer); }
+		void pushOverlay(Layer* layer) { m_LayerStack.pushOverlay(layer); }
 	private:
 		bool m_Running;
 		std::unique_ptr<Window> m_Window;
+		LayerStack m_LayerStack;
 	private:
 		bool onWindowCloseEvent(WindowCloseEvent& e);
 	};

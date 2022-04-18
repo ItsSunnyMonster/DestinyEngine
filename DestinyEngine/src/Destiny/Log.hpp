@@ -14,8 +14,8 @@ namespace Destiny {
 	class Log {
 	public:
 		static void init();
-		inline static const auto& getCoreLogger() { return s_CoreLogger; }
-		inline static const auto& getClientLogger() { return s_ClientLogger; }
+		inline static const auto getCoreLogger() { return s_CoreLogger; }
+		inline static const auto getClientLogger() { return s_ClientLogger; }
 	private:
 		static std::shared_ptr<spdlog::logger> s_CoreLogger;
 		static std::shared_ptr<spdlog::logger> s_ClientLogger;

@@ -4,6 +4,8 @@
 #pragma once
 
 #include "Destiny/Macros.hpp"
+#include <spdlog/fmt/ostr.h>
+
 
 namespace Destiny {
 
@@ -45,6 +47,12 @@ namespace Destiny {
 		{
 			return getCategoryFlags() & category;
 		}
+
+		template<typename OStream>
+		friend OStream& operator<<(OStream& os, const Event& e)
+		{
+			return os << e.toString();
+		}
 	};
 
 	class EventDispatcher
@@ -69,10 +77,5 @@ namespace Destiny {
 	private:
 		Event& m_Event;
 	};
-
-	inline std::ostream& operator<<(std::ostream& os, const Event& e)
-	{
-		return os << e.toString();
-	}
 
 }
