@@ -21,6 +21,7 @@ namespace Destiny {
 		inline void disable() { m_Enabled = false; }
 		// This returns true if the layer is toggled to enable
 		inline bool toggle() { m_Enabled = !m_Enabled; return m_Enabled; }
+		inline bool isEnabled() { return m_Enabled; }
 	protected:
 		std::string m_DebugName;
 		bool m_Enabled;

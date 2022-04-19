@@ -71,10 +71,13 @@ Destiny::WindowsWindow::~WindowsWindow()
 
 void Destiny::WindowsWindow::onUpdate()
 {
-	static MSG msg;
-	GetMessageW(&msg, m_Handle, 0, 0);
-	TranslateMessage(&msg);
-	DispatchMessageW(&msg);
+	MSG msg;
+	if (PeekMessageW(&msg, m_Handle, 0, 0, PM_REMOVE)) {
+		TranslateMessage(&msg);
+		//DT_CORE_TRACE("Before DispatchMessageW()");
+		DispatchMessageW(&msg);
+		//DT_CORE_TRACE("After DispatchMessageW()");
+	}
 }
 
 void Destiny::WindowsWindow::setEventListener(EventListener& listener)

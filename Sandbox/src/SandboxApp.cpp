@@ -14,7 +14,7 @@ public:
 		: Layer("Test") {}
 
 	void onUpdate() override {
-		DT_INFO("TestLayer::onUpdate");
+		//DT_INFO("TestLayer::onUpdate");
 	}
 
 	void onEvent(Destiny::Event& event) override {

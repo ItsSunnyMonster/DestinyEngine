@@ -41,10 +41,13 @@ namespace Destiny {
 
 		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();) {
 			// (*--it) Decrements the iterator and dereferences it
-			(*--it)->onEvent(event);
-			// If the event is handled then don't propogate anymore
-			if (event.handled)
-				break;
+			if ((*--it)->isEnabled())
+			{
+				(*it)->onEvent(event);
+				// If the event is handled then don't propogate anymore
+				if (event.handled)
+					break;
+			}
 		}
 	}
 
