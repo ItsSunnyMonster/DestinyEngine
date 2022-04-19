@@ -40,6 +40,12 @@ namespace Destiny {
 		static LRESULT WINAPI handleMsgMain(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 		LRESULT handleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	private:
-		EventListener* m_Listener;
+		EventListener* m_Listener = nullptr;
+	// TEMPORARY
+	private:
+		IDXGISwapChain* m_SwapChain = nullptr;
+		ID3D11Device* m_Device = nullptr;
+		ID3D11DeviceContext* m_Context = nullptr;
+		ID3D11RenderTargetView* m_Target = nullptr;
 	};
 }
