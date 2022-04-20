@@ -27,6 +27,9 @@ add_library(DestinyEngine STATIC
     "src/Destiny/Layer/Layer.hpp"
     "src/Destiny/Layer/LayerStack.hpp"
     "src/Destiny/Layer/LayerStack.cpp"
+    "src/Destiny/Renderer/GraphicsContext.hpp"
+    "src/Destiny/Platform/D3D11/D3D11Context.hpp"
+    "src/Destiny/Platform/D3D11/D3D11Context.cpp"
 )
 
 if (WIN32)

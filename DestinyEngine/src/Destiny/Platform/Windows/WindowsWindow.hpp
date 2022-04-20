@@ -29,6 +29,7 @@ namespace Destiny {
 		void onUpdate() override;
 		inline unsigned int getWidth() const override { return m_Width; }
 		inline unsigned int getHeight() const override { return m_Height; }
+		GraphicsContext* getContext() override { return m_Context; }
 
 		void setEventListener(EventListener& listener) override;
 	private:
@@ -41,11 +42,5 @@ namespace Destiny {
 		LRESULT handleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	private:
 		EventListener* m_Listener = nullptr;
-	// TEMPORARY
-	private:
-		IDXGISwapChain* m_SwapChain = nullptr;
-		ID3D11Device* m_Device = nullptr;
-		ID3D11DeviceContext* m_Context = nullptr;
-		ID3D11RenderTargetView* m_Target = nullptr;
 	};
 }

@@ -2,6 +2,7 @@
 
 #include "WindowsWindow.hpp"
 #include "Destiny/Events/WindowEvent.hpp"
+#include "Destiny/Platform/D3D11/D3D11Context.hpp"
 
 Destiny::WindowsWindow::Win32WinClass Destiny::WindowsWindow::Win32WinClass::winClass;
 
@@ -63,50 +64,12 @@ Destiny::WindowsWindow::WindowsWindow(const WindowProps& props)
 	);
 	ShowWindow(m_Handle, SW_SHOW);
 
-	DXGI_SWAP_CHAIN_DESC swapChainDesc = { 0 };
-	swapChainDesc.BufferDesc.Width = 0;
-	swapChainDesc.BufferDesc.Height = 0;
-	swapChainDesc.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
-	swapChainDesc.BufferDesc.RefreshRate.Numerator = 0;
-	swapChainDesc.BufferDesc.RefreshRate.Denominator = 0;
-	swapChainDesc.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
-	swapChainDesc.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
-	swapChainDesc.SampleDesc.Count = 1;
-	swapChainDesc.SampleDesc.Quality = 0;
-	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-	swapChainDesc.BufferCount = 1; // This actually means 2 buffered (which is weird)
-	swapChainDesc.OutputWindow = m_Handle;
-	swapChainDesc.Windowed = TRUE;
-	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
-	swapChainDesc.Flags = 0;
-
-	D3D11CreateDeviceAndSwapChain(
-		nullptr,
-		D3D_DRIVER_TYPE_HARDWARE,
-		nullptr,
-		0,
-		nullptr,
-		0,
-		D3D11_SDK_VERSION,
-		&swapChainDesc,
-		&m_SwapChain,
-		&m_Device,
-		nullptr,
-		&m_Context
-	);
-
-	ID3D11Resource* backBuffer;
-	m_SwapChain->GetBuffer(0, __uuidof(ID3D11Resource), reinterpret_cast<void**>(&backBuffer));
-	m_Device->CreateRenderTargetView(backBuffer, nullptr, &m_Target);
-	backBuffer->Release();
+	m_Context = new D3D11Context(m_Handle);
 }
 
 Destiny::WindowsWindow::~WindowsWindow()
 {
-	m_Device->Release();
-	m_SwapChain->Release();
-	m_Context->Release();
-	m_Target->Release();
+	delete m_Context;
 	DestroyWindow(m_Handle);
 }
 
@@ -120,10 +83,7 @@ void Destiny::WindowsWindow::onUpdate()
 		//DT_CORE_TRACE("After DispatchMessageW()");
 	};
 
-	const float color[] = { 1.0f, 0.0f, 0.0f, 1.0f };
-	m_Context->ClearRenderTargetView(m_Target, color);
-	// Rendering goes here
-	m_SwapChain->Present(1, 0);
+	m_Context->swap();
 }
 
 void Destiny::WindowsWindow::setEventListener(EventListener& listener)

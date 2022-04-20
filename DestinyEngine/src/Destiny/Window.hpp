@@ -2,6 +2,8 @@
 
 #include "Destiny/Events/EventListener.hpp"
 
+#include "Destiny/Renderer/GraphicsContext.hpp"
+
 namespace Destiny {
 	struct WindowProps {
 		std::wstring title;
@@ -25,6 +27,10 @@ namespace Destiny {
 
 		virtual void setEventListener(EventListener& listener) = 0;
 
+		virtual GraphicsContext* getContext() = 0;
+
 		static Window* create(const WindowProps& props = WindowProps());
+	protected:
+		GraphicsContext* m_Context;
 	};
 }
