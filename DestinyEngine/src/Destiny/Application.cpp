@@ -12,12 +12,24 @@
 #include "Destiny/Events/KeyboardEvent.hpp"
 #include "Destiny/Events/MouseEvent.hpp"
 #include "Macros.hpp"
+#include "Destiny/ImGui/ImGuiLayer.hpp"
+
+#include <imgui.h>
+#include <Destiny/Platform/D3D11/D3D11Context.hpp>
 
 namespace Destiny {
+	Application* Application::s_Instance;
+
 	Application::Application()
 		: m_Running(true) {
-		m_Window = std::unique_ptr<Window>(Window::create());
+		assert(!s_Instance && "s_Instance is not null!");
+		s_Instance = this;
+
+		m_Window = std::shared_ptr<Window>(Window::create());
 		m_Window->setEventListener(*this);
+
+		m_ImGuiLayer = new ImGuiLayer();
+		pushLayer(m_ImGuiLayer);
 	}
 
 	Application::~Application() = default;
@@ -25,9 +37,35 @@ namespace Destiny {
 	void Application::run() {
 		while (m_Running)
 		{
+			auto context = m_Window->getContext();
+
+			// Update layers
 			for (Layer* layer : m_LayerStack) {
 				layer->onUpdate();
 			}
+
+			context->clear();
+
+			// Start ImGui Frame
+			context->imGuiNewFrame();
+			m_Window->imGuiNewFrame();
+			ImGui::NewFrame();
+			// Render each layer
+			for (Layer* layer : m_LayerStack) {
+				layer->onImGuiRender();
+			}
+
+			//End ImGui Frame
+			ImGui::Render();
+			context->imGuiRender();
+			// Update and Render additional Platform Windows
+			if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+			{
+				ImGui::UpdatePlatformWindows();
+				ImGui::RenderPlatformWindowsDefault();
+			}
+
+			context->swap();
 
 			m_Window->onUpdate();
 		}

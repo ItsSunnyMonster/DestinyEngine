@@ -1,3 +1,7 @@
 [submodule "DestinyEngine/vendor/spdlog"]
 	path = DestinyEngine/vendor/spdlog
 	url = https://github.com/ItsSunnyMonster/spdlog
+[submodule "DestinyEngine/vendor/imgui"]
+	path = DestinyEngine/vendor/imgui
+	url = https://github.com/ItsSunnyMonster/imgui.git
+	branch = docking

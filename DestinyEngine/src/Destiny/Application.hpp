@@ -22,10 +22,17 @@ namespace Destiny {
 		void onEvent(Event& event) override;
 		void pushLayer(Layer* layer) { m_LayerStack.pushLayer(layer); }
 		void pushOverlay(Layer* layer) { m_LayerStack.pushOverlay(layer); }
+
+		inline std::shared_ptr<Window> getWindow() { return m_Window; }
+
+		inline static Application* get() { return s_Instance; }
 	private:
 		bool m_Running;
-		std::unique_ptr<Window> m_Window;
+		std::shared_ptr<Window> m_Window;
+		Layer* m_ImGuiLayer;
 		LayerStack m_LayerStack;
+
+		static Application* s_Instance;
 	private:
 		bool onWindowCloseEvent(WindowCloseEvent& e);
 	};

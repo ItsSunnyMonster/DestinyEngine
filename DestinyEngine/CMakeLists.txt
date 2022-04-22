@@ -4,8 +4,7 @@ project(DestinyEngine)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_library(DestinyEngine STATIC 
-    "src/Destiny/Application.cpp" 
+set(SOURCE_FILES "src/Destiny/Application.cpp" 
     "include/DestinyEngine.hpp" 
     "src/Destiny/EntryPoint.hpp" 
     "src/Destiny/Application.hpp"
@@ -30,6 +29,13 @@ add_library(DestinyEngine STATIC
     "src/Destiny/Renderer/GraphicsContext.hpp"
     "src/Destiny/Platform/D3D11/D3D11Context.hpp"
     "src/Destiny/Platform/D3D11/D3D11Context.cpp"
+    "src/Destiny/ImGui/ImGuiLayer.cpp"
+    "src/Destiny/ImGui/ImGuiLayer.hpp"
+    "src/Destiny/ImGui/ImGuiBuild.cpp"
+)
+
+add_library(DestinyEngine STATIC 
+    ${SOURCE_FILES}
 )
 
 if (WIN32)
@@ -46,16 +52,17 @@ if (APPLE)
     target_compile_definitions(DestinyEngine PUBLIC DT_PLATFORM_MACOS)
 endif()
 
-set(CMAKE_CONFIGURATION_TYPES Debug Release)
+set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "" FORCE)
 
-target_compile_definitions(DestinyEngine PRIVATE
+target_compile_definitions(DestinyEngine PUBLIC
   $<$<CONFIG:Debug>:DT_DEBUG>
   $<$<CONFIG:Release>:DT_RELEASE>
 )
 
 add_subdirectory(vendor/spdlog)
+add_subdirectory(vendor/imgui)
 
-target_link_libraries(DestinyEngine PUBLIC spdlog::spdlog)
+target_link_libraries(DestinyEngine PUBLIC spdlog::spdlog imgui)
 
 target_include_directories(DestinyEngine INTERFACE ./include)
 target_include_directories(DestinyEngine PUBLIC ./src ./vendor/spdlog/include)

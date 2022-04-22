@@ -30,6 +30,9 @@ namespace Destiny {
 		inline unsigned int getWidth() const override { return m_Width; }
 		inline unsigned int getHeight() const override { return m_Height; }
 		GraphicsContext* getContext() override { return m_Context; }
+		void initImGuiImpl() override;
+		void imGuiNewFrame() override;
+		void destroyImGuiImpl() override;
 
 		void setEventListener(EventListener& listener) override;
 	private:

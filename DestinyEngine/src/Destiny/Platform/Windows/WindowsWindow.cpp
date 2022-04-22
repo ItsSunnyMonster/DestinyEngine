@@ -4,6 +4,10 @@
 #include "Destiny/Events/WindowEvent.hpp"
 #include "Destiny/Platform/D3D11/D3D11Context.hpp"
 
+#include <backends/imgui_impl_win32.h>
+
+IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+
 Destiny::WindowsWindow::Win32WinClass Destiny::WindowsWindow::Win32WinClass::winClass;
 
 Destiny::Window* Destiny::Window::create(const WindowProps& props)
@@ -27,7 +31,7 @@ Destiny::WindowsWindow::Win32WinClass::Win32WinClass()
 {
 	WNDCLASSEXW wc = { 0 };
 	wc.cbSize = sizeof(wc);
-	wc.style = CS_OWNDC;
+	wc.style = CS_CLASSDC;
 	wc.lpfnWndProc = handleMsgSetup;
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
@@ -48,7 +52,7 @@ Destiny::WindowsWindow::Win32WinClass::~Win32WinClass()
 Destiny::WindowsWindow::WindowsWindow(const WindowProps& props)
 	: m_Width(props.width), m_Height(props.height)
 {
-	DWORD style = WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_SYSMENU | WS_CAPTION | WS_SIZEBOX;
+	DWORD style = WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_SYSMENU | WS_CAPTION | WS_SIZEBOX | WS_OVERLAPPED;
 
 	RECT wr;
 	wr.left = 100;
@@ -62,7 +66,8 @@ Destiny::WindowsWindow::WindowsWindow(const WindowProps& props)
 		style,
 		300, 300, wr.right - wr.left, wr.bottom - wr.top, nullptr, nullptr, Win32WinClass::getInstance(), this
 	);
-	ShowWindow(m_Handle, SW_SHOW);
+	ShowWindow(m_Handle, SW_SHOWDEFAULT);
+	UpdateWindow(m_Handle);
 
 	m_Context = new D3D11Context(m_Handle);
 }
@@ -76,14 +81,27 @@ Destiny::WindowsWindow::~WindowsWindow()
 void Destiny::WindowsWindow::onUpdate()
 {
 	MSG msg;
-	if (PeekMessageW(&msg, m_Handle, 0, 0, PM_REMOVE)) {
+	if (PeekMessageW(&msg, nullptr, 0, 0, PM_REMOVE)) {
 		TranslateMessage(&msg);
 		//DT_CORE_TRACE("Before DispatchMessageW()");
 		DispatchMessageW(&msg);
 		//DT_CORE_TRACE("After DispatchMessageW()");
 	};
+}
 
-	m_Context->swap();
+void Destiny::WindowsWindow::initImGuiImpl()
+{
+	ImGui_ImplWin32_Init(m_Handle);
+}
+
+void Destiny::WindowsWindow::imGuiNewFrame()
+{
+	ImGui_ImplWin32_NewFrame();
+}
+
+void Destiny::WindowsWindow::destroyImGuiImpl()
+{
+	ImGui_ImplWin32_Shutdown();
 }
 
 void Destiny::WindowsWindow::setEventListener(EventListener& listener)
@@ -113,8 +131,18 @@ LRESULT __stdcall Destiny::WindowsWindow::handleMsgMain(HWND hWnd, UINT msg, WPA
 // TODO: Handle more events
 LRESULT Destiny::WindowsWindow::handleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+	if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam)) {
+		return true;
+	}
+
 	switch (msg)
 	{
+	case WM_SIZE:
+		if (m_Context != nullptr && wParam != SIZE_MINIMIZED)
+		{
+			m_Context->resize(LOWORD(lParam), HIWORD(lParam));
+		}
+		break;
 	case WM_CLOSE:
 	{
 		if (m_Listener) {
