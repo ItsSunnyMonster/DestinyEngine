@@ -57,19 +57,23 @@ namespace Destiny {
 		EVENT_CLASS_TYPE(KeyRelease)
 	};
 
-	class KeyTypeEvent : public KeyEvent
+	class KeyTypeEvent : public Event
 	{
 	public:
-		KeyTypeEvent(const KeyCode keycode)
-			: KeyEvent(keycode) {}
+		KeyTypeEvent(const char c)
+			: m_Char(c) {}
 
 		std::string toString() const override
 		{
 			std::stringstream ss;
-			ss << "KeyTypeEvent: " << m_KeyCode;
+			ss << "KeyTypeEvent: " << m_Char;
 			return ss.str();
 		}
 
 		EVENT_CLASS_TYPE(KeyType)
+		EVENT_CLASS_CATEGORY(EventCategory::EventCategoryInput | EventCategory::EventCategoryKeyboard)
+
+	private:
+		char m_Char;
 	};
 }

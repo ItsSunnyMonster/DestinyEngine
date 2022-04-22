@@ -18,7 +18,7 @@ public:
 	}
 
 	void onEvent(Destiny::Event& event) override {
-		DT_INFO("{0}", event);
+		//DT_INFO("{0}", event);
 	}
 };
 

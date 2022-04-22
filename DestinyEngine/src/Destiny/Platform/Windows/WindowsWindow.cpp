@@ -2,6 +2,8 @@
 
 #include "WindowsWindow.hpp"
 #include "Destiny/Events/WindowEvent.hpp"
+#include "Destiny/Events/KeyboardEvent.hpp"
+#include "Destiny/Events/MouseEvent.hpp"
 #include "Destiny/Platform/D3D11/D3D11Context.hpp"
 
 #include <backends/imgui_impl_win32.h>
@@ -128,9 +130,11 @@ LRESULT __stdcall Destiny::WindowsWindow::handleMsgMain(HWND hWnd, UINT msg, WPA
 	return window->handleMsg(hWnd, msg, wParam, lParam);
 }
 
-// TODO: Handle more events
 LRESULT Destiny::WindowsWindow::handleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+	static KeyCode currentTrackingKey;
+	static unsigned int keyRepeatCount;
+
 	if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam)) {
 		return true;
 	}
@@ -141,6 +145,97 @@ LRESULT Destiny::WindowsWindow::handleMsg(HWND hWnd, UINT msg, WPARAM wParam, LP
 		if (m_Context != nullptr && wParam != SIZE_MINIMIZED)
 		{
 			m_Context->resize(LOWORD(lParam), HIWORD(lParam));
+		}
+		if (m_Listener)
+		{
+			WindowResizeEvent e(LOWORD(lParam), HIWORD(lParam));
+			m_Listener->onEvent(e);
+		}
+		break;
+	case WM_KEYDOWN:
+		if (currentTrackingKey != wParam)
+		{
+			keyRepeatCount = 0;
+			currentTrackingKey = wParam;
+		}
+
+		keyRepeatCount++;
+		if (m_Listener)
+		{
+			KeyPressEvent e(wParam, keyRepeatCount);
+			m_Listener->onEvent(e);
+			
+		}
+		break;
+	case WM_KEYUP:
+		keyRepeatCount = 0;
+		if (m_Listener)
+		{
+			KeyReleaseEvent e(wParam);
+			m_Listener->onEvent(e);
+		}
+		break;
+	case WM_CHAR:
+		if (m_Listener)
+		{
+			KeyTypeEvent e(wParam);
+			m_Listener->onEvent(e);
+		}
+		break;
+	case WM_MOUSEMOVE:
+		if (m_Listener)
+		{
+			MouseMoveEvent e(LOWORD(lParam), HIWORD(lParam));
+			m_Listener->onEvent(e);
+		}
+		break;
+	case WM_MOUSEWHEEL:
+		if (m_Listener)
+		{
+			MouseScrollEvent e(0, HIWORD(wParam));
+			m_Listener->onEvent(e);
+		}
+		break;
+	case WM_LBUTTONDOWN:
+		if (m_Listener)
+		{
+			MouseButtonPressEvent e(Mouse::ButtonLeft);
+			m_Listener->onEvent(e);
+		}
+		break;
+	case WM_LBUTTONUP:
+		if (m_Listener)
+		{
+			MouseButtonReleaseEvent e(Mouse::ButtonLeft);
+			m_Listener->onEvent(e);
+		}
+		break;
+	case WM_RBUTTONDOWN:
+		if (m_Listener)
+		{
+			MouseButtonPressEvent e(Mouse::ButtonRight);
+			m_Listener->onEvent(e);
+		}
+		break;
+	case WM_RBUTTONUP:
+		if (m_Listener)
+		{
+			MouseButtonReleaseEvent e(Mouse::ButtonRight);
+			m_Listener->onEvent(e);
+		}
+		break;
+	case WM_MBUTTONDOWN:
+		if (m_Listener)
+		{
+			MouseButtonPressEvent e(Mouse::ButtonMiddle);
+			m_Listener->onEvent(e);
+		}
+		break;
+	case WM_MBUTTONUP:
+		if (m_Listener)
+		{
+			MouseButtonReleaseEvent e(Mouse::ButtonMiddle);
+			m_Listener->onEvent(e);
 		}
 		break;
 	case WM_CLOSE:
