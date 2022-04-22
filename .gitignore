@@ -450,3 +450,6 @@ FodyWeavers.xsd
 *.filters
 *.sln
 
+# ImGui
+**/imgui.ini
+
