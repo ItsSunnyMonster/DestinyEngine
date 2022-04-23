@@ -32,8 +32,8 @@ namespace Destiny
 		WindowsWindow& operator=(const WindowsWindow&) = delete;
 
 		void onUpdate() override;
-		inline unsigned int getWidth() const override { return m_Width; }
-		inline unsigned int getHeight() const override { return m_Height; }
+		inline uint16_t getWidth() const override { return m_Width; }
+		inline uint16_t getHeight() const override { return m_Height; }
 		GraphicsContext* getContext() override { return m_Context; }
 		void initImGuiImpl() override;
 		void imGuiNewFrame() override;
@@ -43,8 +43,8 @@ namespace Destiny
 
 		void* getNativeWindow();
 	private:
-		unsigned int m_Width;
-		unsigned int m_Height;
+		uint16_t m_Width;
+		uint16_t m_Height;
 		HWND m_Handle;
 	private:
 		static LRESULT WINAPI handleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);

@@ -32,7 +32,7 @@ namespace Destiny
 								virtual EventType getEventType() const override { return getStaticType(); }\
 								virtual const char* getName() const override { return #type; }
 
-#define EVENT_CLASS_CATEGORY(category) virtual int getCategoryFlags() const override { return category; }
+#define EVENT_CLASS_CATEGORY(category) virtual uint8_t getCategoryFlags() const override { return category; }
 
 	class Event
 	{
@@ -43,7 +43,7 @@ namespace Destiny
 
 		virtual EventType getEventType() const = 0;
 		virtual const char* getName() const = 0;
-		virtual int getCategoryFlags() const = 0;
+		virtual uint8_t getCategoryFlags() const = 0;
 		virtual std::string toString() const { return getName(); }
 
 		bool isInCategory(EventCategory category)

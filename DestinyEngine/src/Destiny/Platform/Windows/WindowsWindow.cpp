@@ -147,7 +147,7 @@ LRESULT __stdcall Destiny::WindowsWindow::handleMsgMain(HWND hWnd, UINT msg, WPA
 LRESULT Destiny::WindowsWindow::handleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	static KeyCode currentTrackingKey;
-	static unsigned int keyRepeatCount;
+	static uint16_t keyRepeatCount;
 
 	if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
 		return true;
@@ -413,7 +413,7 @@ WPARAM Destiny::WindowsWindow::mapLeftRightKeys(WPARAM vk, LPARAM lParam)
 {
 	WPARAM new_vk = vk;
 	UINT scancode = (lParam & 0x00ff0000) >> 16;
-	int extended = (lParam & 0x01000000) != 0;
+	uint8_t extended = (lParam & 0x01000000) != 0;
 
 	switch (vk) {
 	case VK_SHIFT:

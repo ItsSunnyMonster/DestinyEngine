@@ -10,12 +10,12 @@ namespace Destiny
 	struct WindowProps 
 	{
 		std::wstring title;
-		unsigned int width;
-		unsigned int height;
+		uint16_t width;
+		uint16_t height;
 
 		WindowProps(const std::wstring& title = L"Destiny Engine",
-			unsigned int width = 1280,
-			unsigned int height = 600)
+			uint16_t width = 1280,
+			uint16_t height = 600)
 			: title(title), width(width), height(height) {}
 	};
 
@@ -25,8 +25,8 @@ namespace Destiny
 		virtual ~Window() {}
 		virtual void onUpdate() = 0;
 
-		virtual unsigned int getWidth() const = 0;
-		virtual unsigned int getHeight() const = 0;
+		virtual uint16_t getWidth() const = 0;
+		virtual uint16_t getHeight() const = 0;
 
 		virtual void setEventListener(EventListener& listener) = 0;
 

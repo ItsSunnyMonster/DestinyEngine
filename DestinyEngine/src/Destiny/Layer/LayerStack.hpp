@@ -20,7 +20,7 @@ namespace Destiny
 		std::vector<Layer*>::iterator end() { return m_Layers.end(); }
 	private:
 		std::vector<Layer*> m_Layers;
-		int m_LayerInsertIndex = 0;
+		uint8_t m_LayerInsertIndex = 0;
 	};
 
 }
