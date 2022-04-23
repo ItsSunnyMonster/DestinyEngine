@@ -2,8 +2,11 @@
 
 #include "Destiny/Layer/Layer.hpp"
 
-namespace Destiny {
-	class ImGuiLayer : public Layer {
+namespace Destiny 
+{
+
+	class ImGuiLayer : public Layer 
+	{
 	public:
 		ImGuiLayer();
 		~ImGuiLayer();
@@ -14,4 +17,5 @@ namespace Destiny {
 		void onEvent(Event& event) override;
 		void onImGuiRender() override;
 	};
+
 }

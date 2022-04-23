@@ -2,9 +2,11 @@
 
 #include "Destiny/Layer/Layer.hpp"
 
-namespace Destiny {
+namespace Destiny 
+{
 
-	class LayerStack {
+	class LayerStack 
+	{
 	public:
 		LayerStack();
 		~LayerStack();

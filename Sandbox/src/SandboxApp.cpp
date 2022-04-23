@@ -8,28 +8,34 @@
 
 #include <DestinyEngine.hpp>
 
-class TestLayer : public Destiny::Layer {
+class TestLayer : public Destiny::Layer 
+{
 public:
 	TestLayer()
 		: Layer("Test") {}
 
-	void onUpdate() override {
+	void onUpdate() override 
+	{
 		//DT_INFO("TestLayer::onUpdate");
 	}
 
-	void onEvent(Destiny::Event& event) override {
+	void onEvent(Destiny::Event& event) override 
+	{
 		//DT_INFO("{0}", event);
 	}
 };
 
-class SandboxApp : public Destiny::Application {
+class SandboxApp : public Destiny::Application 
+{
 public:
-	SandboxApp() {
+	SandboxApp() 
+	{
 		pushLayer(new TestLayer());
 	}
 	~SandboxApp() override = default;
 };
 
-Destiny::Application *Destiny::createApplication() {
+Destiny::Application *Destiny::createApplication() 
+{
 	return new SandboxApp();
 }

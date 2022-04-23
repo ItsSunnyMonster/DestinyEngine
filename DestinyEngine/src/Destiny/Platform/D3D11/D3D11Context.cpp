@@ -85,7 +85,8 @@ void Destiny::D3D11Context::setVSync(bool enabled)
 
 void Destiny::D3D11Context::resize(unsigned int width, unsigned int height)
 {
-	if (m_D3D11Device != nullptr) {
+	if (m_D3D11Device != nullptr) 
+	{
 		cleanUpRenderTarget();
 		m_D3D11SwapChain->ResizeBuffers(0, (UINT)width, (UINT)height, DXGI_FORMAT_UNKNOWN, 0);
 		createRenderTarget();

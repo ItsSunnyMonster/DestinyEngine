@@ -3,9 +3,11 @@
 #include "Destiny/Events/Event.hpp"
 #include "Destiny/Events/EventListener.hpp"
 
-namespace Destiny {
+namespace Destiny 
+{
 
-	class Layer : public EventListener {
+	class Layer : public EventListener 
+	{
 	public:
 		Layer(const std::string& name);
 		virtual ~Layer();

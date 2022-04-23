@@ -2,8 +2,11 @@
 
 #include "Destiny/Renderer/GraphicsContext.hpp"
 
-namespace Destiny {
-	class D3D11Context : public GraphicsContext {
+namespace Destiny 
+{
+
+	class D3D11Context : public GraphicsContext 
+	{
 	public:
 		D3D11Context(HWND hWnd);
 		~D3D11Context() override;
@@ -27,4 +30,5 @@ namespace Destiny {
 		ID3D11DeviceContext* m_D3D11Context;
 		ID3D11RenderTargetView* m_D3D11Target;
 	};
+
 }

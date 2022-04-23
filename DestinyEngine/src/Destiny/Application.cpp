@@ -17,11 +17,14 @@
 #include <imgui.h>
 #include <Destiny/Platform/D3D11/D3D11Context.hpp>
 
-namespace Destiny {
+namespace Destiny 
+{
+
 	Application* Application::s_Instance;
 
 	Application::Application()
-		: m_Running(true) {
+		: m_Running(true) 
+	{
 		assert(!s_Instance && "s_Instance is not null!");
 		s_Instance = this;
 
@@ -34,13 +37,15 @@ namespace Destiny {
 
 	Application::~Application() = default;
 
-	void Application::run() {
+	void Application::run() 
+	{
 		while (m_Running)
 		{
 			auto context = m_Window->getContext();
 
 			// Update layers
-			for (Layer* layer : m_LayerStack) {
+			for (Layer* layer : m_LayerStack) 
+			{
 				layer->onUpdate();
 			}
 
@@ -51,7 +56,8 @@ namespace Destiny {
 			m_Window->imGuiNewFrame();
 			ImGui::NewFrame();
 			// Render each layer
-			for (Layer* layer : m_LayerStack) {
+			for (Layer* layer : m_LayerStack) 
+			{
 				layer->onImGuiRender();
 			}
 
@@ -77,7 +83,8 @@ namespace Destiny {
 
 		DT_CORE_TRACE("{0}", event);
 
-		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();) {
+		for (auto it = m_LayerStack.end(); it != m_LayerStack.begin();) 
+		{
 			// (*--it) Decrements the iterator and dereferences it
 			if ((*--it)->isEnabled())
 			{

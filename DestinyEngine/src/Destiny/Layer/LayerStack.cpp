@@ -42,7 +42,8 @@ void Destiny::LayerStack::popLayer(Layer* layer)
 void Destiny::LayerStack::popOverlay(Layer* overlay)
 {
 	auto it = std::find(m_Layers.begin(), m_Layers.end(), overlay);
-	if (it != m_Layers.end()) {
+	if (it != m_Layers.end()) 
+	{
 		// Remove the element from the vector without decrementing the interator
 		m_Layers.erase(it);
 		overlay->onDetach();

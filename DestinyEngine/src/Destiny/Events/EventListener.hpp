@@ -2,7 +2,8 @@
 
 #include "Destiny/Events/Event.hpp"
 
-namespace Destiny {
+namespace Destiny 
+{
 
 	class EventListener
 	{

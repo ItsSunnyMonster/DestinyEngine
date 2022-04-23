@@ -7,16 +7,19 @@
 #include <spdlog/fmt/ostr.h>
 
 
-namespace Destiny {
+namespace Destiny 
+{
 
-	enum class EventType {
+	enum class EventType 
+	{
 		None = 0,
 		WindowClose, WindowResize, WindowMove, WindowFocus, WindowUnfocus,
 		KeyPress, KeyRelease, KeyType,
 		MouseButtonPress, MouseButtonRelease, MouseMove, MouseScroll
 	};
 
-	enum EventCategory {
+	enum EventCategory 
+	{
 		None = 0,
 		EventCategoryWindow = BIT(0),
 		EventCategoryInput = BIT(1),

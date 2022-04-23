@@ -5,6 +5,7 @@
 
 namespace Destiny
 {
+
 	using KeyCode = uint16_t;
 
 	namespace Key
@@ -144,4 +145,5 @@ namespace Destiny
 			Menu = 348
 		};
 	}
+
 }

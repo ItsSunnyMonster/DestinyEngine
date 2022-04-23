@@ -4,12 +4,15 @@
 
 #include "Destiny/KeyCodes.hpp"
 
-namespace Destiny {
+namespace Destiny 
+{
+
 	class WindowsWindow : public Window
 	{
 	private:
 		// This class should only be a singleton (It manages Win32 window classes)
-		class Win32WinClass {
+		class Win32WinClass 
+		{
 		public:
 			static const wchar_t* getName();
 			static HINSTANCE getInstance();
@@ -58,4 +61,5 @@ namespace Destiny {
 
 		static WPARAM mapLeftRightKeys(WPARAM vk, LPARAM lParam);
 	};
+
 }

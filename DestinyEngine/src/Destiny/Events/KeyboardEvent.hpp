@@ -6,7 +6,8 @@
 #include "Destiny/Events/Event.hpp"
 #include "Destiny/KeyCodes.hpp"
 
-namespace Destiny {
+namespace Destiny 
+{
 
 	class KeyEvent : public Event
 	{
@@ -76,4 +77,5 @@ namespace Destiny {
 	private:
 		char m_Char;
 	};
+	
 }

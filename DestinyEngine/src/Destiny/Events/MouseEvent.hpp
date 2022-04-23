@@ -6,7 +6,8 @@
 #include "Destiny/Events/Event.hpp"
 #include "Destiny/MouseCodes.hpp"
 
-namespace Destiny {
+namespace Destiny 
+{
 
 	class MouseMoveEvent : public Event
 	{

@@ -8,8 +8,10 @@
 
 #include <backends/imgui_impl_win32.h>
 
+// Forward declaration
 IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
+// Static variables
 Destiny::WindowsWindow::Win32WinClass Destiny::WindowsWindow::Win32WinClass::s_WinClass;
 bool Destiny::WindowsWindow::s_KeyMapInitialized = false;
 std::unordered_map<WPARAM, Destiny::KeyCode> Destiny::WindowsWindow::s_VkToDtKeyCode;
@@ -89,7 +91,8 @@ Destiny::WindowsWindow::~WindowsWindow()
 void Destiny::WindowsWindow::onUpdate()
 {
 	MSG msg;
-	if (PeekMessageW(&msg, nullptr, 0, 0, PM_REMOVE)) {
+	if (PeekMessageW(&msg, nullptr, 0, 0, PM_REMOVE)) 
+	{
 		TranslateMessage(&msg);
 		//DT_CORE_TRACE("Before DispatchMessageW()");
 		DispatchMessageW(&msg);
@@ -141,9 +144,8 @@ LRESULT Destiny::WindowsWindow::handleMsg(HWND hWnd, UINT msg, WPARAM wParam, LP
 	static KeyCode currentTrackingKey;
 	static unsigned int keyRepeatCount;
 
-	if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam)) {
+	if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
 		return true;
-	}
 
 	switch (msg)
 	{
@@ -252,7 +254,8 @@ LRESULT Destiny::WindowsWindow::handleMsg(HWND hWnd, UINT msg, WPARAM wParam, LP
 		break;
 	case WM_CLOSE:
 	{
-		if (m_Listener) {
+		if (m_Listener) 
+		{
 			WindowCloseEvent event;
 			m_Listener->onEvent(event);
 		}
@@ -383,18 +386,21 @@ void Destiny::WindowsWindow::initializeKeyMap()
 	s_VkToDtKeyCode[VK_RWIN] = Key::RightSuper;
 
 	// Reverses vkToDtKeyCode and store into dtKeyCodeToVk
-	for (const auto& keyValuePair : s_VkToDtKeyCode) {
+	for (const auto& keyValuePair : s_VkToDtKeyCode) 
+	{
 		// keyValuePair.second is the value of the collection
 		// first is the key
 		s_DtKeyCodeToVk[keyValuePair.second] = keyValuePair.first;
 	}
 }
 
-Destiny::KeyCode Destiny::WindowsWindow::vkToDtKeyCode(WPARAM vk) {
+Destiny::KeyCode Destiny::WindowsWindow::vkToDtKeyCode(WPARAM vk) 
+{
 	return s_VkToDtKeyCode[vk];
 }
 
-WPARAM Destiny::WindowsWindow::dtKeyCodeToVk(Destiny::KeyCode kc) {
+WPARAM Destiny::WindowsWindow::dtKeyCodeToVk(Destiny::KeyCode kc) 
+{
 	return s_DtKeyCodeToVk[kc];
 }
 

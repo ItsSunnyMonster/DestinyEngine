@@ -5,7 +5,8 @@
 
 #include "Destiny/Events/Event.hpp"
 
-namespace Destiny {
+namespace Destiny 
+{
 
 	class WindowResizeEvent : public Event
 	{
@@ -44,4 +45,5 @@ namespace Destiny {
 		EVENT_CLASS_TYPE(WindowClose)
 		EVENT_CLASS_CATEGORY(EventCategoryWindow)
 	};
+
 }

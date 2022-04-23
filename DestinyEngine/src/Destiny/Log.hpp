@@ -10,8 +10,11 @@
 
 #include "spdlog/logger.h"
 
-namespace Destiny {
-	class Log {
+namespace Destiny 
+{
+
+	class Log 
+	{
 	public:
 		static void init();
 		inline static const auto getCoreLogger() { return s_CoreLogger; }
@@ -20,6 +23,7 @@ namespace Destiny {
 		static std::shared_ptr<spdlog::logger> s_CoreLogger;
 		static std::shared_ptr<spdlog::logger> s_ClientLogger;
 	};
+
 }
 
 #define DT_CORE_TRACE(...)		::Destiny::Log::getCoreLogger()->trace(__VA_ARGS__)

@@ -4,8 +4,11 @@
 
 #include "Destiny/Renderer/GraphicsContext.hpp"
 
-namespace Destiny {
-	struct WindowProps {
+namespace Destiny 
+{
+
+	struct WindowProps 
+	{
 		std::wstring title;
 		unsigned int width;
 		unsigned int height;
@@ -37,4 +40,5 @@ namespace Destiny {
 	protected:
 		GraphicsContext* m_Context = nullptr;
 	};
+
 }

@@ -1,7 +1,10 @@
 #pragma once
 
-namespace Destiny {
-	class GraphicsContext {
+namespace Destiny 
+{
+
+	class GraphicsContext 
+	{
 	public:
 		virtual ~GraphicsContext() {}
 
@@ -20,4 +23,5 @@ namespace Destiny {
 	protected:
 		bool m_VSync;
 	};
+
 }

@@ -13,8 +13,11 @@
 #include "Destiny/Events/WindowEvent.hpp"
 #include "Destiny/Layer/LayerStack.hpp"
 
-namespace Destiny {
-	class Application : public EventListener {
+namespace Destiny 
+{
+
+	class Application : public EventListener 
+	{
 	public:
 		Application();
 		virtual ~Application();
@@ -39,4 +42,5 @@ namespace Destiny {
 
 	// To be defined in CLIENT
 	Application* createApplication();
+
 }

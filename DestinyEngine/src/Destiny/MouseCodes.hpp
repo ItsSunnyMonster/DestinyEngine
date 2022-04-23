@@ -5,6 +5,7 @@
 
 namespace Destiny
 {
+
 	using MouseCode = uint16_t;
 
 	namespace Mouse
@@ -27,4 +28,5 @@ namespace Destiny
 			ButtonMiddle = Button2
 		};
 	}
+
 }
