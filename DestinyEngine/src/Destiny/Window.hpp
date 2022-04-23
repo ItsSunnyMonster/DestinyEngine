@@ -36,6 +36,8 @@ namespace Destiny
 		virtual void imGuiNewFrame() = 0;
 		virtual void destroyImGuiImpl() = 0;
 
+		virtual void* getNativeWindow() = 0;
+
 		static Window* create(const WindowProps& props = WindowProps());
 	protected:
 		GraphicsContext* m_Context = nullptr;

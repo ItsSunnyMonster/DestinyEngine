@@ -40,6 +40,8 @@ namespace Destiny
 		void destroyImGuiImpl() override;
 
 		void setEventListener(EventListener& listener) override;
+
+		void* getNativeWindow();
 	private:
 		unsigned int m_Width;
 		unsigned int m_Height;
