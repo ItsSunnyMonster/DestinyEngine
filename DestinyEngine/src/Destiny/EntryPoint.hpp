@@ -10,7 +10,8 @@
 
 extern Destiny::Application* Destiny::createApplication();
 
-int entry() {
+int entry() 
+{
 	Destiny::Log::init();
 
 	Destiny::Application* app = Destiny::createApplication();
@@ -23,13 +24,15 @@ int entry() {
 #ifdef DT_PLATFORM_WINDOWS
 
 #if 1
-int main() {
+int main() 
+{
 	return entry();
 }
 #endif // DT_DEBUG
 
 #if 0
-int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow) {
+int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow) 
+{
 	return entry();
 }
 #endif
