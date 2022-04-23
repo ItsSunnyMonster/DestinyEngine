@@ -2,6 +2,8 @@
 
 #include "Destiny/Window.hpp"
 
+#include "Destiny/KeyCodes.hpp"
+
 namespace Destiny {
 	class WindowsWindow : public Window
 	{
@@ -16,8 +18,8 @@ namespace Destiny {
 			~Win32WinClass();
 			Win32WinClass(const Win32WinClass&) = delete;
 			Win32WinClass& operator=(const Win32WinClass&) = delete;
-			static constexpr const wchar_t* winClassName = L"D3D11 WinClass";
-			static Win32WinClass winClass;
+			static constexpr const wchar_t* s_WinClassName = L"D3D11 WinClass";
+			static Win32WinClass s_WinClass;
 			HINSTANCE hInst;
 		};
 	public:
@@ -45,5 +47,15 @@ namespace Destiny {
 		LRESULT handleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	private:
 		EventListener* m_Listener = nullptr;
+	private:
+		static std::unordered_map<WPARAM, KeyCode> s_VkToDtKeyCode;
+		static std::unordered_map<KeyCode, WPARAM> s_DtKeyCodeToVk;
+		static bool s_KeyMapInitialized;
+		static void initializeKeyMap();
+
+		static KeyCode vkToDtKeyCode(WPARAM vk);
+		static WPARAM dtKeyCodeToVk(KeyCode kc);
+
+		static WPARAM mapLeftRightKeys(WPARAM vk, LPARAM lParam);
 	};
 }
