@@ -25,7 +25,7 @@ namespace Destiny
 	Application::Application()
 		: m_Running(true) 
 	{
-		assert(!s_Instance && "s_Instance is not null!");
+		DT_ASSERT_MSG(!s_Instance, "s_Instance is not null!");
 		s_Instance = this;
 
 		m_Window = std::shared_ptr<Window>(Window::create());

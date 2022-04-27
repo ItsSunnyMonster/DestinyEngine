@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.21.1)
 
 project(DestinyEngine)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 
 set(SOURCE_FILES "src/Destiny/Application.cpp" 
     "include/DestinyEngine.hpp" 
@@ -32,6 +32,10 @@ set(SOURCE_FILES "src/Destiny/Application.cpp"
     "src/Destiny/ImGui/ImGuiLayer.cpp"
     "src/Destiny/ImGui/ImGuiLayer.hpp"
     "src/Destiny/ImGui/ImGuiBuild.cpp"
+    "src/Destiny/Exception.hpp"
+    "src/Destiny/Exception.cpp"
+    "src/Destiny/Platform/Windows/Win32Exception.hpp"
+    "src/Destiny/Platform/Windows/Win32Exception.cpp"
 )
 
 add_library(DestinyEngine STATIC 
@@ -44,12 +48,15 @@ if (WIN32)
 endif()
 if (UNIX)
     target_compile_definitions(DestinyEngine PUBLIC DT_PLATFORM_UNIX)
+    message(FATAL_ERROR "UNIX IS NOT SUPPORTED!")
 endif()
 if (UNIX AND NOT APPLE)
     target_compile_definitions(DestinyEngine PUBLIC DT_PLATFORM_LINUX)
+    message(FATAL_ERROR "LINUX IS NOT SUPPORTED!")
 endif()
 if (APPLE)
     target_compile_definitions(DestinyEngine PUBLIC DT_PLATFORM_MACOS)
+    message(FATAL_ERROR "MACOS IS NOT SUPPORTED!")
 endif()
 
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "" FORCE)

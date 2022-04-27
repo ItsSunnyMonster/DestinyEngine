@@ -9,5 +9,6 @@ set(SOURCE_FILES src/SandboxApp.cpp)
 set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "" FORCE)
 
 add_executable(Sandbox ${SOURCE_FILES})
+set_target_properties(Sandbox PROPERTIES WIN32_EXECUTABLE $<CONFIG:Release>)
 
 target_link_libraries(Sandbox DestinyEngine)

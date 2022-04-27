@@ -15,6 +15,8 @@
 #include <utility>
 #include <algorithm>
 #include <functional>
+#include <exception>
+#include <format>
 
 #include <string>
 #include <sstream>

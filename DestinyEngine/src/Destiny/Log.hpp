@@ -10,6 +10,8 @@
 
 #include "spdlog/logger.h"
 
+#include "Destiny/Exception.hpp"
+
 namespace Destiny 
 {
 
@@ -37,3 +39,6 @@ namespace Destiny
 #define DT_WARN(...)		::Destiny::Log::getClientLogger()->warn(__VA_ARGS__)
 #define DT_ERROR(...)		::Destiny::Log::getClientLogger()->error(__VA_ARGS__)
 #define DT_CRITICAL(...)	::Destiny::Log::getClientLogger()->critical(__VA_ARGS__)
+
+#define DT_ASSERT_MSG(x, msg) if (!(x)) throw Destiny::Exception(__LINE__, __FILE__, msg)
+#define DT_ASSERT(x) if (!(x)) throw Destiny::Exception(__LINE__, __FILE__);

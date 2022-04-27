@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "Destiny/Events/EventListener.hpp"
 
@@ -9,12 +9,12 @@ namespace Destiny
 
 	struct WindowProps 
 	{
-		std::wstring title;
+		std::string title;
 		uint16_t width;
 		uint16_t height;
 
-		WindowProps(const std::wstring& title = L"Destiny Engine",
-			uint16_t width = 1280,
+		WindowProps(const std::string& title = "Destiny Engine",
+			uint16_t width = 800,
 			uint16_t height = 600)
 			: title(title), width(width), height(height) {}
 	};

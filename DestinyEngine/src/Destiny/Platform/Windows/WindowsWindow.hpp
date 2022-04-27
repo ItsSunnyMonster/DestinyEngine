@@ -4,6 +4,8 @@
 
 #include "Destiny/KeyCodes.hpp"
 
+#include "Destiny/Exception.hpp"
+
 namespace Destiny 
 {
 
@@ -14,14 +16,14 @@ namespace Destiny
 		class Win32WinClass 
 		{
 		public:
-			static const wchar_t* getName();
+			static const char* getName();
 			static HINSTANCE getInstance();
 		private:
 			Win32WinClass();
 			~Win32WinClass();
 			Win32WinClass(const Win32WinClass&) = delete;
 			Win32WinClass& operator=(const Win32WinClass&) = delete;
-			static constexpr const wchar_t* s_WinClassName = L"D3D11 WinClass";
+			static constexpr const char* s_WinClassName = "D3D11 WinClass";
 			static Win32WinClass s_WinClass;
 			HINSTANCE hInst;
 		};
@@ -41,7 +43,7 @@ namespace Destiny
 
 		void setEventListener(EventListener& listener) override;
 
-		void* getNativeWindow();
+		void* getNativeWindow() override;
 	private:
 		uint16_t m_Width;
 		uint16_t m_Height;

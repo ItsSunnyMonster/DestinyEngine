@@ -5,6 +5,7 @@
 #include "Destiny/Events/KeyboardEvent.hpp"
 #include "Destiny/Events/MouseEvent.hpp"
 #include "Destiny/Platform/D3D11/D3D11Context.hpp"
+#include "Destiny/Platform/Windows/Win32Exception.hpp"
 
 #include <backends/imgui_impl_win32.h>
 
@@ -22,7 +23,7 @@ Destiny::Window* Destiny::Window::create(const WindowProps& props)
 	return new WindowsWindow(props);
 }
 
-const wchar_t* Destiny::WindowsWindow::Win32WinClass::getName()
+const char* Destiny::WindowsWindow::Win32WinClass::getName()
 {
 	return s_WinClassName;
 }
@@ -36,7 +37,7 @@ HINSTANCE Destiny::WindowsWindow::Win32WinClass::getInstance()
 Destiny::WindowsWindow::Win32WinClass::Win32WinClass()
 	: hInst(GetModuleHandle(nullptr))
 {
-	WNDCLASSEXW wc = { 0 };
+	WNDCLASSEX wc = { 0 };
 	wc.cbSize = sizeof(wc);
 	wc.style = CS_CLASSDC;
 	wc.lpfnWndProc = handleMsgSetup;
@@ -48,12 +49,12 @@ Destiny::WindowsWindow::Win32WinClass::Win32WinClass()
 	wc.hbrBackground = nullptr;
 	wc.lpszClassName = getName();
 	wc.hIconSm = nullptr;
-	RegisterClassExW(&wc);
+	RegisterClassEx(&wc);
 }
 
 Destiny::WindowsWindow::Win32WinClass::~Win32WinClass()
 {
-	UnregisterClassW(getName(), getInstance());
+	UnregisterClass(getName(), getInstance());
 }
 
 Destiny::WindowsWindow::WindowsWindow(const WindowProps& props)
@@ -69,13 +70,21 @@ Destiny::WindowsWindow::WindowsWindow(const WindowProps& props)
 	wr.top = 100;
 	wr.bottom = wr.top + m_Height;
 	wr.right = wr.left + m_Width;
-	AdjustWindowRect(&wr, style, FALSE);
+	if (!AdjustWindowRect(&wr, style, FALSE))
+	{
+		throw DT_W32_LAST_EXCEPT();
+	}
 
-	m_Handle = CreateWindowExW(
+	m_Handle = CreateWindowEx(
 		0, Win32WinClass::getName(), props.title.c_str(),
 		style,
-		300, 300, wr.right - wr.left, wr.bottom - wr.top, nullptr, nullptr, Win32WinClass::getInstance(), this
+		CW_USEDEFAULT, CW_USEDEFAULT, wr.right - wr.left, wr.bottom - wr.top, nullptr, nullptr, Win32WinClass::getInstance(), this
 	);
+	if (!m_Handle)
+	{
+		throw DT_W32_LAST_EXCEPT();
+	}
+
 	ShowWindow(m_Handle, SW_SHOWDEFAULT);
 	UpdateWindow(m_Handle);
 
@@ -91,11 +100,11 @@ Destiny::WindowsWindow::~WindowsWindow()
 void Destiny::WindowsWindow::onUpdate()
 {
 	MSG msg;
-	if (PeekMessageW(&msg, nullptr, 0, 0, PM_REMOVE)) 
+	if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE)) 
 	{
 		TranslateMessage(&msg);
 		//DT_CORE_TRACE("Before DispatchMessageW()");
-		DispatchMessageW(&msg);
+		DispatchMessage(&msg);
 		//DT_CORE_TRACE("After DispatchMessageW()");
 	};
 }
@@ -129,18 +138,18 @@ LRESULT __stdcall Destiny::WindowsWindow::handleMsgSetup(HWND hWnd, UINT msg, WP
 {
 	if (msg == WM_NCCREATE)
 	{
-		const CREATESTRUCTW* const create = reinterpret_cast<CREATESTRUCTW*>(lParam);
+		const CREATESTRUCT* const create = reinterpret_cast<CREATESTRUCT*>(lParam);
 		WindowsWindow* const window = reinterpret_cast<WindowsWindow*>(create->lpCreateParams);
-		SetWindowLongPtrW(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(window));
-		SetWindowLongPtrW(hWnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(&WindowsWindow::handleMsgMain));
+		SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(window));
+		SetWindowLongPtr(hWnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(&WindowsWindow::handleMsgMain));
 		return window->handleMsg(hWnd, msg, wParam, lParam);
 	}
-	return DefWindowProcW(hWnd, msg, wParam, lParam);
+	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
 LRESULT __stdcall Destiny::WindowsWindow::handleMsgMain(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	WindowsWindow* const window = reinterpret_cast<WindowsWindow*>(GetWindowLongPtrW(hWnd, GWLP_USERDATA));
+	WindowsWindow* const window = reinterpret_cast<WindowsWindow*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
 	return window->handleMsg(hWnd, msg, wParam, lParam);
 }
 
@@ -270,7 +279,7 @@ LRESULT Destiny::WindowsWindow::handleMsg(HWND hWnd, UINT msg, WPARAM wParam, LP
 		break;
 	}
 
-	return DefWindowProcW(hWnd, msg, wParam, lParam);
+	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
 void Destiny::WindowsWindow::initializeKeyMap()
