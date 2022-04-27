@@ -44,7 +44,7 @@ add_library(DestinyEngine STATIC
 
 if (WIN32)
     target_compile_definitions(DestinyEngine PUBLIC DT_PLATFORM_WINDOWS)
-    target_link_libraries(DestinyEngine PUBLIC d3d11.lib)
+    target_link_libraries(DestinyEngine PUBLIC d3d11.lib Comctl32.lib)
 endif()
 if (UNIX)
     target_compile_definitions(DestinyEngine PUBLIC DT_PLATFORM_UNIX)
