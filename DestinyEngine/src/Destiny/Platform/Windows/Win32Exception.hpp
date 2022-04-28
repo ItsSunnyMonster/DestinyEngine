@@ -20,3 +20,4 @@ namespace Destiny
 
 #define DT_W32_EXCEPT(hr) Destiny::Win32Exception(__LINE__, __FILE__, hr)
 #define DT_W32_LAST_EXCEPT() Destiny::Win32Exception(__LINE__, __FILE__, GetLastError())
+#define DT_D3D11_THROW_FAILED(hr) { const HRESULT& refHr = hr; if ((refHr) != 0) throw Destiny::Win32Exception(__LINE__, __FILE__, refHr); }

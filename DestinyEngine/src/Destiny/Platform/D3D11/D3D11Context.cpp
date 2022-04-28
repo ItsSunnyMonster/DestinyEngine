@@ -1,4 +1,5 @@
 #include "D3D11Context.hpp"
+#include "Destiny/Platform/Windows/Win32Exception.hpp"
 
 #include <backends/imgui_impl_dx11.h>
 #include <imgui.h>
@@ -16,17 +17,22 @@ Destiny::D3D11Context::D3D11Context(HWND hWnd)
 	swapChainDesc.SampleDesc.Count = 1;
 	swapChainDesc.SampleDesc.Quality = 0;
 	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-	swapChainDesc.BufferCount = 1; // This actually means 2 buffered (which is weird)
+	swapChainDesc.BufferCount = 2;
 	swapChainDesc.OutputWindow = hWnd;
 	swapChainDesc.Windowed = TRUE;
-	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+	swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
 	swapChainDesc.Flags = D3D11_CREATE_DEVICE_DEBUG;
 
-	D3D11CreateDeviceAndSwapChain(
+	UINT flags = 0;
+#ifdef DT_DEBUG
+	flags |= D3D11_CREATE_DEVICE_DEBUG;
+#endif
+
+	DT_D3D11_THROW_FAILED(D3D11CreateDeviceAndSwapChain(
 		nullptr,
 		D3D_DRIVER_TYPE_HARDWARE,
 		nullptr,
-		0,
+		flags,
 		nullptr,
 		0,
 		D3D11_SDK_VERSION,
@@ -35,7 +41,7 @@ Destiny::D3D11Context::D3D11Context(HWND hWnd)
 		&m_D3D11Device,
 		nullptr,
 		&m_D3D11Context
-	);
+	));
 
 	createRenderTarget();
 }
@@ -50,7 +56,7 @@ Destiny::D3D11Context::~D3D11Context()
 
 void Destiny::D3D11Context::swap()
 {
-	m_D3D11SwapChain->Present(m_VSync ? 1 : 0, 0);
+	DT_D3D11_THROW_FAILED(m_D3D11SwapChain->Present(m_VSync ? 1 : 0, 0));
 }
 
 void Destiny::D3D11Context::clear()
@@ -63,8 +69,8 @@ void Destiny::D3D11Context::clear()
 void Destiny::D3D11Context::createRenderTarget()
 {
 	ID3D11Texture2D* backBuffer;
-	m_D3D11SwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&backBuffer));
-	m_D3D11Device->CreateRenderTargetView(backBuffer, nullptr, &m_D3D11Target);
+	DT_D3D11_THROW_FAILED(m_D3D11SwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&backBuffer)));
+	DT_D3D11_THROW_FAILED(m_D3D11Device->CreateRenderTargetView(backBuffer, nullptr, &m_D3D11Target));
 	backBuffer->Release();
 }
 
@@ -88,7 +94,7 @@ void Destiny::D3D11Context::resize(unsigned int width, unsigned int height)
 	if (m_D3D11Device != nullptr) 
 	{
 		cleanUpRenderTarget();
-		m_D3D11SwapChain->ResizeBuffers(0, (UINT)width, (UINT)height, DXGI_FORMAT_UNKNOWN, 0);
+		DT_D3D11_THROW_FAILED(m_D3D11SwapChain->ResizeBuffers(0, (UINT)width, (UINT)height, DXGI_FORMAT_UNKNOWN, 0));
 		createRenderTarget();
 	}
 }
@@ -110,6 +116,5 @@ void Destiny::D3D11Context::destroyImGuiImpl()
 
 void Destiny::D3D11Context::imGuiRender()
 {
-	auto drawData = ImGui::GetDrawData();
-	ImGui_ImplDX11_RenderDrawData(drawData);
+	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 }
