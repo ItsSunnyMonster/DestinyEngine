@@ -13,6 +13,6 @@ add_subdirectory(Sandbox)
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Sandbox)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-set_target_properties(DestinyEngine Sandbox imgui spdlog PROPERTIES MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+set_target_properties(DestinyEngine Sandbox PROPERTIES MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 message(STATUS "Using toolchain file: ${CMAKE_TOOLCHAIN_FILE}")

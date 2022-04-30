@@ -74,12 +74,14 @@ target_compile_definitions(DestinyEngine PUBLIC
 add_subdirectory(vendor/spdlog)
 add_subdirectory(vendor/imgui)
 
+set_target_properties(spdlog imgui PROPERTIES MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+
 set_target_properties(spdlog PROPERTIES FOLDER "Dependencies")
 set_target_properties(imgui PROPERTIES FOLDER "Dependencies")
 
 target_link_libraries(DestinyEngine PUBLIC spdlog::spdlog imgui)
 
 target_include_directories(DestinyEngine INTERFACE ./include)
-target_include_directories(DestinyEngine PUBLIC ./src ./vendor/spdlog/include)
+target_include_directories(DestinyEngine PUBLIC ./src ./vendor/spdlog/include ./vendor/glm)
 
 target_precompile_headers(DestinyEngine PUBLIC src/dtpch.hpp)
