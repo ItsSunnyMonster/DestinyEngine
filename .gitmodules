@@ -5,3 +5,6 @@
 	path = DestinyEngine/vendor/imgui
 	url = https://github.com/ItsSunnyMonster/imgui.git
 	branch = docking
+[submodule "DestinyEngine/vendor/glm"]
+	path = DestinyEngine/vendor/glm
+	url = git@github.com:ItsSunnyMonster/glm.git
