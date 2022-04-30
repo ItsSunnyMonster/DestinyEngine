@@ -74,6 +74,9 @@ target_compile_definitions(DestinyEngine PUBLIC
 add_subdirectory(vendor/spdlog)
 add_subdirectory(vendor/imgui)
 
+set_target_properties(spdlog PROPERTIES FOLDER "Dependencies")
+set_target_properties(imgui PROPERTIES FOLDER "Dependencies")
+
 target_link_libraries(DestinyEngine PUBLIC spdlog::spdlog imgui)
 
 target_include_directories(DestinyEngine INTERFACE ./include)
