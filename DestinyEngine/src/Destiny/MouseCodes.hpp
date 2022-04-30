@@ -12,6 +12,8 @@ namespace Destiny
 	{
 		enum : MouseCode
 		{
+			ButtonUnknown = 8,
+			
 			// From glfw3.h
 			Button0 = 0,
 			Button1 = 1,

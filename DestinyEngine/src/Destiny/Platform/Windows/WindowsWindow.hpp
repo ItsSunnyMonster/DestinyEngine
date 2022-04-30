@@ -54,16 +54,6 @@ namespace Destiny
 		LRESULT handleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	private:
 		EventListener* m_Listener = nullptr;
-	private:
-		static std::unordered_map<WPARAM, KeyCode> s_VkToDtKeyCode;
-		static std::unordered_map<KeyCode, WPARAM> s_DtKeyCodeToVk;
-		static bool s_KeyMapInitialized;
-		static void initializeKeyMap();
-
-		static KeyCode vkToDtKeyCode(WPARAM vk);
-		static WPARAM dtKeyCodeToVk(KeyCode kc);
-
-		static WPARAM mapLeftRightKeys(WPARAM vk, LPARAM lParam);
 	};
 
 }

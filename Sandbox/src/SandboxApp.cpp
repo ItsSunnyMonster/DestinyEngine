@@ -17,6 +17,10 @@ public:
 	void onUpdate() override 
 	{
 		//DT_INFO("TestLayer::onUpdate");
+		/*if (Destiny::Input::isMouseButtonPressed(Destiny::Mouse::ButtonRight))
+		{
+			DT_INFO("LEFT BUTTON DOWN!");
+		}*/
 	}
 
 	void onEvent(Destiny::Event& event) override 

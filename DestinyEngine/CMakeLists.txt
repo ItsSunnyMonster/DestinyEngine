@@ -36,6 +36,9 @@ set(SOURCE_FILES "src/Destiny/Application.cpp"
     "src/Destiny/Exception.cpp"
     "src/Destiny/Platform/Windows/Win32Exception.hpp"
     "src/Destiny/Platform/Windows/Win32Exception.cpp"
+    "src/Destiny/Input.hpp"
+    "src/Destiny/Platform/Windows/WindowsInput.hpp"
+    "src/Destiny/Platform/Windows/WindowsInput.cpp"
 )
 
 add_library(DestinyEngine STATIC 
