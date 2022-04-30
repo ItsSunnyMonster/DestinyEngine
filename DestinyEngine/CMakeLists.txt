@@ -39,6 +39,8 @@ set(SOURCE_FILES "src/Destiny/Application.cpp"
     "src/Destiny/Input.hpp"
     "src/Destiny/Platform/Windows/WindowsInput.hpp"
     "src/Destiny/Platform/Windows/WindowsInput.cpp"
+    "src/Destiny/Platform/Windows/Win32KeyCodes.hpp"
+	"src/Destiny/Platform/Windows/Win32MouseCodes.hpp"
 )
 
 add_library(DestinyEngine STATIC 
