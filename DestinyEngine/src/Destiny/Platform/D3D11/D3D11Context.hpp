@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Destiny/Renderer/GraphicsContext.hpp"
+#include "DxgiInfoManager.hpp"
 
 namespace Destiny 
 {
@@ -25,10 +26,13 @@ namespace Destiny
 		void createRenderTarget();
 		void cleanUpRenderTarget();
 	private:
-		ID3D11Device* m_D3D11Device;
-		IDXGISwapChain* m_D3D11SwapChain;
-		ID3D11DeviceContext* m_D3D11Context;
-		ID3D11RenderTargetView* m_D3D11Target;
+		ID3D11Device* m_Device;
+		IDXGISwapChain* m_SwapChain;
+		ID3D11DeviceContext* m_Context;
+		ID3D11RenderTargetView* m_RenderTarget;
+#ifdef DT_DEBUG
+		DxgiInfoManager m_InfoManager;
+#endif
 	};
 
 }

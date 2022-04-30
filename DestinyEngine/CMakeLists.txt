@@ -41,6 +41,10 @@ set(SOURCE_FILES "src/Destiny/Application.cpp"
     "src/Destiny/Platform/Windows/WindowsInput.cpp"
     "src/Destiny/Platform/Windows/Win32KeyCodes.hpp"
 	"src/Destiny/Platform/Windows/Win32MouseCodes.hpp"
+    "src/Destiny/Platform/D3D11/D3D11Exception.hpp"
+    "src/Destiny/Platform/D3D11/D3D11Exception.cpp"
+    "src/Destiny/Platform/D3D11/DxgiInfoManager.hpp"
+    "src/Destiny/Platform/D3D11/DxgiInfoManager.cpp"
 )
 
 add_library(DestinyEngine STATIC 

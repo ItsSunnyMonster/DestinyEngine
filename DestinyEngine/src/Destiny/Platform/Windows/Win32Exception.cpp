@@ -7,7 +7,7 @@ const char* Destiny::Win32Exception::what() const
 {
 	std::ostringstream oss;
 	oss << getType() << std::endl
-		<< "[Error Code] " << getErrorCode() << std::endl
+		<< "[Error Code] 0x" << std::hex << std::uppercase << getErrorCode() << std::endl
 		<< "[Description] " << getErrorString() << std::endl
 		<< getOriginString();
 	m_WhatBuffer = oss.str();
@@ -16,7 +16,7 @@ const char* Destiny::Win32Exception::what() const
 
 const char* Destiny::Win32Exception::getType() const
 {
-	return "Destiny Win32/D3D11 Exception";
+	return "Destiny Win32 Exception";
 }
 
 std::string Destiny::Win32Exception::translateErrorCode(HRESULT hr)

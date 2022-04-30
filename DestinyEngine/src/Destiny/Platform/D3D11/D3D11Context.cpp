@@ -1,5 +1,5 @@
 #include "D3D11Context.hpp"
-#include "Destiny/Platform/Windows/Win32Exception.hpp"
+#include "Destiny/Platform/D3D11/D3D11Exception.hpp"
 
 #include <backends/imgui_impl_dx11.h>
 #include <imgui.h>
@@ -37,10 +37,10 @@ Destiny::D3D11Context::D3D11Context(HWND hWnd)
 		0,
 		D3D11_SDK_VERSION,
 		&swapChainDesc,
-		&m_D3D11SwapChain,
-		&m_D3D11Device,
+		&m_SwapChain,
+		&m_Device,
 		nullptr,
-		&m_D3D11Context
+		&m_Context
 	));
 
 	createRenderTarget();
@@ -48,35 +48,82 @@ Destiny::D3D11Context::D3D11Context(HWND hWnd)
 
 Destiny::D3D11Context::~D3D11Context()
 {
-	m_D3D11Context->Release();
-	m_D3D11Device->Release();
-	m_D3D11SwapChain->Release();
+	m_Context->Release();
+	m_Device->Release();
+	m_SwapChain->Release();
 	cleanUpRenderTarget();
 }
 
 void Destiny::D3D11Context::swap()
 {
-	DT_D3D11_THROW_FAILED(m_D3D11SwapChain->Present(m_VSync ? 1 : 0, 0));
+	{
+		struct Vertex
+		{
+			float x, y;
+		};
+
+		const Vertex vertices[] =
+		{
+			{  0.0f,  0.5f },
+			{  0.5f, -0.5f },
+			{ -0.5f, -0.5f }
+		};
+
+		// Create vertex buffer
+		D3D11_BUFFER_DESC bd = { 0 };
+		bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+		bd.Usage = D3D11_USAGE_DEFAULT;
+		bd.CPUAccessFlags = 0;
+		bd.MiscFlags = 0;
+		bd.ByteWidth = sizeof(vertices);
+		bd.StructureByteStride = sizeof(Vertex);
+
+		D3D11_SUBRESOURCE_DATA sd = { 0 };
+		sd.pSysMem = vertices;
+
+		ID3D11Buffer* vertexBuffer;
+		DT_D3D11_THROW_FAILED(m_Device->CreateBuffer(&bd, &sd, &vertexBuffer));
+
+		// Bind vertex buffer to pipeline
+		const UINT stride = sizeof(Vertex);
+		const UINT offset = 0;
+		m_Context->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
+
+		DT_D3D11_THROW_INFO_ONLY(m_Context->Draw(3, 0));
+		vertexBuffer->Release();
+	}
+	
+	HRESULT hr;
+
+	if (FAILED(hr = m_SwapChain->Present(m_VSync ? 1 : 0, 0)))
+	{
+		if (hr == DXGI_ERROR_DEVICE_REMOVED)
+		{
+			throw DT_D3D11_DEVICE_REMOVED_EXCEPTION(m_Device->GetDeviceRemovedReason());
+		}
+		
+		DT_D3D11_THROW_FAILED(hr);
+	}
 }
 
 void Destiny::D3D11Context::clear()
 {
 	const float color[] = { 1.0, 0.0, 0.0, 1.0 };
-	m_D3D11Context->OMSetRenderTargets(1, &m_D3D11Target, nullptr);
-	m_D3D11Context->ClearRenderTargetView(m_D3D11Target, color);
+	m_Context->OMSetRenderTargets(1, &m_RenderTarget, nullptr);
+	m_Context->ClearRenderTargetView(m_RenderTarget, color);
 }
 
 void Destiny::D3D11Context::createRenderTarget()
 {
 	ID3D11Texture2D* backBuffer;
-	DT_D3D11_THROW_FAILED(m_D3D11SwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&backBuffer)));
-	DT_D3D11_THROW_FAILED(m_D3D11Device->CreateRenderTargetView(backBuffer, nullptr, &m_D3D11Target));
+	DT_D3D11_THROW_FAILED(m_SwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(&backBuffer)));
+	DT_D3D11_THROW_FAILED(m_Device->CreateRenderTargetView(backBuffer, nullptr, &m_RenderTarget));
 	backBuffer->Release();
 }
 
 void Destiny::D3D11Context::cleanUpRenderTarget()
 {
-	m_D3D11Target->Release();
+	m_RenderTarget->Release();
 }
 
 bool Destiny::D3D11Context::isVSync()
@@ -91,17 +138,17 @@ void Destiny::D3D11Context::setVSync(bool enabled)
 
 void Destiny::D3D11Context::resize(unsigned int width, unsigned int height)
 {
-	if (m_D3D11Device != nullptr) 
+	if (m_Device != nullptr) 
 	{
 		cleanUpRenderTarget();
-		DT_D3D11_THROW_FAILED(m_D3D11SwapChain->ResizeBuffers(0, (UINT)width, (UINT)height, DXGI_FORMAT_UNKNOWN, 0));
+		DT_D3D11_THROW_FAILED(m_SwapChain->ResizeBuffers(0, (UINT)width, (UINT)height, DXGI_FORMAT_UNKNOWN, 0));
 		createRenderTarget();
 	}
 }
 
 void Destiny::D3D11Context::initImGuiImpl()
 {
-	ImGui_ImplDX11_Init(m_D3D11Device, m_D3D11Context);
+	ImGui_ImplDX11_Init(m_Device, m_Context);
 }
 
 void Destiny::D3D11Context::imGuiNewFrame()
