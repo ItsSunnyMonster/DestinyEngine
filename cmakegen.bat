@@ -1,2 +1,3 @@
-cmake . &
+@ echo off
+cmake .
 PAUSE
