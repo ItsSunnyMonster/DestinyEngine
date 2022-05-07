@@ -6,7 +6,7 @@ namespace Destiny
 	class GraphicsContext 
 	{
 	public:
-		virtual ~GraphicsContext() {}
+		virtual ~GraphicsContext() = default;
 
 		virtual void swap() = 0;
 
@@ -21,7 +21,12 @@ namespace Destiny
 
 		virtual void clear() = 0;
 	protected:
+		GraphicsContext(bool vSync, uint16_t width, uint16_t height)
+			: m_VSync(vSync), m_Width(width), m_Height(height) {}
+
 		bool m_VSync;
+		uint16_t m_Width;
+		uint16_t m_Height;
 	};
 
 }

@@ -4,7 +4,12 @@
 #include <backends/imgui_impl_dx11.h>
 #include <imgui.h>
 
-Destiny::D3D11Context::D3D11Context(HWND hWnd)
+#include <d3dcompiler.h>
+
+#pragma comment(lib, "D3DCompiler.lib")
+
+Destiny::D3D11Context::D3D11Context(HWND hWnd, uint16_t width, uint16_t height, bool vSync)
+	: GraphicsContext(vSync, width, height)
 {
 	DXGI_SWAP_CHAIN_DESC swapChainDesc = { 0 };
 	swapChainDesc.BufferDesc.Width = 0;
@@ -55,7 +60,27 @@ Destiny::D3D11Context::~D3D11Context()
 }
 
 void Destiny::D3D11Context::swap()
+{	
+	HRESULT hr;
+
+	if (FAILED(hr = m_SwapChain->Present(m_VSync ? 1 : 0, 0)))
+	{
+		if (hr == DXGI_ERROR_DEVICE_REMOVED)
+		{
+			throw DT_D3D11_DEVICE_REMOVED_EXCEPTION(m_Device->GetDeviceRemovedReason());
+		}
+		
+		DT_D3D11_THROW_FAILED(hr);
+	}
+}
+
+void Destiny::D3D11Context::clear()
 {
+	const float color[] = { 0.0, 162.0 / 256.0, 237.0 / 256.0, 1.0 };
+	m_Context->OMSetRenderTargets(1, &m_RenderTarget, nullptr);
+	m_Context->ClearRenderTargetView(m_RenderTarget, color);
+	
+	// Draw test triangle
 	{
 		struct Vertex
 		{
@@ -89,28 +114,66 @@ void Destiny::D3D11Context::swap()
 		const UINT offset = 0;
 		m_Context->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
 
-		DT_D3D11_THROW_INFO_ONLY(m_Context->Draw(3, 0));
-		vertexBuffer->Release();
-	}
-	
-	HRESULT hr;
+		// Create vertex shader
+		ID3D11VertexShader* vertexShader;
+		ID3DBlob* blob;
+		DT_D3D11_THROW_FAILED(D3DReadFileToBlob(L"assets/shaders/hlsl/test_shader_vs.cso", &blob));
+		DT_D3D11_THROW_FAILED(m_Device->CreateVertexShader(blob->GetBufferPointer(), blob->GetBufferSize(), nullptr, &vertexShader));
 
-	if (FAILED(hr = m_SwapChain->Present(m_VSync ? 1 : 0, 0)))
-	{
-		if (hr == DXGI_ERROR_DEVICE_REMOVED)
+		// Bind vertex shader to pipeline
+		m_Context->VSSetShader(vertexShader, nullptr, 0);
+
+		// Input layout
+		ID3D11InputLayout* inputLayout;
+		const D3D11_INPUT_ELEMENT_DESC ied[] =
 		{
-			throw DT_D3D11_DEVICE_REMOVED_EXCEPTION(m_Device->GetDeviceRemovedReason());
-		}
-		
-		DT_D3D11_THROW_FAILED(hr);
-	}
-}
+			{ "POSITION", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		};
 
-void Destiny::D3D11Context::clear()
-{
-	const float color[] = { 1.0, 0.0, 0.0, 1.0 };
-	m_Context->OMSetRenderTargets(1, &m_RenderTarget, nullptr);
-	m_Context->ClearRenderTargetView(m_RenderTarget, color);
+		DT_D3D11_THROW_FAILED(m_Device->CreateInputLayout(
+			ied,
+			(UINT)std::size(ied),
+			blob->GetBufferPointer(),
+			blob->GetBufferSize(),
+			&inputLayout
+		));
+
+		// Bind input layout to pipeline
+		m_Context->IASetInputLayout(inputLayout);
+
+		// Create pixel shader
+		blob->Release();
+		ID3D11PixelShader* pixelShader;
+		DT_D3D11_THROW_FAILED(D3DReadFileToBlob(L"assets/shaders/hlsl/test_shader_fs.cso", &blob));
+		DT_D3D11_THROW_FAILED(m_Device->CreatePixelShader(blob->GetBufferPointer(), blob->GetBufferSize(), nullptr, &pixelShader));
+		blob->Release();
+
+		// Bind pixel shader to pipeline
+		m_Context->PSSetShader(pixelShader, nullptr, 0);
+
+		// Set primitive topology
+		m_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+		// Setup render viewport
+		D3D11_VIEWPORT vp;
+		vp.Width = m_Width;
+		vp.Height = m_Height;
+		vp.MinDepth = 0;
+		vp.MaxDepth = 1;
+		vp.TopLeftX = 0;
+		vp.TopLeftY = 0;
+		m_Context->RSSetViewports(1, &vp);
+
+		// Draw
+		DT_D3D11_THROW_INFO_ONLY(m_Context->Draw((UINT)std::size(vertices), 0));
+
+		// Cleanup
+		blob->Release();
+		vertexShader->Release();
+		pixelShader->Release();
+		vertexBuffer->Release();
+		inputLayout->Release();
+	}
 }
 
 void Destiny::D3D11Context::createRenderTarget()
@@ -143,6 +206,9 @@ void Destiny::D3D11Context::resize(unsigned int width, unsigned int height)
 		cleanUpRenderTarget();
 		DT_D3D11_THROW_FAILED(m_SwapChain->ResizeBuffers(0, (UINT)width, (UINT)height, DXGI_FORMAT_UNKNOWN, 0));
 		createRenderTarget();
+
+		m_Width = width;
+		m_Height = height;
 	}
 }
 

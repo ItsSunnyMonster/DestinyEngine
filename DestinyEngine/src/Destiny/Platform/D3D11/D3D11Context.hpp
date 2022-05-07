@@ -9,7 +9,7 @@ namespace Destiny
 	class D3D11Context : public GraphicsContext 
 	{
 	public:
-		D3D11Context(HWND hWnd);
+		D3D11Context(HWND hWnd, uint16_t width, uint16_t height, bool vSync);
 		~D3D11Context() override;
 
 		void swap() override;

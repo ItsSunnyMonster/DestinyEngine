@@ -4,7 +4,8 @@ project(DestinyEngine)
 
 set(CMAKE_CXX_STANDARD 23)
 
-set(SOURCE_FILES "src/Destiny/Application.cpp" 
+set(SOURCE_FILES 
+    "src/Destiny/Application.cpp" 
     "include/DestinyEngine.hpp" 
     "src/Destiny/EntryPoint.hpp" 
     "src/Destiny/Application.hpp"
@@ -51,7 +52,8 @@ add_library(DestinyEngine STATIC
     ${SOURCE_FILES}
 )
 
-set(SHADER_FILES src/Shaders/test_shader.glsl src/Shaders/another_shader.glsl)
+set(SHADER_FILES 
+    "src/Shaders/test_shader.glsl")
 set(TARGET_SHADER_PATH assets/shaders)
 
 if (WIN32)

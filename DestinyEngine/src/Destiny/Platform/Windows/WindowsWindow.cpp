@@ -84,7 +84,7 @@ Destiny::WindowsWindow::WindowsWindow(const WindowProps& props)
 	ShowWindow(m_Handle, SW_SHOWDEFAULT);
 	UpdateWindow(m_Handle);
 
-	m_Context = new D3D11Context(m_Handle);
+	m_Context = new D3D11Context(m_Handle, m_Width, m_Height, true);
 }
 
 Destiny::WindowsWindow::~WindowsWindow()
