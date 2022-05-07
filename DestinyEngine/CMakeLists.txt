@@ -51,9 +51,56 @@ add_library(DestinyEngine STATIC
     ${SOURCE_FILES}
 )
 
+set(SHADER_FILES src/Shaders/test_shader.glsl src/Shaders/another_shader.glsl)
+set(TARGET_SHADER_PATH assets/shaders)
+
 if (WIN32)
     target_compile_definitions(DestinyEngine PUBLIC DT_PLATFORM_WINDOWS)
     target_link_libraries(DestinyEngine PUBLIC d3d11.lib Comctl32.lib)
+
+    add_custom_target(Shaders)
+    set_target_properties(Shaders PROPERTIES FOLDER "Shaders")
+    add_custom_target(CleanShaders)
+    set_target_properties(CleanShaders PROPERTIES FOLDER "Shaders")
+    add_dependencies(DestinyEngine Shaders)
+
+    foreach(FILE ${SHADER_FILES})
+        get_filename_component(FILE_WE ${FILE} NAME_WE)
+        add_custom_command(TARGET Shaders
+                           COMMAND vendor/shader-compiling/fxc.exe /nologo /Emain /Tvs_5_0 $<$<CONFIG:Debug>:/Od> /Zi /Fo ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_vs.cso /Fd ${CMAKE_BINARY_DIR}/${FILE_WE}_vs.pdb ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_vs.hlsl
+                           COMMAND vendor/shader-compiling/fxc.exe /nologo /Emain /Tps_5_0 $<$<CONFIG:Debug>:/Od> /Zi /Fo ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_fs.cso /Fd ${CMAKE_BINARY_DIR}/${FILE_WE}_fs.pdb ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_fs.hlsl
+                           MAIN_DEPENDENCY ${FILE}
+                           WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+                           COMMENT "Compiling HLSL shader ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}.hlsl"
+                           VERBATIM)
+        add_custom_command(TARGET CleanShaders
+                           COMMAND ${CMAKE_COMMAND} -E rm -f ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_fs.cso 
+                           COMMAND ${CMAKE_COMMAND} -E rm -f ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_fs.hlsl.json
+                           COMMAND ${CMAKE_COMMAND} -E rm -f ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_vs.cso
+                           COMMAND ${CMAKE_COMMAND} -E rm -f ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_vs.hlsl.json
+                           MAIN_DEPENDENCY ${FILE}
+                           WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+                           COMMENT "Deleting compiled shader output file ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}"
+                           VERBATIM)
+        add_custom_command(TARGET Shaders
+                           PRE_BUILD
+                           COMMAND ${CMAKE_COMMAND} -E make_directory ${TARGET_SHADER_PATH}/hlsl
+                           COMMAND vendor/shader-compiling/glslcc.exe ${FILE} --output=${TARGET_SHADER_PATH}/hlsl/${FILE_WE}.hlsl --lang=hlsl --reflect 
+                           COMMENT "Generate HLSL from ${FILE}"
+                           WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+                           VERBATIM)
+        add_custom_command(TARGET Shaders
+                           POST_BUILD
+                           COMMAND ${CMAKE_COMMAND} -E rm ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_vs.hlsl
+                           COMMAND ${CMAKE_COMMAND} -E rm ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_fs.hlsl
+                           COMMENT "Generate HLSL ${FILE}"
+                           WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+                           VERBATIM)
+    endforeach(FILE)
+
+    add_custom_command(TARGET Shaders
+                   POST_BUILD
+                   COMMAND ${CMAKE_COMMAND} -E copy_directory assets ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/assets)
 endif()
 if (UNIX)
     target_compile_definitions(DestinyEngine PUBLIC DT_PLATFORM_UNIX)
