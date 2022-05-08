@@ -1,5 +1,6 @@
 #include "D3D11Context.hpp"
 #include "Destiny/Platform/D3D11/D3D11Exception.hpp"
+#include "Destiny/Renderer/Buffer.hpp"
 
 #include <backends/imgui_impl_dx11.h>
 #include <imgui.h>
@@ -85,34 +86,34 @@ void Destiny::D3D11Context::clear()
 		struct Vertex
 		{
 			float x, y;
+			float r, g, b;
 		};
 
-		const Vertex vertices[] =
+		Vertex vertices[] =
 		{
-			{  0.0f,  0.5f },
-			{  0.5f, -0.5f },
-			{ -0.5f, -0.5f }
+			{ -0.5f,  0.5f, 1.0f, 0.0f, 0.0f },
+			{  0.5f, -0.5f, 0.0f, 1.0f, 0.0f },
+			{ -0.5f, -0.5f, 0.0f, 0.0f, 1.0f },
+			{  0.5f,  0.5f, 1.0f, 1.0f, 0.0f },
 		};
 
-		// Create vertex buffer
-		D3D11_BUFFER_DESC bd = { 0 };
-		bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-		bd.Usage = D3D11_USAGE_DEFAULT;
-		bd.CPUAccessFlags = 0;
-		bd.MiscFlags = 0;
-		bd.ByteWidth = sizeof(vertices);
-		bd.StructureByteStride = sizeof(Vertex);
+		BufferLayout layout =
+		{
+			{ ShaderDataType::Float2, "POSITION" },
+			{ ShaderDataType::Float3, "COLOR" }
+		};
 
-		D3D11_SUBRESOURCE_DATA sd = { 0 };
-		sd.pSysMem = vertices;
+		std::unique_ptr<VertexBuffer> vertexBuffer = std::unique_ptr<VertexBuffer>(VertexBuffer::create(reinterpret_cast<float*>(&vertices), std::size(vertices) * 5, this, layout));
+		vertexBuffer->bind();
 
-		ID3D11Buffer* vertexBuffer;
-		DT_D3D11_THROW_FAILED(m_Device->CreateBuffer(&bd, &sd, &vertexBuffer));
-
-		// Bind vertex buffer to pipeline
-		const UINT stride = sizeof(Vertex);
-		const UINT offset = 0;
-		m_Context->IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
+		// Create index buffer
+		uint32_t indices[] =
+		{
+			0, 1, 2,
+			0, 3, 1
+		};
+		std::unique_ptr<IndexBuffer> indexBuffer = std::unique_ptr<IndexBuffer>(IndexBuffer::create(indices, std::size(indices), this));
+		indexBuffer->bind();
 
 		// Create vertex shader
 		ID3D11VertexShader* vertexShader;
@@ -128,6 +129,7 @@ void Destiny::D3D11Context::clear()
 		const D3D11_INPUT_ELEMENT_DESC ied[] =
 		{
 			{ "POSITION", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 2 * sizeof(float), D3D11_INPUT_PER_VERTEX_DATA, 0},
 		};
 
 		DT_D3D11_THROW_FAILED(m_Device->CreateInputLayout(
@@ -155,7 +157,7 @@ void Destiny::D3D11Context::clear()
 		m_Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 		// Setup render viewport
-		D3D11_VIEWPORT vp;
+		D3D11_VIEWPORT vp = {};
 		vp.Width = m_Width;
 		vp.Height = m_Height;
 		vp.MinDepth = 0;
@@ -165,13 +167,14 @@ void Destiny::D3D11Context::clear()
 		m_Context->RSSetViewports(1, &vp);
 
 		// Draw
-		DT_D3D11_THROW_INFO_ONLY(m_Context->Draw((UINT)std::size(vertices), 0));
+		DT_D3D11_THROW_INFO_ONLY(m_Context->DrawIndexed((UINT)std::size(indices), 0, 0));
+
+		indexBuffer->unbind();
 
 		// Cleanup
 		blob->Release();
 		vertexShader->Release();
 		pixelShader->Release();
-		vertexBuffer->Release();
 		inputLayout->Release();
 	}
 }

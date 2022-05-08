@@ -51,6 +51,9 @@ std::vector<std::string> Destiny::DxgiInfoManager::getMessages() const
 	}
 	return messages;
 }
+#ifdef DT_DEBUG
+Destiny::DxgiInfoManager Destiny::DxgiInfoManager::s_Instance;
+#endif
 
 Destiny::DxgiInfoManager::~DxgiInfoManager()
 {

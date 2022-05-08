@@ -46,6 +46,10 @@ set(SOURCE_FILES
     "src/Destiny/Platform/D3D11/D3D11Exception.cpp"
     "src/Destiny/Platform/D3D11/DxgiInfoManager.hpp"
     "src/Destiny/Platform/D3D11/DxgiInfoManager.cpp"
+    "src/Destiny/Renderer/Buffer.hpp"
+    "src/Destiny/Renderer/Buffer.cpp"
+    "src/Destiny/Platform/D3D11/D3D11Buffer.hpp"
+    "src/Destiny/Platform/D3D11/D3D11Buffer.cpp"
 )
 
 add_library(DestinyEngine STATIC 
@@ -69,8 +73,9 @@ if (WIN32)
     foreach(FILE ${SHADER_FILES})
         get_filename_component(FILE_WE ${FILE} NAME_WE)
         add_custom_command(TARGET Shaders
-                           COMMAND vendor/shader-compiling/fxc.exe /nologo /Emain /Tvs_5_0 $<$<CONFIG:Debug>:/Od> /Zi /Fo ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_vs.cso /Fd ${CMAKE_BINARY_DIR}/${FILE_WE}_vs.pdb ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_vs.hlsl
-                           COMMAND vendor/shader-compiling/fxc.exe /nologo /Emain /Tps_5_0 $<$<CONFIG:Debug>:/Od> /Zi /Fo ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_fs.cso /Fd ${CMAKE_BINARY_DIR}/${FILE_WE}_fs.pdb ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_fs.hlsl
+                           COMMAND vendor/shader-compiling/fxc.exe /nologo /Emain /Tvs_5_0 $<$<CONFIG:Debug>:/Od> /Zi /Fo ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_vs.cso /Fd ${CMAKE_BINARY_DIR}/bin/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${FILE_WE}_vs.pdb ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_vs.hlsl
+                           COMMAND vendor/shader-compiling/fxc.exe /nologo /Emain /Tps_5_0 $<$<CONFIG:Debug>:/Od> /Zi /Fo ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_fs.cso /Fd ${CMAKE_BINARY_DIR}/bin/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${FILE_WE}_fs.pdb ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_fs.hlsl
+                           COMMAND_EXPAND_LISTS
                            MAIN_DEPENDENCY ${FILE}
                            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
                            COMMENT "Compiling HLSL shader ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}.hlsl"

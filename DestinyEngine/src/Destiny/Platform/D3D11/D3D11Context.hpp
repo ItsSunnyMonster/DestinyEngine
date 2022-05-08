@@ -17,6 +17,11 @@ namespace Destiny
 		void setVSync(bool enabled) override;
 		void resize(unsigned int width, unsigned int height) override;
 
+		inline ID3D11DeviceContext* getD3D11Context() { return m_Context; }
+		inline ID3D11Device* getD3D11Device() { return m_Device; }
+		inline IDXGISwapChain* getD3D11SwapChain() { return m_SwapChain; }
+		inline ID3D11RenderTargetView* getD3D11RenderTarget() { return m_RenderTarget; }
+
 		void initImGuiImpl() override;
 		void imGuiNewFrame() override;
 		void destroyImGuiImpl() override;
@@ -30,9 +35,6 @@ namespace Destiny
 		IDXGISwapChain* m_SwapChain;
 		ID3D11DeviceContext* m_Context;
 		ID3D11RenderTargetView* m_RenderTarget;
-#ifdef DT_DEBUG
-		DxgiInfoManager m_InfoManager;
-#endif
 	};
 
 }

@@ -13,6 +13,9 @@ namespace Destiny
 		DxgiInfoManager& operator=(const DxgiInfoManager&) = delete;
 		void set();
 		std::vector<std::string> getMessages() const;
+#ifdef DT_DEBUG
+		static DxgiInfoManager s_Instance;
+#endif
 	private:
 		uint64_t next = 0;
 		IDXGIInfoQueue* m_DxgiInfoQueue = nullptr;

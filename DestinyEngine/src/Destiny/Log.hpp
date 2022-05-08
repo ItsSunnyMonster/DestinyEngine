@@ -40,5 +40,5 @@ namespace Destiny
 #define DT_ERROR(...)		::Destiny::Log::getClientLogger()->error(__VA_ARGS__)
 #define DT_CRITICAL(...)	::Destiny::Log::getClientLogger()->critical(__VA_ARGS__)
 
-#define DT_ASSERT_MSG(x, msg) if (!(x)) throw Destiny::Exception(__LINE__, __FILE__, msg)
-#define DT_ASSERT(x) if (!(x)) throw Destiny::Exception(__LINE__, __FILE__);
+#define DT_ASSERT_MSG(x, msg) if (!(x)) { __debugbreak(); throw Destiny::Exception(__LINE__, __FILE__, msg); } 
+#define DT_ASSERT(x) if (!(x)) { __debugbreak(); throw Destiny::Exception(__LINE__, __FILE__); }
