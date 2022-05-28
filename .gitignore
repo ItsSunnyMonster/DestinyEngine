@@ -457,3 +457,7 @@ FodyWeavers.xsd
 *.cso
 *.hlsl.json
 
+# Unignore dependencies
+!**/glslcc.exe
+!**/fxc.exe
+
