@@ -11,7 +11,7 @@ namespace Destiny
 	class WindowResizeEvent : public Event
 	{
 	public:
-		WindowResizeEvent(unsigned int width, unsigned int height)
+		WindowResizeEvent(uint16_t width, uint16_t height)
 			: m_Width(width), m_Height(height) {}
 
 		uint16_t getWidth() const { return m_Width; }

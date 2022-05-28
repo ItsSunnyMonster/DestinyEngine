@@ -103,7 +103,7 @@ void Destiny::D3D11Context::clear()
 			{ ShaderDataType::Float3, "COLOR" }
 		};
 
-		std::unique_ptr<VertexBuffer> vertexBuffer = std::unique_ptr<VertexBuffer>(VertexBuffer::create(reinterpret_cast<float*>(&vertices), std::size(vertices) * 5, this, layout));
+		Ref<VertexBuffer> vertexBuffer = Ref<VertexBuffer>(VertexBuffer::create(reinterpret_cast<float*>(&vertices), std::size(vertices) * 5, this, layout));
 		vertexBuffer->bind();
 
 		// Create index buffer
@@ -112,7 +112,7 @@ void Destiny::D3D11Context::clear()
 			0, 1, 2,
 			0, 3, 1
 		};
-		std::unique_ptr<IndexBuffer> indexBuffer = std::unique_ptr<IndexBuffer>(IndexBuffer::create(indices, std::size(indices), this));
+		Ref<IndexBuffer> indexBuffer = Ref<IndexBuffer>(IndexBuffer::create(indices, std::size(indices), this));
 		indexBuffer->bind();
 
 		// Create vertex shader

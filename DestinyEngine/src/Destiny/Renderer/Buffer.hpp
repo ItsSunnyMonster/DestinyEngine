@@ -79,7 +79,7 @@ namespace Destiny
 		
 		virtual const BufferLayout& getLayout() const = 0;
 
-		static VertexBuffer* create(float* vertices, size_t size, GraphicsContext* context, BufferLayout layout);
+		static Ref<VertexBuffer> create(float* vertices, size_t size, GraphicsContext* context, BufferLayout layout);
 	};
 
 	class IndexBuffer
@@ -90,6 +90,6 @@ namespace Destiny
 		virtual void bind() const = 0;
 		virtual void unbind() const = 0;
 
-		static IndexBuffer* create(uint32_t* indices, size_t size, GraphicsContext* context);
+		static Ref<IndexBuffer> create(uint32_t* indices, size_t size, GraphicsContext* context);
 	};
 }

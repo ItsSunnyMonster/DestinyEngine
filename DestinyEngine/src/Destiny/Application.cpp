@@ -28,7 +28,7 @@ namespace Destiny
 		DT_ASSERT_MSG(!s_Instance, "s_Instance is not null!");
 		s_Instance = this;
 
-		m_Window = std::shared_ptr<Window>(Window::create());
+		m_Window = Ref<Window>(Window::create());
 		m_Window->setEventListener(*this);
 
 		m_ImGuiLayer = new ImGuiLayer();

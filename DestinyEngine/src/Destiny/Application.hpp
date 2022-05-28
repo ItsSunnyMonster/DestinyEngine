@@ -26,12 +26,12 @@ namespace Destiny
 		void pushLayer(Layer* layer) { m_LayerStack.pushLayer(layer); }
 		void pushOverlay(Layer* layer) { m_LayerStack.pushOverlay(layer); }
 
-		inline std::shared_ptr<Window> getWindow() { return m_Window; }
+		inline Ref<Window> getWindow() { return m_Window; }
 
 		inline static Application* get() { return s_Instance; }
 	private:
 		bool m_Running;
-		std::shared_ptr<Window> m_Window;
+		Ref<Window> m_Window;
 		Layer* m_ImGuiLayer;
 		LayerStack m_LayerStack;
 

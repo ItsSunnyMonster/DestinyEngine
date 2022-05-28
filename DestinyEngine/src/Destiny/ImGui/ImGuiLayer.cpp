@@ -26,14 +26,14 @@ void Destiny::ImGuiLayer::onAttach()
 	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 
-	std::shared_ptr<Window> wnd = Application::get()->getWindow();
+	Ref<Window> wnd = Application::get()->getWindow();
 	wnd->initImGuiImpl();
 	wnd->getContext()->initImGuiImpl();
 }
 
 void Destiny::ImGuiLayer::onDetach()
 {
-	std::shared_ptr<Window> wnd = Application::get()->getWindow();
+	Ref<Window> wnd = Application::get()->getWindow();
 	wnd->destroyImGuiImpl();
 	wnd->getContext()->destroyImGuiImpl();
 	ImGui::DestroyContext();

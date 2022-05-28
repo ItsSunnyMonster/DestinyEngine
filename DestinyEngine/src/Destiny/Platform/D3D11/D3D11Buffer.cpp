@@ -16,7 +16,7 @@ Destiny::D3D11VertexBuffer::D3D11VertexBuffer(
 	bd.CPUAccessFlags = 0;
 	bd.MiscFlags = 0;
 	bd.ByteWidth = sizeof(float) * size;
-	bd.StructureByteStride = layout.getStride();
+	bd.StructureByteStride = m_Layout.getStride();
 	
 	D3D11_SUBRESOURCE_DATA sd = { nullptr };
 	sd.pSysMem = vertices;

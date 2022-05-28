@@ -31,6 +31,7 @@ processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #include <unordered_set>
 
 #include "Destiny/Log.hpp"
+#include "Destiny/Macros.hpp"
 
 #ifdef DT_PLATFORM_WINDOWS
 #include <Windows.h>
