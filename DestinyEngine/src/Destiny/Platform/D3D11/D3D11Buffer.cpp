@@ -21,19 +21,18 @@ Destiny::D3D11VertexBuffer::D3D11VertexBuffer(
 	D3D11_SUBRESOURCE_DATA sd = { nullptr };
 	sd.pSysMem = vertices;
 
-	DT_D3D11_THROW_FAILED(m_Context->getD3D11Device()->CreateBuffer(&bd, &sd, &m_Buffer));
+	DT_D3D11_THROW_FAILED(m_Context->getD3D11Device()->CreateBuffer(&bd, &sd, m_Buffer.ReleaseAndGetAddressOf()));
 }
 
 Destiny::D3D11VertexBuffer::~D3D11VertexBuffer()
 {
-	m_Buffer->Release();
 }
 
 void Destiny::D3D11VertexBuffer::bind() const
 {
 	const UINT stride = m_Layout.getStride();
 	const UINT offset = 0;
-	m_Context->getD3D11Context()->IASetVertexBuffers(0, 1, &m_Buffer, &stride, &offset);
+	m_Context->getD3D11Context()->IASetVertexBuffers(0, 1, m_Buffer.GetAddressOf(), &stride, &offset);
 }
 
 void Destiny::D3D11VertexBuffer::unbind() const
@@ -59,17 +58,16 @@ Destiny::D3D11IndexBuffer::D3D11IndexBuffer(uint32_t* indices, size_t size, Grap
 
 	D3D11_SUBRESOURCE_DATA isd = { nullptr };
 	isd.pSysMem = indices;
-	DT_D3D11_THROW_FAILED(m_Context->getD3D11Device()->CreateBuffer(&ibd, &isd, &m_Buffer));
+	DT_D3D11_THROW_FAILED(m_Context->getD3D11Device()->CreateBuffer(&ibd, &isd, m_Buffer.ReleaseAndGetAddressOf()));
 }
 
 Destiny::D3D11IndexBuffer::~D3D11IndexBuffer()
 {
-	m_Buffer->Release();
 }
 
 void Destiny::D3D11IndexBuffer::bind() const
 {
-	m_Context->getD3D11Context()->IASetIndexBuffer(m_Buffer, DXGI_FORMAT_R32_UINT, 0);
+	m_Context->getD3D11Context()->IASetIndexBuffer(m_Buffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 }
 
 void Destiny::D3D11IndexBuffer::unbind() const

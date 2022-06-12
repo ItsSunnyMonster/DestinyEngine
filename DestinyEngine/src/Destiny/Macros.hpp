@@ -2,6 +2,10 @@
 
 #include <memory.h>
 
+#ifdef DT_PLATFORM_WINDOWS
+#include <wrl.h>
+#endif
+
 #define BIT(x) 1 << x
 
 #define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
@@ -23,4 +27,10 @@ namespace Destiny
 	{
 		return std::make_shared<T>(std::forward<Args>(args)...);
 	}
+
+#ifdef DT_PLATFORM_WINDOWS
+
+	template<typename T>
+	using ComRef = Microsoft::WRL::ComPtr<T>;
+#endif
 }

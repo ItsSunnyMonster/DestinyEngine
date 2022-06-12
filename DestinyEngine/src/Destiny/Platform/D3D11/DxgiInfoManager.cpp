@@ -24,7 +24,7 @@ Destiny::DxgiInfoManager::DxgiInfoManager()
 		throw DT_W32_LAST_EXCEPT();
 	}
 
-	DT_D3D11_THROW_NOINFO(DxgiGetDebugInterface(__uuidof(IDXGIInfoQueue), reinterpret_cast<void**>(&m_DxgiInfoQueue)));
+	DT_D3D11_THROW_NOINFO(DxgiGetDebugInterface(__uuidof(IDXGIInfoQueue), reinterpret_cast<void**>(m_DxgiInfoQueue.ReleaseAndGetAddressOf())));
 }
 
 void Destiny::DxgiInfoManager::set()
@@ -57,6 +57,4 @@ Destiny::DxgiInfoManager Destiny::DxgiInfoManager::s_Instance;
 
 Destiny::DxgiInfoManager::~DxgiInfoManager()
 {
-	if (m_DxgiInfoQueue != nullptr)
-		m_DxgiInfoQueue->Release();
 }

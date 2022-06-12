@@ -18,7 +18,7 @@ namespace Destiny
 		const BufferLayout& getLayout() const override;
 
 	private:
-		ID3D11Buffer* m_Buffer;
+		ComRef<ID3D11Buffer> m_Buffer;
 		BufferLayout m_Layout;
 		D3D11Context* m_Context;
 	};
@@ -31,7 +31,7 @@ namespace Destiny
 		void bind() const override;
 		void unbind() const override;
 	private:
-		ID3D11Buffer* m_Buffer;
+		ComRef<ID3D11Buffer> m_Buffer;
 		D3D11Context* m_Context;
 	};
 }

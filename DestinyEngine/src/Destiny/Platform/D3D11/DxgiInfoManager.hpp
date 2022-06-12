@@ -18,6 +18,6 @@ namespace Destiny
 #endif
 	private:
 		uint64_t next = 0;
-		IDXGIInfoQueue* m_DxgiInfoQueue = nullptr;
+		ComRef<IDXGIInfoQueue> m_DxgiInfoQueue = nullptr;
 	};
 }
