@@ -4,15 +4,21 @@
 #pragma once
 
 #ifdef DT_PLATFORM_WINDOWS
+
 #ifndef NOMINMAX
 // See github.com/skypjack/entt/wiki/Frequently-Asked-Questions#warning-c4003-the-min-the-max-and-the-macro
 #define NOMINMAX
+#endif // !NOMINMAX
 
 #pragma comment(linker,"\"/manifestdependency:type='win32' \
 name='Microsoft.Windows.Common-Controls' version='6.0.0.0' \
 processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
-#endif // !NOMINMAX
+#include <Windows.h>
+#include <d3d11.h>
+#include <CommCtrl.h>
+#include <wrl.h>
+
 #endif // DT_PLATFORM_WINDOWS
 
 #include <iostream>
@@ -32,9 +38,3 @@ processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
 #include "Destiny/Log.hpp"
 #include "Destiny/Macros.hpp"
-
-#ifdef DT_PLATFORM_WINDOWS
-#include <Windows.h>
-#include <d3d11.h>
-#include <CommCtrl.h>
-#endif

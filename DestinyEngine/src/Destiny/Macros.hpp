@@ -1,11 +1,5 @@
 #pragma once
 
-#include <memory.h>
-
-#ifdef DT_PLATFORM_WINDOWS
-#include <wrl.h>
-#endif
-
 #define BIT(x) 1 << x
 
 #define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
