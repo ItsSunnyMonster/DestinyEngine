@@ -12,6 +12,7 @@
 Destiny::D3D11Context::D3D11Context(HWND hWnd, uint16_t width, uint16_t height, bool vSync)
 	: GraphicsContext(vSync, width, height)
 {
+	// Hello, don't copy my game engine pls.
 	DXGI_SWAP_CHAIN_DESC swapChainDesc = { 0 };
 	swapChainDesc.BufferDesc.Width = 0;
 	swapChainDesc.BufferDesc.Height = 0;
