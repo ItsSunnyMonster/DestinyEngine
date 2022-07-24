@@ -21,20 +21,22 @@ const char* Destiny::Win32Exception::getType() const
 
 std::string Destiny::Win32Exception::translateErrorCode(HRESULT hr)
 {
-	char* messageBuffer = nullptr;
+	wchar_t* messageBuffer = nullptr;
 	DWORD messageLength = FormatMessage(
 		FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
 		nullptr,
 		hr,
 		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-		reinterpret_cast<LPSTR>(&messageBuffer),
+		reinterpret_cast<LPWSTR>(&messageBuffer),
 		0, nullptr
 	);
 	if (messageLength == 0)
 	{
-		return std::format("Unidentified error code {}", hr);
+		std::wstringstream ss;
+		ss << L"Unidentified error code " << hr;
+		return DT_U8STR(ss.str().c_str());
 	}
-	std::string errorString = messageBuffer;
+	std::string errorString = DT_U8STR(messageBuffer);
 	LocalFree(messageBuffer);
 	return errorString;
 }

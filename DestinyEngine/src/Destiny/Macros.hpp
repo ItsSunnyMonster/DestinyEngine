@@ -4,6 +4,10 @@
 
 #define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
 
+#define DT_PWSTR(x) (wchar_t*)utf8::utf8to16(x).c_str()
+#define DT_U8STR(x) utf8::utf16to8((char16_t*) x)
+#define DT_U8(x) (char*)u8##x
+
 namespace Destiny
 {
 	template<typename T>

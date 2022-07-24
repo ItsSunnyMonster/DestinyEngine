@@ -1,9 +1,5 @@
 cmake_minimum_required(VERSION 3.21.1)
 
-project(DestinyEngine)
-
-set(CMAKE_CXX_STANDARD 23)
-
 set(SOURCE_FILES 
     "src/Destiny/Application.cpp" 
     "include/DestinyEngine.hpp" 
@@ -105,9 +101,9 @@ if (WIN32)
                            VERBATIM)
     endforeach(FILE)
 
-    add_custom_command(TARGET Shaders
-                   POST_BUILD
+    add_custom_target(CopyAssets 
                    COMMAND ${CMAKE_COMMAND} -E copy_directory assets ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/assets)
+    add_dependencies(DestinyEngine CopyAssets)
 endif()
 if (UNIX)
     target_compile_definitions(DestinyEngine PUBLIC DT_PLATFORM_UNIX)
@@ -131,13 +127,14 @@ target_compile_definitions(DestinyEngine PUBLIC
 
 add_subdirectory(vendor/spdlog)
 add_subdirectory(vendor/imgui)
+add_subdirectory(vendor/utfcpp)
 
 set_target_properties(spdlog imgui PROPERTIES MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 set_target_properties(spdlog PROPERTIES FOLDER "Dependencies")
 set_target_properties(imgui PROPERTIES FOLDER "Dependencies")
 
-target_link_libraries(DestinyEngine PUBLIC spdlog::spdlog imgui)
+target_link_libraries(DestinyEngine PUBLIC spdlog::spdlog imgui utf8::cpp)
 
 target_include_directories(DestinyEngine INTERFACE ./include)
 target_include_directories(DestinyEngine PUBLIC ./src ./vendor/spdlog/include ./vendor/glm)

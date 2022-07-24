@@ -8,3 +8,6 @@
 [submodule "DestinyEngine/vendor/glm"]
 	path = DestinyEngine/vendor/glm
 	url = https://github.com/ItsSunnyMonster/glm.git
+[submodule "DestinyEngine/vendor/utfcpp"]
+	path = DestinyEngine/vendor/utfcpp
+	url = https://github.com/ItsSunnyMonster/utfcpp.git

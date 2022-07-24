@@ -11,7 +11,7 @@ Destiny::DxgiInfoManager::DxgiInfoManager()
 	using DXGIGetDebugInterface = HRESULT(WINAPI*)(REFIID, void**);
 
 	// Load the dll that contains the function DXGIGetDebugInterface
-	const auto dxgiDebug = LoadLibraryEx("dxgidebug.dll", nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32);
+	const auto dxgiDebug = LoadLibraryEx(L"dxgidebug.dll", nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32);
 	if (dxgiDebug == nullptr)
 	{
 		throw DT_W32_LAST_EXCEPT();

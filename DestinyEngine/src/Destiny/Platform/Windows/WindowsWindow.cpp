@@ -1,5 +1,4 @@
 // TODO: Add platform macros and surround window class with it
-
 #include "WindowsWindow.hpp"
 #include "Destiny/Events/WindowEvent.hpp"
 #include "Destiny/Events/KeyboardEvent.hpp"
@@ -14,6 +13,7 @@
 IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 // Static variables
+const std::wstring Destiny::WindowsWindow::Win32WinClass::s_WinClassName = L"D3D11 WinClass";
 Destiny::WindowsWindow::Win32WinClass Destiny::WindowsWindow::Win32WinClass::s_WinClass;
 
 Destiny::Window* Destiny::Window::create(const WindowProps& props)
@@ -21,7 +21,7 @@ Destiny::Window* Destiny::Window::create(const WindowProps& props)
 	return new WindowsWindow(props);
 }
 
-const char* Destiny::WindowsWindow::Win32WinClass::getName()
+const std::wstring& Destiny::WindowsWindow::Win32WinClass::getName()
 {
 	return s_WinClassName;
 }
@@ -45,19 +45,22 @@ Destiny::WindowsWindow::Win32WinClass::Win32WinClass()
 	wc.hIcon = nullptr;
 	wc.hCursor = nullptr;
 	wc.hbrBackground = nullptr;
-	wc.lpszClassName = getName();
+	wc.lpszClassName = getName().c_str();
 	wc.hIconSm = nullptr;
 	RegisterClassEx(&wc);
 }
 
 Destiny::WindowsWindow::Win32WinClass::~Win32WinClass()
 {
-	UnregisterClass(getName(), getInstance());
+	UnregisterClass(getName().c_str(), getInstance());
 }
 
 Destiny::WindowsWindow::WindowsWindow(const WindowProps& props)
 	: m_Width(props.width), m_Height(props.height)
 {
+	//throw DT_W32_EXCEPT(ERROR_ARENA_TRASHED);
+
+	ImGui_ImplWin32_EnableDpiAwareness();
 
 	DWORD style = WS_MAXIMIZEBOX | WS_MINIMIZEBOX | WS_SYSMENU | WS_CAPTION | WS_SIZEBOX | WS_OVERLAPPED;
 
@@ -72,7 +75,7 @@ Destiny::WindowsWindow::WindowsWindow(const WindowProps& props)
 	}
 
 	m_Handle = CreateWindowEx(
-		0, Win32WinClass::getName(), props.title.c_str(),
+		0, Win32WinClass::getName().c_str(), DT_PWSTR(props.title.c_str()),
 		style,
 		CW_USEDEFAULT, CW_USEDEFAULT, wr.right - wr.left, wr.bottom - wr.top, nullptr, nullptr, Win32WinClass::getInstance(), this
 	);
@@ -108,11 +111,24 @@ void Destiny::WindowsWindow::onUpdate()
 void Destiny::WindowsWindow::initImGuiImpl()
 {
 	ImGui_ImplWin32_Init(m_Handle);
+	//ImGui_ImplWin32_EnableDpiAwareness();
 }
 
 void Destiny::WindowsWindow::imGuiNewFrame()
 {
 	ImGui_ImplWin32_NewFrame();
+
+	ImGuiIO io = ImGui::GetIO();
+	float dpiScale = ImGui_ImplWin32_GetDpiScaleForHwnd(m_Handle);
+	io.DisplayFramebufferScale = ImVec2(dpiScale, dpiScale);
+	io.DisplaySize.x /= dpiScale;
+	io.DisplaySize.y /= dpiScale;
+
+	if (io.MousePos.x != -FLT_MAX && io.MousePos.y != -FLT_MAX)
+	{
+		io.MousePos.x /= dpiScale;
+		io.MousePos.y /= dpiScale;
+	}
 }
 
 void Destiny::WindowsWindow::destroyImGuiImpl()

@@ -16,14 +16,14 @@ namespace Destiny
 		class Win32WinClass 
 		{
 		public:
-			static const char* getName();
+			static const std::wstring& getName();
 			static HINSTANCE getInstance();
 		private:
 			Win32WinClass();
 			~Win32WinClass();
 			Win32WinClass(const Win32WinClass&) = delete;
 			Win32WinClass& operator=(const Win32WinClass&) = delete;
-			static constexpr const char* s_WinClassName = "D3D11 WinClass";
+			static const std::wstring s_WinClassName;
 			static Win32WinClass s_WinClass;
 			HINSTANCE hInst;
 		};

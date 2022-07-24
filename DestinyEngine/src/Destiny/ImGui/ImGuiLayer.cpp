@@ -3,6 +3,7 @@
 #include <imgui.h>
 
 #include "Destiny/Application.hpp"
+#include <backends/imgui_impl_win32.h>
 
 Destiny::ImGuiLayer::ImGuiLayer()
 	: Layer("ImGuiLayer")
@@ -25,6 +26,13 @@ void Destiny::ImGuiLayer::onAttach()
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+
+	ImFontConfig config;
+	config.Density = ImGui_ImplWin32_GetDpiScaleForHwnd(Application::get()->getWindow()->getNativeWindow());
+	config.OversampleH = 1;
+	config.OversampleV = 1;
+	config.FontBuilderFlags = 1;
+	io.Fonts->AddFontFromFileTTF("assets/fonts/cjk/NotoSansSC-Regular.otf", 20, &config, io.Fonts->GetGlyphRangesChineseSimplifiedCommon());
 
 	Ref<Window> wnd = Application::get()->getWindow();
 	wnd->initImGuiImpl();

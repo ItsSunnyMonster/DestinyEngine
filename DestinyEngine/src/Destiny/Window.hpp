@@ -13,7 +13,7 @@ namespace Destiny
 		uint16_t width;
 		uint16_t height;
 
-		WindowProps(const std::string& title = "Destiny Engine",
+		WindowProps(const std::string& title = "Destiny Engine 使命游戏引擎 ciǎ seî hǔ jiù wâ nǘ ho̱ à",
 			uint16_t width = 800,
 			uint16_t height = 600)
 			: title(title), width(width), height(height) {}

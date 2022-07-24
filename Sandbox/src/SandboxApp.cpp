@@ -23,6 +23,12 @@ public:
 		}*/
 	}
 
+	void onImGuiRender() override
+	{
+		ImGui::Begin("你好世界");
+		ImGui::End();
+	}
+	
 	void onEvent(Destiny::Event& event) override 
 	{
 		//DT_INFO("{0}", event);

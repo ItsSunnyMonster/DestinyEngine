@@ -36,5 +36,7 @@ processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #include <unordered_map>
 #include <unordered_set>
 
+#include <utf8.h>
+
 #include "Destiny/Log.hpp"
 #include "Destiny/Macros.hpp"

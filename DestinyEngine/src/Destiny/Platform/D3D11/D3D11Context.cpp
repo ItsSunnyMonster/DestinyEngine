@@ -173,7 +173,7 @@ void Destiny::D3D11Context::createRenderTarget()
 {
 	ComRef<ID3D11Texture2D> backBuffer;
 	DT_D3D11_THROW_FAILED(m_SwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(backBuffer.GetAddressOf())));
-	DT_D3D11_THROW_FAILED(m_Device->CreateRenderTargetView(backBuffer.Get(), nullptr, &m_RenderTarget));
+	DT_D3D11_THROW_FAILED(m_Device->CreateRenderTargetView(backBuffer.Get(), nullptr, m_RenderTarget.GetAddressOf()));
 }
 
 void Destiny::D3D11Context::cleanUpRenderTarget()
