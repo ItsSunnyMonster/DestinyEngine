@@ -76,8 +76,8 @@ if (WIN32)
     foreach(FILE ${SHADER_FILES})
         get_filename_component(FILE_WE ${FILE} NAME_WE)
         add_custom_command(TARGET Shaders
-                           COMMAND vendor/shader-compiling/fxc.exe /nologo /Emain /Tvs_5_0 $<$<CONFIG:Debug>:/Od> /Zi /Fo ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_vs.cso /Fd ${CMAKE_CURRENT_BINARY_DIR}/${FILE_WE}_vs.pdb ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_vs.hlsl
-                           COMMAND vendor/shader-compiling/fxc.exe /nologo /Emain /Tps_5_0 $<$<CONFIG:Debug>:/Od> /Zi /Fo ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_fs.cso /Fd ${CMAKE_CURRENT_BINARY_DIR}/${FILE_WE}_fs.pdb ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_fs.hlsl
+                           COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/vendor/shader-compiling/fxc.exe /nologo /Emain /Tvs_5_0 $<$<CONFIG:Debug>:/Od> /Zi /Fo ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_vs.cso /Fd ${CMAKE_CURRENT_BINARY_DIR}/${FILE_WE}_vs.pdb ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_vs.hlsl
+                           COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/vendor/shader-compiling/fxc.exe /nologo /Emain /Tps_5_0 $<$<CONFIG:Debug>:/Od> /Zi /Fo ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_fs.cso /Fd ${CMAKE_CURRENT_BINARY_DIR}/${FILE_WE}_fs.pdb ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_fs.hlsl
                            COMMAND_EXPAND_LISTS
                            MAIN_DEPENDENCY ${FILE}
                            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
@@ -95,7 +95,7 @@ if (WIN32)
         add_custom_command(TARGET Shaders
                            PRE_BUILD
                            COMMAND ${CMAKE_COMMAND} -E make_directory ${TARGET_SHADER_PATH}/hlsl
-                           COMMAND vendor/shader-compiling/glslcc.exe ${FILE} --output=${TARGET_SHADER_PATH}/hlsl/${FILE_WE}.hlsl --lang=hlsl --reflect 
+                           COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/vendor/shader-compiling/glslcc.exe ${FILE} --output=${TARGET_SHADER_PATH}/hlsl/${FILE_WE}.hlsl --lang=hlsl --reflect 
                            COMMENT "Generate HLSL from ${FILE}"
                            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
                            VERBATIM)
