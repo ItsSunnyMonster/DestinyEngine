@@ -461,3 +461,5 @@ FodyWeavers.xsd
 !**/glslcc.exe
 !**/fxc.exe
 
+build
+

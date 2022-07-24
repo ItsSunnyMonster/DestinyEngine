@@ -48,8 +48,15 @@ set(SOURCE_FILES
     "src/Destiny/Platform/D3D11/D3D11Buffer.cpp"
 )
 
-add_library(DestinyEngine STATIC 
+add_library(DestinyEngine 
     ${SOURCE_FILES}
+)
+
+set_target_properties(
+    DestinyEngine PROPERTIES ARCHIVE_OUTPUT_DIRECTORY_DEBUG "${CMAKE_CURRENT_BINARY_DIR}"
+                             ARCHIVE_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}"
+                             ARCHIVE_OUTPUT_DIRECTORY_MINSIZEREL "${CMAKE_CURRENT_BINARY_DIR}"
+                             ARCHIVE_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_CURRENT_BINARY_DIR}"
 )
 
 set(SHADER_FILES 
@@ -69,8 +76,8 @@ if (WIN32)
     foreach(FILE ${SHADER_FILES})
         get_filename_component(FILE_WE ${FILE} NAME_WE)
         add_custom_command(TARGET Shaders
-                           COMMAND vendor/shader-compiling/fxc.exe /nologo /Emain /Tvs_5_0 $<$<CONFIG:Debug>:/Od> /Zi /Fo ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_vs.cso /Fd ${CMAKE_BINARY_DIR}/bin/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${FILE_WE}_vs.pdb ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_vs.hlsl
-                           COMMAND vendor/shader-compiling/fxc.exe /nologo /Emain /Tps_5_0 $<$<CONFIG:Debug>:/Od> /Zi /Fo ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_fs.cso /Fd ${CMAKE_BINARY_DIR}/bin/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/${FILE_WE}_fs.pdb ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_fs.hlsl
+                           COMMAND vendor/shader-compiling/fxc.exe /nologo /Emain /Tvs_5_0 $<$<CONFIG:Debug>:/Od> /Zi /Fo ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_vs.cso /Fd ${CMAKE_CURRENT_BINARY_DIR}/${FILE_WE}_vs.pdb ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_vs.hlsl
+                           COMMAND vendor/shader-compiling/fxc.exe /nologo /Emain /Tps_5_0 $<$<CONFIG:Debug>:/Od> /Zi /Fo ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_fs.cso /Fd ${CMAKE_CURRENT_BINARY_DIR}/${FILE_WE}_fs.pdb ${TARGET_SHADER_PATH}/hlsl/${FILE_WE}_fs.hlsl
                            COMMAND_EXPAND_LISTS
                            MAIN_DEPENDENCY ${FILE}
                            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
@@ -101,8 +108,7 @@ if (WIN32)
                            VERBATIM)
     endforeach(FILE)
 
-    add_custom_target(CopyAssets 
-                   COMMAND ${CMAKE_COMMAND} -E copy_directory assets ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<$<CONFIG:Debug>:Debug>$<$<CONFIG:Release>:Release>/assets)
+    add_custom_target(CopyAssets COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets" "${CMAKE_BINARY_DIR}/Sandbox/assets")
     add_dependencies(DestinyEngine CopyAssets)
 endif()
 if (UNIX)
@@ -117,8 +123,6 @@ if (APPLE)
     target_compile_definitions(DestinyEngine PUBLIC DT_PLATFORM_MACOS)
     message(FATAL_ERROR "MACOS IS NOT SUPPORTED!")
 endif()
-
-set(CMAKE_CONFIGURATION_TYPES "Debug;Release" CACHE STRING "" FORCE)
 
 target_compile_definitions(DestinyEngine PUBLIC
   $<$<CONFIG:Debug>:DT_DEBUG>
