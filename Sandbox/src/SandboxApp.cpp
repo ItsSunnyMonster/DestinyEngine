@@ -1,51 +1,48 @@
-/*-------------------------------------
- - Copyright (c) ItsSunnyMonster 2022 -
- -------------------------------------*/
+/*
+ *   Copyright (c) 2022 ItsSunnyMonster
 
-//
-// Created by ItsSunnyMonster on 14/04/22.
-//
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 
 #include <DestinyEngine.hpp>
 
-class TestLayer : public Destiny::Layer 
-{
+class TestLayer : public Destiny::Layer {
 public:
-	TestLayer()
-		: Layer("Test") {}
+  TestLayer() : Layer("Test") {}
 
-	void onUpdate() override 
-	{
-		//DT_INFO("TestLayer::onUpdate");
-		/*if (Destiny::Input::isMouseButtonPressed(Destiny::Mouse::ButtonRight))
-		{
-			DT_INFO("LEFT BUTTON DOWN!");
-		}*/
-	}
+  void onUpdate() override {
+    // DT_INFO("TestLayer::onUpdate");
+    /*if (Destiny::Input::isMouseButtonPressed(Destiny::Mouse::ButtonRight))
+    {
+            DT_INFO("LEFT BUTTON DOWN!");
+    }*/
+  }
 
-	void onImGuiRender() override
-	{
-		ImGui::Begin("你好世界");
-		ImGui::End();
-	}
-	
-	void onEvent(Destiny::Event& event) override 
-	{
-		//DT_INFO("{0}", event);
-	}
+  void onImGuiRender() override {
+    ImGui::Begin("你好世界");
+    ImGui::End();
+  }
+
+  void onEvent(Destiny::Event &event) override {
+    // DT_INFO("{0}", event);
+  }
 };
 
-class SandboxApp : public Destiny::Application 
-{
+class SandboxApp : public Destiny::Application {
 public:
-	SandboxApp() 
-	{
-		pushLayer(new TestLayer());
-	}
-	~SandboxApp() override = default;
+  SandboxApp() { pushLayer(new TestLayer()); }
+  ~SandboxApp() override = default;
 };
 
-Destiny::Application *Destiny::createApplication() 
-{
-	return new SandboxApp();
-}
+Destiny::Application *Destiny::createApplication() { return new SandboxApp(); }

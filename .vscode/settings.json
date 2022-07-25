@@ -5,5 +5,5 @@
         "*.ejs": "html",
         "algorithm": "cpp"
     },
-    "copyrighter.newFilesOnly": true
+    "copyrighter.newFilesOnly": false
 }
