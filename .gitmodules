@@ -11,3 +11,6 @@
 [submodule "DestinyEngine/vendor/utfcpp"]
 	path = DestinyEngine/vendor/utfcpp
 	url = https://github.com/ItsSunnyMonster/utfcpp.git
+[submodule "DestinyEngine/vendor/fmt"]
+	path = DestinyEngine/vendor/fmt
+	url = https://github.com/ItsSunnyMonster/fmt.git

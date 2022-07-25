@@ -6,6 +6,13 @@ set(SOURCE_FILES src/SandboxApp.cpp)
 
 add_executable(Sandbox ${SOURCE_FILES})
 
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    target_sources(Sandbox PRIVATE resources/manifest.rc)
+endif()
+if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR MSVC)
+    target_sources(Sandbox PRIVATE resources/manifest.manifest)
+endif()
+
 set_target_properties(
     Sandbox PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_CURRENT_BINARY_DIR}"
                        RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_CURRENT_BINARY_DIR}"

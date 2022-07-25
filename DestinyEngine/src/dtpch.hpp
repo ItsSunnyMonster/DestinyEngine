@@ -6,20 +6,25 @@
 #ifdef DT_PLATFORM_WINDOWS
 
 #ifndef NOMINMAX
-// See github.com/skypjack/entt/wiki/Frequently-Asked-Questions#warning-c4003-the-min-the-max-and-the-macro
+// See
+// github.com/skypjack/entt/wiki/Frequently-Asked-Questions#warning-c4003-the-min-the-max-and-the-macro
 #define NOMINMAX
 #endif // !NOMINMAX
 
-#pragma comment(linker,"\"/manifestdependency:type='win32' \
+#pragma comment(linker, "\"/manifestdependency:type='win32' \
 name='Microsoft.Windows.Common-Controls' version='6.0.0.0' \
 processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
-#include <Windows.h>
+#include <windows.h>
 #include <d3d11.h>
-#include <CommCtrl.h>
+#include <commctrl.h>
 #include <wrl.h>
+#include <dt_dxgidebug.h>
 
 #endif // DT_PLATFORM_WINDOWS
+
+#include "Destiny/Log.hpp"
+#include "Destiny/Macros.hpp"
 
 #include <iostream>
 #include <memory>
@@ -27,7 +32,7 @@ processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #include <algorithm>
 #include <functional>
 #include <exception>
-#include <format>
+#include <fmt/core.h>
 
 #include <string>
 #include <sstream>
@@ -37,6 +42,3 @@ processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #include <unordered_set>
 
 #include <utf8.h>
-
-#include "Destiny/Log.hpp"
-#include "Destiny/Macros.hpp"

@@ -65,7 +65,7 @@ set(TARGET_SHADER_PATH assets/shaders)
 
 if (WIN32)
     target_compile_definitions(DestinyEngine PUBLIC DT_PLATFORM_WINDOWS)
-    target_link_libraries(DestinyEngine PUBLIC d3d11.lib Comctl32.lib)
+    target_link_libraries(DestinyEngine PUBLIC d3d11.lib Comctl32.lib D3DCompiler.lib dwmapi.lib)
 
     add_custom_target(Shaders)
     set_target_properties(Shaders PROPERTIES FOLDER "Shaders")
@@ -109,6 +109,7 @@ if (WIN32)
     endforeach(FILE)
 
     add_custom_target(CopyAssets COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/assets" "${CMAKE_BINARY_DIR}/Sandbox/assets")
+    set_target_properties(CopyAssets PROPERTIES FOLDER "Commands")
     add_dependencies(DestinyEngine CopyAssets)
 endif()
 if (UNIX)
@@ -132,15 +133,17 @@ target_compile_definitions(DestinyEngine PUBLIC
 add_subdirectory(vendor/spdlog)
 add_subdirectory(vendor/imgui)
 add_subdirectory(vendor/utfcpp)
+add_subdirectory(vendor/fmt)
 
-set_target_properties(spdlog imgui PROPERTIES MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+set_target_properties(spdlog imgui fmt PROPERTIES MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 set_target_properties(spdlog PROPERTIES FOLDER "Dependencies")
 set_target_properties(imgui PROPERTIES FOLDER "Dependencies")
+set_target_properties(fmt PROPERTIES FOLDER "Dependencies")
 
-target_link_libraries(DestinyEngine PUBLIC spdlog::spdlog imgui utf8::cpp)
+target_link_libraries(DestinyEngine PUBLIC spdlog::spdlog imgui utf8::cpp fmt::fmt)
 
 target_include_directories(DestinyEngine INTERFACE ./include)
-target_include_directories(DestinyEngine PUBLIC ./src ./vendor/spdlog/include ./vendor/glm)
+target_include_directories(DestinyEngine PUBLIC ./src ./vendor/spdlog/include ./vendor/glm ./vendor/include)
 
 target_precompile_headers(DestinyEngine PUBLIC src/dtpch.hpp)
