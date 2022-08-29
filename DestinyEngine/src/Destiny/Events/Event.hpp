@@ -32,6 +32,7 @@ enum class EventType {
   WindowMove,
   WindowFocus,
   WindowUnfocus,
+  WindowDPIChange,
   KeyPress,
   KeyRelease,
   KeyType,

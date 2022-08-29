@@ -33,6 +33,7 @@ public:
   virtual void imGuiNewFrame() = 0;
   virtual void destroyImGuiImpl() = 0;
   virtual void imGuiRender() = 0;
+  virtual void imGuiReCreateFontsTexture() = 0;
 
   virtual void clear() = 0;
 

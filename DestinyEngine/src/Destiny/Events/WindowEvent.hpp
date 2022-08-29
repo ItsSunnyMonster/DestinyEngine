@@ -58,4 +58,19 @@ public:
   EVENT_CLASS_CATEGORY(EventCategoryWindow)
 };
 
+class WindowDPIChangeEvent : public Event {
+public:
+  WindowDPIChangeEvent(float dpi) : m_DPI(dpi) {}
+  float getDPI() const { return m_DPI; }
+  std::string toString() const override {
+    std::stringstream ss;
+    ss << "WindowDPIChangeEvent: " << m_DPI;
+    return ss.str();
+  }
+  EVENT_CLASS_TYPE(WindowDPIChange)
+  EVENT_CLASS_CATEGORY(EventCategoryWindow)
+private:
+  float m_DPI;
+};
+
 } // namespace Destiny

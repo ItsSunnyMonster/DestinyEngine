@@ -15,7 +15,6 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-// TODO: Add platform macros and surround window class with it
 #include "WindowsWindow.hpp"
 #include "Destiny/Events/WindowEvent.hpp"
 #include "Destiny/Events/KeyboardEvent.hpp"
@@ -276,9 +275,20 @@ LRESULT Destiny::WindowsWindow::handleMsg(HWND hWnd, UINT msg, WPARAM wParam,
     }
     break;
   }
+  case WM_DPICHANGED: {
+    if (m_Listener) {
+      WindowDPIChangeEvent event(LOWORD(wParam) / 96.0f);
+      m_Listener->onEvent(event);
+    }
+    break;
+  }
   default:
     break;
   }
 
   return DefWindowProc(hWnd, msg, wParam, lParam);
+}
+
+float Destiny::WindowsWindow::getDPIScale() const {
+    return ImGui_ImplWin32_GetDpiScaleForHwnd(m_Handle);
 }

@@ -42,6 +42,8 @@ public:
   virtual uint16_t getWidth() const = 0;
   virtual uint16_t getHeight() const = 0;
 
+  virtual float getDPIScale() const = 0;
+
   virtual void setEventListener(EventListener &listener) = 0;
 
   virtual GraphicsContext *getContext() = 0;

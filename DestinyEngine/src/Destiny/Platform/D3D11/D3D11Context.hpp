@@ -43,6 +43,7 @@ public:
   void imGuiNewFrame() override;
   void destroyImGuiImpl() override;
   void imGuiRender() override;
+  void imGuiReCreateFontsTexture() override;
   void clear() override;
 
 private:

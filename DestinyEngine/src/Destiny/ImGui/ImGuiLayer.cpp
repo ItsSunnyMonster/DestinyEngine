@@ -20,11 +20,10 @@
 #include <imgui.h>
 
 #include "Destiny/Application.hpp"
-#include <backends/imgui_impl_win32.h>
 
-Destiny::ImGuiLayer::ImGuiLayer() : Layer("ImGuiLayer") {}
+Destiny::ImGuiLayer::ImGuiLayer() : Layer("ImGuiLayer"), m_DPIChanged(false) {}
 
-Destiny::ImGuiLayer::~ImGuiLayer() {}
+Destiny::ImGuiLayer::~ImGuiLayer() = default;
 
 void Destiny::ImGuiLayer::onAttach() {
   IMGUI_CHECKVERSION();
@@ -38,17 +37,17 @@ void Destiny::ImGuiLayer::onAttach() {
   io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;
   io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 
+  Ref<Window> wnd = Application::get()->getWindow();
+
   ImFontConfig config;
-  config.Density = ImGui_ImplWin32_GetDpiScaleForHwnd(
-      Application::get()->getWindow()->getNativeWindow());
   config.OversampleH = 1;
   config.OversampleV = 1;
   config.FontBuilderFlags = 1;
   io.Fonts->AddFontFromFileTTF(
-      "assets/fonts/cjk/NotoSansSC-Regular.otf", 20, &config,
+      "assets/fonts/cjk/NotoSansSC-Regular.otf", 20 * wnd->getDPIScale(), &config,
       io.Fonts->GetGlyphRangesChineseSimplifiedCommon());
+  //ImGui::GetStyle().ScaleAllSizes(wnd->getDPIScale());
 
-  Ref<Window> wnd = Application::get()->getWindow();
   wnd->initImGuiImpl();
   wnd->getContext()->initImGuiImpl();
 }
@@ -60,9 +59,31 @@ void Destiny::ImGuiLayer::onDetach() {
   ImGui::DestroyContext();
 }
 
-void Destiny::ImGuiLayer::onUpdate() {}
+void Destiny::ImGuiLayer::onUpdate() {
+  if (m_DPIChanged) {
+    ImGuiIO &io = ImGui::GetIO();
+    io.Fonts->Clear();
+    io.Fonts->AddFontFromFileTTF(
+        "assets/fonts/cjk/NotoSansSC-Regular.otf", 20 * m_DPI,
+        nullptr, io.Fonts->GetGlyphRangesChineseSimplifiedCommon());
+    //io.Fonts->GetTexDataAsRGBA32(nullptr, nullptr, nullptr);
+    io.Fonts->Build();
+    Application::get()->getWindow()->getContext()->imGuiReCreateFontsTexture();
+    m_DPIChanged = false;
+  }
+}
 
-void Destiny::ImGuiLayer::onEvent(Event &event) {}
+void Destiny::ImGuiLayer::onEvent(Event &event) {
+  EventDispatcher dispatcher = EventDispatcher(event);
+  dispatcher.dispatch<WindowDPIChangeEvent>(
+          BIND_EVENT_FN(ImGuiLayer::onDPIChanged));
+}
+
+bool Destiny::ImGuiLayer::onDPIChanged(WindowDPIChangeEvent &event) {
+  m_DPIChanged = true;
+  m_DPI = event.getDPI();
+  return true;
+}
 
 void Destiny::ImGuiLayer::onImGuiRender() {
   static bool show;

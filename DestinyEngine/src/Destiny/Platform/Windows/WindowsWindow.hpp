@@ -52,6 +52,7 @@ public:
   void onUpdate() override;
   inline uint16_t getWidth() const override { return m_Width; }
   inline uint16_t getHeight() const override { return m_Height; }
+  float getDPIScale() const override;
   GraphicsContext *getContext() override { return m_Context; }
   void initImGuiImpl() override;
   void imGuiNewFrame() override;

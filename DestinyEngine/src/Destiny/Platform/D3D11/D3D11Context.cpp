@@ -24,6 +24,8 @@
 
 #include <d3dcompiler.h>
 
+extern void ImGui_ImplDX11_ReCreateFontsTexture();
+
 Destiny::D3D11Context::D3D11Context(HWND hWnd, uint16_t width, uint16_t height,
                                     bool vSync)
     : GraphicsContext(vSync, width, height) {
@@ -208,4 +210,9 @@ void Destiny::D3D11Context::destroyImGuiImpl() { ImGui_ImplDX11_Shutdown(); }
 
 void Destiny::D3D11Context::imGuiRender() {
   ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+}
+
+void Destiny::D3D11Context::imGuiReCreateFontsTexture()
+{
+    ImGui_ImplDX11_ReCreateFontsTexture();
 }
