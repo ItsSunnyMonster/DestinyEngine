@@ -1,9 +1,0 @@
-{
-    "copyrighter.author": "ItsSunnyMonster",
-    "copyrighter.license": "GPL3",
-    "files.associations": {
-        "*.ejs": "html",
-        "algorithm": "cpp"
-    },
-    "copyrighter.newFilesOnly": false
-}
