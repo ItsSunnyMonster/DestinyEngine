@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.21.1)
 
+set(CMAKE_CONFIGURATION_TYPES "Debug;Release;Profile" CACHE STRING "" FORCE)
+
 set(SOURCE_FILES 
     "src/Destiny/Application.cpp" 
     "include/DestinyEngine.hpp" 
@@ -127,7 +129,7 @@ endif()
 
 target_compile_definitions(DestinyEngine PUBLIC
   $<$<CONFIG:Debug>:DT_DEBUG>
-  $<$<CONFIG:Release>:DT_RELEASE>
+  $<$<NOT:$<CONFIG:Debug>>:DT_RELEASE>
 )
 
 add_subdirectory(vendor/spdlog)
