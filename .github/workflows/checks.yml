@@ -21,7 +21,7 @@ jobs:
           configurePreset: 'msvc-debug'
 
       - name: Build
-        run: ninja .
+        run: ninja all
 
       - name: Configure MSVC Release
         uses: lukka/run-cmake@v10
