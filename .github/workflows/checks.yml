@@ -7,4 +7,4 @@ jobs:
       - uses: lukka/get-cmake@latest
       
       - name: Run CMake consuming CMakePresets.json and vcpkg.json by mean of vcpkg.
-        - uses: lukka/run-cmake@v10
+        uses: lukka/run-cmake@v10
