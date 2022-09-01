@@ -1,7 +1,7 @@
 name: Checks
 on: [push,pull_request]
 jobs:
-  Build on Windows:
+  Build_on_Windows:
     runs-on: windows-latest
     steps:
       - name: Checkout repo
