@@ -33,6 +33,7 @@ jobs:
       ###############################################
 
       - name: Configure MSVC Release
+        if: success() || failure()
         uses: lukka/run-cmake@v10
         with:
           configurePreset: 'msvc-release'
@@ -43,6 +44,7 @@ jobs:
       ###############################################
 
       - name: Configure MSVC Dist
+        if: success() || failure()
         uses: lukka/run-cmake@v10
         with:
           configurePreset: 'msvc-dist'
@@ -54,6 +56,7 @@ jobs:
       ############################################################################
 
       - name: Configure Clang Debug
+        if: success() || failure()
         uses: lukka/run-cmake@v10
         with:
           configurePreset: 'clang-debug'
@@ -64,6 +67,7 @@ jobs:
       ###############################################
 
       - name: Configure Clang Release
+        if: success() || failure()
         uses: lukka/run-cmake@v10
         with:
           configurePreset: 'clang-release'
@@ -74,6 +78,7 @@ jobs:
       ###############################################
 
       - name: Configure Clang Dist
+        if: success() || failure()
         uses: lukka/run-cmake@v10
         with:
           configurePreset: 'clang-dist'
@@ -85,6 +90,7 @@ jobs:
       ############################################################################
 
       - name: Configure GNU Debug
+        if: success() || failure()
         uses: lukka/run-cmake@v10
         with:
           configurePreset: 'gnu-debug'
@@ -95,6 +101,7 @@ jobs:
       ###############################################
 
       - name: Configure GNU Release
+        if: success() || failure()
         uses: lukka/run-cmake@v10
         with:
           configurePreset: 'gnu-release'
@@ -105,6 +112,7 @@ jobs:
       ###############################################
 
       - name: Configure GNU Dist
+        if: success() || failure()
         uses: lukka/run-cmake@v10
         with:
           configurePreset: 'gnu-dist'
