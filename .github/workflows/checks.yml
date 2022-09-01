@@ -9,11 +9,18 @@ jobs:
         with: 
           submodules: recursive
 
+      ###############################################
+
       - name: Get CMake
         uses: lukka/get-cmake@latest
 
       - name: Get MSVC
         uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Get Clang
+        uses: egor-tensin/setup-clang@v1
+
+      ###############################################
       
       - name: Configure MSVC Debug
         uses: lukka/run-cmake@v10
@@ -23,6 +30,8 @@ jobs:
       - name: Build
         run: ninja all
 
+      ###############################################
+
       - name: Configure MSVC Release
         uses: lukka/run-cmake@v10
         with:
@@ -31,10 +40,74 @@ jobs:
       - name: Build
         run: ninja all
 
+      ###############################################
+
       - name: Configure MSVC Dist
         uses: lukka/run-cmake@v10
         with:
           configurePreset: 'msvc-dist'
+
+      - name: Build
+        run: ninja all
+
+      ############################################################################
+      ############################################################################
+
+      - name: Configure Clang Debug
+        uses: lukka/run-cmake@v10
+        with:
+          configurePreset: 'clang-debug'
+
+      - name: Build
+        run: ninja all
+
+      ###############################################
+
+      - name: Configure Clang Release
+        uses: lukka/run-cmake@v10
+        with:
+          configurePreset: 'clang-release'
+
+      - name: Build
+        run: ninja all
+
+      ###############################################
+
+      - name: Configure Clang Dist
+        uses: lukka/run-cmake@v10
+        with:
+          configurePreset: 'clang-dist'
+
+      - name: Build
+        run: ninja all
+
+      ############################################################################
+      ############################################################################
+
+      - name: Configure GNU Debug
+        uses: lukka/run-cmake@v10
+        with:
+          configurePreset: 'gnu-debug'
+
+      - name: Build
+        run: ninja all
+
+      ###############################################
+
+      - name: Configure GNU Release
+        uses: lukka/run-cmake@v10
+        with:
+          configurePreset: 'gnu-release'
+
+      - name: Build
+        run: ninja all
+
+      ###############################################
+
+      - name: Configure GNU Dist
+        uses: lukka/run-cmake@v10
+        with:
+          configurePreset: 'gnu-dist'
 
       - name: Build
         run: ninja all
