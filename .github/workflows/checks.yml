@@ -1,14 +1,16 @@
 name: Checks
 on: [push,pull_request]
 jobs:
-  Test:
+  Windows:
     runs-on: windows-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
-      - uses: lukka/get-cmake@latest
+
+      - name: Get CMake
+        uses: lukka/get-cmake@latest
       
-      - name: Run CMake consuming CMakePresets.json and vcpkg.json by mean of vcpkg.
+      - name: Configure MSVC Debug
         uses: lukka/run-cmake@v10
         with:
           configurePreset: 'ninja-multi'
