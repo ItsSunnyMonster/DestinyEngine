@@ -11,6 +11,9 @@ jobs:
 
       - name: Get CMake
         uses: lukka/get-cmake@latest
+
+      - name: Get MSVC
+        uses: ilammy/msvc-dev-cmd@v1
       
       - name: Configure MSVC Debug
         uses: lukka/run-cmake@v10
