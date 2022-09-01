@@ -9,4 +9,4 @@ jobs:
       - name: Run CMake consuming CMakePresets.json and vcpkg.json by mean of vcpkg.
         uses: lukka/run-cmake@v10
         with: 
-          cmakeListsTxtPath: "$RUNNER_WORKSPACE\CMakeLists.txt"
+          cmakeListsTxtPath: "$RUNNER_WORKSPACE\\CMakeLists.txt"
