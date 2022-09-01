@@ -1,7 +1,7 @@
 name: Checks
 on: [push,pull_request]
 jobs:
-  Windows:
+  Build on Windows:
     runs-on: windows-latest
     steps:
       - name: Checkout repo
@@ -15,4 +15,23 @@ jobs:
       - name: Configure MSVC Debug
         uses: lukka/run-cmake@v10
         with:
-          configurePreset: 'ninja-multi'
+          configurePreset: 'msvc-debug'
+
+      - name: Build
+        run: ninja .
+
+      - name: Configure MSVC Release
+        uses: lukka/run-cmake@v10
+        with:
+          configurePreset: 'msvc-release'
+
+      - name: Build
+        run: ninja .
+
+      - name: Configure MSVC Dist
+        uses: lukka/run-cmake@v10
+        with:
+          configurePreset: 'msvc-dist'
+
+      - name: Build
+        run: ninja .
