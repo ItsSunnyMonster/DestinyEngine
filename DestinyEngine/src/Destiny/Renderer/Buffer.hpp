@@ -59,8 +59,9 @@ static size_t shaderDataTypeSize(ShaderDataType type) {
     return sizeof(int32_t) * 4;
   case Destiny::ShaderDataType::Bool:
     return sizeof(bool);
+  default:
+    DT_ASSERT_MSG(false, "Unknown shader data type");
   }
-  DT_ASSERT_MSG(false, "Unknown shader data type");
 }
 
 struct BufferElement {
