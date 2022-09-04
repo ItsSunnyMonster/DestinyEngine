@@ -3,6 +3,7 @@ on: [push,pull_request]
 jobs:
   check_build:
     strategy:
+      fail-fast: false
       matrix:
         os: [windows]
         compiler: [msvc, clang]
