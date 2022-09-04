@@ -27,7 +27,7 @@ jobs:
         uses: lukka/get-cmake@latest
 
       - name: Get MSVC
-        if: matrix.compiler == 'msvc' && matrix.os == 'windows'
+        if: (matrix.compiler == 'msvc' && matrix.os == 'windows') || (matrix.compiler == 'clang' && matrix.os == 'windows)
         id: get_msvc
         uses: ilammy/msvc-dev-cmd@v1
 
