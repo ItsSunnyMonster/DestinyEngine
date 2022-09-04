@@ -34,6 +34,10 @@ jobs:
         # Learn more about CodeQL language support at https://aka.ms/codeql-docs/language-support
 
     steps:
+    
+    - name: Get MSVC
+      uses: ilammy/msvc-dev-cmd@v1.11.0
+    
     - name: Checkout repository
       uses: actions/checkout@v3
 
