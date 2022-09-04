@@ -10,7 +10,7 @@ jobs:
 
     name: ${{ format('Compile for {0} with {1}-{2}', matrix.os, matrix.compiler, matrix.configuration) }}
     runs-on: ${{ format('{0}-latest', matrix.os) }}
-    if: (matrix.os != windows && matrix.compiler == msvc) != true
+    if: ${{ (matrix.os != windows && matrix.compiler == msvc) != true }}
     steps:
       - name: Checkout repo
         id: checkout_repo
