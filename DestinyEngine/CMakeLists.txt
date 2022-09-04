@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.21.1)
 
-set(CMAKE_CONFIGURATION_TYPES "Debug;Release;Profile" CACHE STRING "" FORCE)
+set(CMAKE_CONFIGURATION_TYPES "Debug;RelWithDebInfo;Release" CACHE STRING "" FORCE)
 
 set(SOURCE_FILES 
     "src/Destiny/Application.cpp" 
@@ -114,10 +114,6 @@ if (WIN32)
     set_target_properties(CopyAssets PROPERTIES FOLDER "Commands")
     add_dependencies(DestinyEngine CopyAssets)
 endif()
-if (UNIX)
-    target_compile_definitions(DestinyEngine PUBLIC DT_PLATFORM_UNIX)
-    message(FATAL_ERROR "UNIX IS NOT SUPPORTED!")
-endif()
 if (UNIX AND NOT APPLE)
     target_compile_definitions(DestinyEngine PUBLIC DT_PLATFORM_LINUX)
     message(FATAL_ERROR "LINUX IS NOT SUPPORTED!")
@@ -125,6 +121,10 @@ endif()
 if (APPLE)
     target_compile_definitions(DestinyEngine PUBLIC DT_PLATFORM_MACOS)
     message(FATAL_ERROR "MACOS IS NOT SUPPORTED!")
+endif()
+if (UNIX)
+    target_compile_definitions(DestinyEngine PUBLIC DT_PLATFORM_UNIX)
+    message(FATAL_ERROR "UNIX IS NOT SUPPORTED!")
 endif()
 
 target_compile_definitions(DestinyEngine PUBLIC

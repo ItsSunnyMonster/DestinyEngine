@@ -1,19 +1,12 @@
 cmake_minimum_required(VERSION 3.21.1)
 
-set(CMAKE_CONFIGURATION_TYPES "Debug;Release;Profile" CACHE STRING "" FORCE)
+set(CMAKE_CONFIGURATION_TYPES "Debug;RelWithDebInfo;Release" CACHE STRING "" FORCE)
 
 project(Sandbox)
 
-set(SOURCE_FILES src/SandboxApp.cpp)
+set(SOURCE_FILES src/SandboxApp.cpp resources/manifest.manifest)
 
 add_executable(Sandbox ${SOURCE_FILES})
-
-if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    target_sources(Sandbox PRIVATE resources/manifest.rc)
-endif()
-if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang" OR MSVC)
-    target_sources(Sandbox PRIVATE resources/manifest.manifest)
-endif()
 
 set_target_properties(
     Sandbox PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_CURRENT_BINARY_DIR}"

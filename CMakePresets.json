@@ -46,14 +46,6 @@
       }
     },
     {
-      "name": "gnu-debug",
-      "inherits": "debug",
-      "cacheVariables": {
-        "CMAKE_C_COMPILER": "cc",
-        "CMAKE_CXX_COMPILER": "c++"
-      }
-    },
-    {
       "name": "msvc-release",
       "inherits": "release",
       "cacheVariables": {
@@ -70,14 +62,6 @@
       }
     },
     {
-      "name": "gnu-release",
-      "inherits": "release",
-      "cacheVariables": {
-        "CMAKE_C_COMPILER": "cc",
-        "CMAKE_CXX_COMPILER": "c++"
-      }
-    },
-    {
       "name": "msvc-dist",
       "inherits": "dist",
       "cacheVariables": {
@@ -91,14 +75,6 @@
       "cacheVariables": {
         "CMAKE_C_COMPILER": "clang",
         "CMAKE_CXX_COMPILER": "clang++"
-      }
-    },
-    {
-      "name": "gnu-dist",
-      "inherits": "dist",
-      "cacheVariables": {
-        "CMAKE_C_COMPILER": "cc",
-        "CMAKE_CXX_COMPILER": "c++"
       }
     }
   ]
