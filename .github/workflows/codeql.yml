@@ -76,5 +76,5 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@v3
       with: 
-        name: my-artifact
+        name: Result Sarif
         path: D:/a/DestinyEngine/results/cpp.sarif
