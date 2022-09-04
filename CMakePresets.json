@@ -49,8 +49,8 @@
       "name": "gnu-debug",
       "inherits": "debug",
       "cacheVariables": {
-        "CMAKE_C_COMPILER": "gcc",
-        "CMAKE_CXX_COMPILER": "g++"
+        "CMAKE_C_COMPILER": "cc",
+        "CMAKE_CXX_COMPILER": "c++"
       }
     },
     {
@@ -73,8 +73,8 @@
       "name": "gnu-release",
       "inherits": "release",
       "cacheVariables": {
-        "CMAKE_C_COMPILER": "gcc",
-        "CMAKE_CXX_COMPILER": "g++"
+        "CMAKE_C_COMPILER": "cc",
+        "CMAKE_CXX_COMPILER": "c++"
       }
     },
     {
@@ -97,8 +97,8 @@
       "name": "gnu-dist",
       "inherits": "dist",
       "cacheVariables": {
-        "CMAKE_C_COMPILER": "gcc",
-        "CMAKE_CXX_COMPILER": "g++"
+        "CMAKE_C_COMPILER": "cc",
+        "CMAKE_CXX_COMPILER": "c++"
       }
     }
   ]
