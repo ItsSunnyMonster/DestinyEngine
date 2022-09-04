@@ -13,7 +13,7 @@ jobs:
     runs-on: ${{ format('{0}-latest', matrix.os) }}
     steps:
       - name: Checkout repo
-        if: (matrix.os != windows && matrix.compiler == msvc) != true
+        if: (matrix.os != 'windows' && matrix.compiler == 'msvc') != true
         id: checkout_repo
         uses: actions/checkout@v3
         with: 
@@ -22,28 +22,28 @@ jobs:
       ###############################################
 
       - name: Get CMake
-        if: (matrix.os != windows && matrix.compiler == msvc) != true
+        if: (matrix.os != 'windows' && matrix.compiler == 'msvc') != true
         id: get_cmake
         uses: lukka/get-cmake@latest
 
       - name: Get MSVC
-        if: matrix.compiler == msvc && matrix.os == windows
+        if: matrix.compiler == 'msvc' && matrix.os == 'windows'
         id: get_msvc
         uses: ilammy/msvc-dev-cmd@v1
 
       - name: Get Clang
-        if: matrix.compiler == clang
+        if: matrix.compiler == 'clang'
         id: get_clang
         uses: egor-tensin/setup-clang@v1
 
       ###############################################
       
       - name: ${{ format('Configure {0} {1} on {2}', matrix.compiler, matrix.configuration, matrix.os) }}
-        if: (matrix.os != windows && matrix.compiler == msvc) != true
+        if: (matrix.os != 'windows' && matrix.compiler == 'msvc') != true
         uses: lukka/run-cmake@v10
         with:
           configurePreset: ${{ format('{0}-{1}', matrix.compiler, matrix.configuration) }}
 
       - name: Build
-        if: (matrix.os != windows && matrix.compiler == msvc) != true
+        if: (matrix.os != 'windows' && matrix.compiler == 'msvc') != true
         run: ninja all
