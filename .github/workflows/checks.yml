@@ -1,8 +1,16 @@
 name: Checks
 on: [push,pull_request]
 jobs:
-  Build_on_Windows:
-    runs-on: windows-latest
+  check_build:
+    strategy:
+      matrix:
+        os: [windows]
+        compiler: [msvc, clang]
+        configuration: [debug, release, dist]
+
+    name: ${{ format('Compile for {0} with {1}-{2}', matrix.os, matrix.compiler, matrix.configuration) }}
+    runs-on: ${{ format('{0}-latest', matrix.os) }}
+    if: (matrix.os != windows && matrix.compiler == msvc) != true
     steps:
       - name: Checkout repo
         id: checkout_repo
@@ -14,103 +22,25 @@ jobs:
       ###############################################
 
       - name: Get CMake
-        continue-on-error: true
         id: get_cmake
         uses: lukka/get-cmake@latest
 
       - name: Get MSVC
-        continue-on-error: true
+        if: matrix.compiler == msvc
         id: get_msvc
         uses: ilammy/msvc-dev-cmd@v1
 
       - name: Get Clang
-        continue-on-error: true
+        if: matrix.compiler == clang
         id: get_clang
         uses: egor-tensin/setup-clang@v1
 
-      - name: Check Setup Status
-        id: ins_status
-        if: steps.get_cmake.outcome     == 'success' &&
-            steps.get_msvc.outcome      == 'success' &&
-            steps.get_clang.outcome     == 'success' &&
-            steps.checkout_repo.outcome == 'success'
-        run: echo "Setup succeeded!"
-
       ###############################################
       
-      - name: Configure MSVC Debug
-        id: conf_msvc_debug
-        if: (success() || failure()) && steps.ins_status.outcome == 'success'
+      - name: ${{ format('Configure {0} {1} on {2}', matrix.compiler, matrix.configuration, matrix.os) }}
         uses: lukka/run-cmake@v10
         with:
-          configurePreset: 'msvc-debug'
+          configurePreset: ${{ format('{0}-{1}', matrix.compiler, matrix.configuration) }}
 
       - name: Build
-        if: (success() || failure()) && steps.conf_msvc_debug.outcome == 'success'
-        run: ninja all
-
-      ###############################################
-
-      - name: Configure MSVC Release
-        id: conf_msvc_release
-        if: (success() || failure()) && steps.ins_status.outcome == 'success'
-        uses: lukka/run-cmake@v10
-        with:
-          configurePreset: 'msvc-release'
-
-      - name: Build
-        if: (success() || failure()) && steps.conf_msvc_release.outcome == 'success'
-        run: ninja all
-
-      ###############################################
-
-      - name: Configure MSVC Dist
-        id: conf_msvc_dist
-        if: (success() || failure()) && steps.ins_status.outcome == 'success'
-        uses: lukka/run-cmake@v10
-        with:
-          configurePreset: 'msvc-dist'
-
-      - name: Build
-        if: (success() || failure()) && steps.conf_msvc_dist.outcome == 'success'
-        run: ninja all
-
-      ############################################################################
-      ############################################################################
-
-      - name: Configure Clang Debug
-        id: conf_clang_debug
-        if: (success() || failure()) && steps.ins_status.outcome == 'success'
-        uses: lukka/run-cmake@v10
-        with:
-          configurePreset: 'clang-debug'
-
-      - name: Build
-        if: (success() || failure()) && steps.conf_clang_debug.outcome == 'success'
-        run: ninja all
-
-      ###############################################
-
-      - name: Configure Clang Release
-        id: conf_clang_release
-        if: (success() || failure()) && steps.ins_status.outcome == 'success'
-        uses: lukka/run-cmake@v10
-        with:
-          configurePreset: 'clang-release'
-
-      - name: Build
-        if: (success() || failure()) && steps.conf_clang_release.outcome == 'success'
-        run: ninja all
-
-      ###############################################
-
-      - name: Configure Clang Dist
-        id: conf_clang_dist
-        if: (success() || failure()) && steps.ins_status.outcome == 'success'
-        uses: lukka/run-cmake@v10
-        with:
-          configurePreset: 'clang-dist'
-
-      - name: Build
-        if: (success() || failure()) && steps.conf_clang_dist.outcome == 'success'
         run: ninja all
