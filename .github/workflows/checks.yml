@@ -31,6 +31,7 @@ jobs:
         if: steps.get_cmake.outcome == 'success' && |
             steps.get_msvc.outcome  == 'success' && |
             steps.get_clang.outcome == 'success'
+        run: echo Installation succeeded!
 
       ###############################################
       
