@@ -28,8 +28,8 @@ jobs:
 
       - name: Check Installation Status
         id: ins_status
-        if: steps.get_cmake.outcome == 'success' && |
-            steps.get_msvc.outcome  == 'success' && |
+        if: steps.get_cmake.outcome == 'success' &&
+            steps.get_msvc.outcome  == 'success' &&
             steps.get_clang.outcome == 'success'
         run: echo Installation succeeded!
 
@@ -142,7 +142,7 @@ jobs:
       ###############################################
 
       - name: Configure GNU Dist
-        id: conf_gnu_release
+        id: conf_gnu_dist
         if: (success() || failure()) && steps.ins_status.outcome == 'success'
         uses: lukka/run-cmake@v10
         with:
