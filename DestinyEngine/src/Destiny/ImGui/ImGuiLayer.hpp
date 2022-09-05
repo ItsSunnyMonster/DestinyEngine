@@ -17,8 +17,8 @@
 
 #pragma once
 
-#include "Destiny/Layer/Layer.hpp"
 #include <Destiny/Events/WindowEvent.hpp>
+#include "Destiny/Layer/Layer.hpp"
 
 namespace Destiny {
 
@@ -32,7 +32,6 @@ public:
   void onUpdate() override;
   void onEvent(Event &event) override;
   void onImGuiRender() override;
-
 private:
   float m_DPI;
   bool m_DPIChanged;

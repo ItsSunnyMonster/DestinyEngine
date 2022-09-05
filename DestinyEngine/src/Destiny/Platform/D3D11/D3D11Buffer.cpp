@@ -16,8 +16,8 @@
  */
 
 #include "D3D11Buffer.hpp"
-#include "D3D11Context.hpp"
 #include "D3D11Exception.hpp"
+#include "D3D11Context.hpp"
 
 Destiny::D3D11VertexBuffer::D3D11VertexBuffer(float *vertices, size_t size,
                                               GraphicsContext *context,

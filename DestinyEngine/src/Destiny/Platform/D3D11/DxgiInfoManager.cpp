@@ -17,8 +17,8 @@
 
 #include "DxgiInfoManager.hpp"
 
-#include "Destiny/Platform/D3D11/D3D11Exception.hpp"
 #include "Destiny/Platform/Windows/Win32Exception.hpp"
+#include "Destiny/Platform/D3D11/D3D11Exception.hpp"
 
 #pragma comment(lib, "dxguid.lib")
 

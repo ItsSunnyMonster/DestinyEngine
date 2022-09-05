@@ -32,30 +32,30 @@
 name='Microsoft.Windows.Common-Controls' version='6.0.0.0' \
 processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 
-#include <commctrl.h>
-#include <d3d11.h>
-#include <dt_dxgidebug.h>
 #include <windows.h>
+#include <d3d11.h>
+#include <commctrl.h>
 #include <wrl.h>
+#include <dt_dxgidebug.h>
 
 #endif // DT_PLATFORM_WINDOWS
 
 #include "Destiny/Log.hpp"
 #include "Destiny/Macros.hpp"
 
-#include <algorithm>
-#include <exception>
-#include <fmt/core.h>
-#include <functional>
 #include <iostream>
 #include <memory>
 #include <utility>
+#include <algorithm>
+#include <functional>
+#include <exception>
+#include <fmt/core.h>
 
-#include <array>
-#include <sstream>
 #include <string>
+#include <sstream>
+#include <array>
+#include <vector>
 #include <unordered_map>
 #include <unordered_set>
-#include <vector>
 
 #include <utf8.h>
