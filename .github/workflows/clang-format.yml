@@ -3,13 +3,14 @@ name: Run clang-format Linter
 on: [push, pull_request]
 
 jobs:
-  build:
+  Lint:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
     - uses: DoozyX/clang-format-lint-action@v0.14
       with:
+        style: llvm
         source: '.'
         exclude: '**/vendor'
         extensions: 'cpp,hpp'
