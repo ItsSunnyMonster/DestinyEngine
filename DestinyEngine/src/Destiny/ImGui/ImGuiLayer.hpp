@@ -32,6 +32,7 @@ public:
   void onUpdate() override;
   void onEvent(Event &event) override;
   void onImGuiRender() override;
+
 private:
   float m_DPI;
   bool m_DPIChanged;
