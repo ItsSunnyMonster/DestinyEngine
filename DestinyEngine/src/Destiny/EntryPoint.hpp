@@ -56,12 +56,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine,
     return entry();
   } catch (const Destiny::Exception &e) {
     TaskDialog(nullptr, nullptr, L"Destiny Exception Thrown!",
-               L"Destiny Exception", DT_PWSTR(e.what()), TDCBF_OK_BUTTON,
-               TD_ERROR_ICON, nullptr);
+               L"Destiny Exception", DT_PWSTR(e.what()), TDCBF_OK_BUTTON, TD_ERROR_ICON,
+               nullptr);
   } catch (const std::exception &e) {
     TaskDialog(nullptr, nullptr, L"Standard Exception Thrown!",
-               L"Standard Exception", DT_PWSTR(e.what()), TDCBF_OK_BUTTON,
-               TD_ERROR_ICON, nullptr);
+               L"Standard Exception", DT_PWSTR(e.what()), TDCBF_OK_BUTTON, TD_ERROR_ICON,
+               nullptr);
   } catch (...) {
     TaskDialog(nullptr, nullptr, L"Unknown Exception Thrown!",
                L"Unknown Exception", L"No further information.",

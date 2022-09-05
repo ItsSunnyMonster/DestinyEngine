@@ -44,9 +44,9 @@ void Destiny::ImGuiLayer::onAttach() {
   config.OversampleV = 1;
   config.FontBuilderFlags = 1;
   io.Fonts->AddFontFromFileTTF(
-      "assets/fonts/cjk/NotoSansSC-Regular.otf", 20 * wnd->getDPIScale(),
-      &config, io.Fonts->GetGlyphRangesChineseSimplifiedCommon());
-  // ImGui::GetStyle().ScaleAllSizes(wnd->getDPIScale());
+      "assets/fonts/cjk/NotoSansSC-Regular.otf", 20 * wnd->getDPIScale(), &config,
+      io.Fonts->GetGlyphRangesChineseSimplifiedCommon());
+  //ImGui::GetStyle().ScaleAllSizes(wnd->getDPIScale());
 
   wnd->initImGuiImpl();
   wnd->getContext()->initImGuiImpl();
@@ -64,9 +64,9 @@ void Destiny::ImGuiLayer::onUpdate() {
     ImGuiIO &io = ImGui::GetIO();
     io.Fonts->Clear();
     io.Fonts->AddFontFromFileTTF(
-        "assets/fonts/cjk/NotoSansSC-Regular.otf", 20 * m_DPI, nullptr,
-        io.Fonts->GetGlyphRangesChineseSimplifiedCommon());
-    // io.Fonts->GetTexDataAsRGBA32(nullptr, nullptr, nullptr);
+        "assets/fonts/cjk/NotoSansSC-Regular.otf", 20 * m_DPI,
+        nullptr, io.Fonts->GetGlyphRangesChineseSimplifiedCommon());
+    //io.Fonts->GetTexDataAsRGBA32(nullptr, nullptr, nullptr);
     io.Fonts->Build();
     Application::get()->getWindow()->getContext()->imGuiReCreateFontsTexture();
     m_DPIChanged = false;
@@ -76,7 +76,7 @@ void Destiny::ImGuiLayer::onUpdate() {
 void Destiny::ImGuiLayer::onEvent(Event &event) {
   EventDispatcher dispatcher = EventDispatcher(event);
   dispatcher.dispatch<WindowDPIChangeEvent>(
-      BIND_EVENT_FN(ImGuiLayer::onDPIChanged));
+          BIND_EVENT_FN(ImGuiLayer::onDPIChanged));
 }
 
 bool Destiny::ImGuiLayer::onDPIChanged(WindowDPIChangeEvent &event) {

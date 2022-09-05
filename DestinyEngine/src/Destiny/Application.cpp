@@ -16,15 +16,15 @@
  */
 
 #include "Application.hpp"
+#include "Log.hpp"
+#include "Destiny/Events/WindowEvent.hpp"
 #include "Destiny/Events/KeyboardEvent.hpp"
 #include "Destiny/Events/MouseEvent.hpp"
-#include "Destiny/Events/WindowEvent.hpp"
-#include "Destiny/ImGui/ImGuiLayer.hpp"
-#include "Log.hpp"
 #include "Macros.hpp"
+#include "Destiny/ImGui/ImGuiLayer.hpp"
 
-#include <Destiny/Platform/D3D11/D3D11Context.hpp>
 #include <imgui.h>
+#include <Destiny/Platform/D3D11/D3D11Context.hpp>
 
 namespace Destiny {
 
