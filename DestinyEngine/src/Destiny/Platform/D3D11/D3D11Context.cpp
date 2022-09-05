@@ -212,7 +212,6 @@ void Destiny::D3D11Context::imGuiRender() {
   ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 }
 
-void Destiny::D3D11Context::imGuiReCreateFontsTexture()
-{
-    ImGui_ImplDX11_ReCreateFontsTexture();
+void Destiny::D3D11Context::imGuiReCreateFontsTexture() {
+  ImGui_ImplDX11_ReCreateFontsTexture();
 }

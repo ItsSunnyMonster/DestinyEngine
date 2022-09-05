@@ -17,10 +17,10 @@
 
 #pragma once
 
-#include "Window.hpp"
 #include "Destiny/Events/EventListener.hpp"
 #include "Destiny/Events/WindowEvent.hpp"
 #include "Destiny/Layer/LayerStack.hpp"
+#include "Window.hpp"
 
 namespace Destiny {
 
