@@ -17,9 +17,9 @@
 
 #pragma once
 
+#include "D3D11Context.hpp"
 #include "Destiny/Renderer/Buffer.hpp"
 #include "Destiny/Renderer/GraphicsContext.hpp"
-#include "D3D11Context.hpp"
 
 namespace Destiny {
 class D3D11VertexBuffer : public VertexBuffer {
