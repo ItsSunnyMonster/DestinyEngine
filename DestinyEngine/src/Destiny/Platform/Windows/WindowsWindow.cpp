@@ -16,9 +16,9 @@
  */
 
 #include "WindowsWindow.hpp"
-#include "Destiny/Events/WindowEvent.hpp"
 #include "Destiny/Events/KeyboardEvent.hpp"
 #include "Destiny/Events/MouseEvent.hpp"
+#include "Destiny/Events/WindowEvent.hpp"
 #include "Destiny/Platform/D3D11/D3D11Context.hpp"
 #include "Destiny/Platform/Windows/Win32Exception.hpp"
 #include "WindowsInput.hpp"
@@ -290,5 +290,5 @@ LRESULT Destiny::WindowsWindow::handleMsg(HWND hWnd, UINT msg, WPARAM wParam,
 }
 
 float Destiny::WindowsWindow::getDPIScale() const {
-    return ImGui_ImplWin32_GetDpiScaleForHwnd(m_Handle);
+  return ImGui_ImplWin32_GetDpiScaleForHwnd(m_Handle);
 }
