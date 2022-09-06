@@ -19,6 +19,16 @@ jobs:
         with: 
           submodules: recursive
 
+      - name: Format
+        uses: DoozyX/clang-format-lint-action@v0.14
+        with:
+          style: file
+          source: '.'
+          exclude: '**/vendor'
+          extensions: 'cpp,hpp'
+          clangFormatVersion: 14
+          inplace: True
+
       ###############################################
 
       - name: Get CMake
