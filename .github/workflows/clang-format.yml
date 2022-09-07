@@ -16,6 +16,12 @@ jobs:
         extensions: 'cpp,hpp'
         clangFormatVersion: 14
         inplace: True
-    - uses: EndBug/add-and-commit@v4
-      with:
-        message: 'Committing clang-format changes'
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v4.1.1
+      with: 
+        token: ${{ secrets.PAT }}
+        commit-message: Clang formatted
+        delete-branch: true
+        push-to-fork: ItsRainyMonster/DestinyEngine-workflow-pull-requests
+        title: Clang Format
+        body: Formatted code using Clang Format
