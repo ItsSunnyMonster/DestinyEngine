@@ -290,5 +290,5 @@ LRESULT Destiny::WindowsWindow::handleMsg(HWND hWnd, UINT msg, WPARAM wParam,
 }
 
 float Destiny::WindowsWindow::getDPIScale() const {
-    return ImGui_ImplWin32_GetDpiScaleForHwnd(m_Handle);
+  return ImGui_ImplWin32_GetDpiScaleForHwnd(m_Handle);
 }
