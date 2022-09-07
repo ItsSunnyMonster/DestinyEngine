@@ -1,12 +1,19 @@
 name: Run clang-format Linter
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   Lint:
     runs-on: ubuntu-latest
 
     steps:
+
+    - name: Extract branch name
+      shell: bash
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      id: extract_branch
+
+
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
@@ -27,3 +34,4 @@ jobs:
         push-to-fork: ItsRainyMonster/DestinyEngine-workflow-pull-requests
         title: Clang Format
         body: Formatted code using Clang Format
+        base: ${{ steps.extract_branch.outputs.branch }}
