@@ -25,19 +25,19 @@
 namespace Destiny {
 
 class Application : public EventListener {
-    public:
-                Application();
+public:
+  Application();
   virtual ~Application();
-    void run();
+  void run();
   void onEvent(Event &event) override;
-              void pushLayer(Layer *layer) { m_LayerStack.pushLayer(layer); }
+  void pushLayer(Layer *layer) { m_LayerStack.pushLayer(layer); }
   void pushOverlay(Layer *layer) { m_LayerStack.pushOverlay(layer); }
 
-    inline Ref<Window> getWindow() { return m_Window; }
+  inline Ref<Window> getWindow() { return m_Window; }
 
   inline static Application *get() { return s_Instance; }
 
-                        private:
+private:
   bool m_Running;
   Ref<Window> m_Window;
   Layer *m_ImGuiLayer;
