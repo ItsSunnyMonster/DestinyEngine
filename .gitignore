@@ -455,7 +455,7 @@ FodyWeavers.xsd
 
 # Shader output files
 *.cso
-*.hlsl.json
+*.cso.json
 
 # Unignore dependencies
 !**/glslcc.exe

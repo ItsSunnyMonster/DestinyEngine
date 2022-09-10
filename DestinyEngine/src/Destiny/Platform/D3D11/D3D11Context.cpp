@@ -43,7 +43,7 @@ Destiny::D3D11Context::D3D11Context(HWND hWnd, uint16_t width, uint16_t height,
   swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
   swapChainDesc.BufferCount = 2;
   swapChainDesc.OutputWindow = hWnd;
-  swapChainDesc.OutputWindow = (HWND)696969;
+  // swapChainDesc.OutputWindow = (HWND)696969;
   swapChainDesc.Windowed = TRUE;
   swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
   swapChainDesc.Flags = D3D11_CREATE_DEVICE_DEBUG;
