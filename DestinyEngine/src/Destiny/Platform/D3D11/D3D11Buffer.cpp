@@ -29,7 +29,7 @@ Destiny::D3D11VertexBuffer::D3D11VertexBuffer(float *vertices, size_t size,
   bd.Usage = D3D11_USAGE_DEFAULT;
   bd.CPUAccessFlags = 0;
   bd.MiscFlags = 0;
-  bd.ByteWidth = sizeof(float) * size;
+  bd.ByteWidth = (UINT)(sizeof(float) * size);
   bd.StructureByteStride = m_Layout.getStride();
 
   D3D11_SUBRESOURCE_DATA sd = {nullptr};
@@ -65,7 +65,7 @@ Destiny::D3D11IndexBuffer::D3D11IndexBuffer(uint32_t *indices, size_t size,
   ibd.Usage = D3D11_USAGE_DEFAULT;
   ibd.CPUAccessFlags = 0;
   ibd.MiscFlags = 0;
-  ibd.ByteWidth = sizeof(uint32_t) * size;
+  ibd.ByteWidth = (UINT)(sizeof(uint32_t) * size);
   ibd.StructureByteStride = sizeof(uint32_t);
 
   D3D11_SUBRESOURCE_DATA isd = {nullptr};

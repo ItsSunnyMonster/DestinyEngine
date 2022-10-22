@@ -20,6 +20,8 @@
 
 #pragma once
 
+#include <dtpch.hpp>
+
 namespace Destiny {
 
 using MouseCode = uint16_t;

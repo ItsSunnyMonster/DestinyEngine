@@ -17,7 +17,7 @@
 
 #include "Win32Exception.hpp"
 
-Destiny::Win32Exception::Win32Exception(uint16_t line, const char *file,
+Destiny::Win32Exception::Win32Exception(uint64_t line, const char *file,
                                         HRESULT hr)
     : Destiny::Exception(line, file), m_Hr(hr) {}
 

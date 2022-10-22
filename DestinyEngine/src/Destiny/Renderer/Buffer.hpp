@@ -17,6 +17,7 @@
 
 #pragma once
 
+#include <dtpch.hpp>
 #include "GraphicsContext.hpp"
 
 namespace Destiny {

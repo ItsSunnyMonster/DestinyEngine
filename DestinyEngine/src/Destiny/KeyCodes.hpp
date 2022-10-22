@@ -20,6 +20,8 @@
 
 #pragma once
 
+#include <dtpch.hpp>
+
 namespace Destiny {
 
 using KeyCode = uint16_t;

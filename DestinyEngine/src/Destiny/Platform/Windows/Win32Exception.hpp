@@ -17,12 +17,13 @@
 
 #pragma once
 
+#include <dtpch.hpp>
 #include "Destiny/Exception.hpp"
 
 namespace Destiny {
 class Win32Exception : public Destiny::Exception {
 public:
-  Win32Exception(uint16_t line, const char *file, HRESULT hr);
+  Win32Exception(uint64_t line, const char *file, HRESULT hr);
   const char *what() const noexcept override;
   const char *getType() const override;
   static std::string translateErrorCode(HRESULT hr);

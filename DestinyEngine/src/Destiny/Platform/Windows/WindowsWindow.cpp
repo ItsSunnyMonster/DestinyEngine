@@ -194,7 +194,7 @@ LRESULT Destiny::WindowsWindow::handleMsg(HWND hWnd, UINT msg, WPARAM wParam,
   case WM_KEYDOWN:
     if (currentTrackingKey != wParam) {
       keyRepeatCount = 0;
-      currentTrackingKey = wParam;
+      currentTrackingKey = (KeyCode)wParam;
     }
 
     keyRepeatCount++;
@@ -216,7 +216,7 @@ LRESULT Destiny::WindowsWindow::handleMsg(HWND hWnd, UINT msg, WPARAM wParam,
     break;
   case WM_CHAR:
     if (m_Listener) {
-      KeyTypeEvent e(wParam);
+      KeyTypeEvent e((const char)wParam);
       m_Listener->onEvent(e);
     }
     break;

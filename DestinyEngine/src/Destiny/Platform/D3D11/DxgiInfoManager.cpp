@@ -53,8 +53,7 @@ std::vector<std::string> Destiny::DxgiInfoManager::getMessages() const {
   std::vector<std::string> messages;
   const auto end = m_DxgiInfoQueue->GetNumStoredMessages(DXGI_DEBUG_ALL);
   for (auto i = next; i < end; ++i) {
-    HRESULT hr;
-    SIZE_T messageLength;
+    SIZE_T messageLength = 0;
 
     DT_D3D11_THROW_NOINFO(m_DxgiInfoQueue->GetMessage(DXGI_DEBUG_ALL, i,
                                                       nullptr, &messageLength));

@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Dist|x64">
+      <Configuration>Dist</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{3B2E3CE6-A7EE-B71C-7029-019ADCA8FCF8}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>DestinyEngine</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="ShaderCompiler.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <OutDir>..\bin\Debug-windows-x86_64\DestinyEngine\</OutDir>
+    <IntDir>..\bin-int\Debug-windows-x86_64\DestinyEngine\</IntDir>
+    <TargetName>DestinyEngine</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>..\bin\Release-windows-x86_64\DestinyEngine\</OutDir>
+    <IntDir>..\bin-int\Release-windows-x86_64\DestinyEngine\</IntDir>
+    <TargetName>DestinyEngine</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
+    <OutDir>..\bin\Dist-windows-x86_64\DestinyEngine\</OutDir>
+    <IntDir>..\bin-int\Dist-windows-x86_64\DestinyEngine\</IntDir>
+    <TargetName>DestinyEngine</TargetName>
+    <TargetExt>.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>DT_PLATFORM_WINDOWS;DT_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include;src;vendor\fmt\include;vendor\glm;vendor\imgui;vendor\spdlog\include;vendor\utfcpp\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions>/utf-8 /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST assets\ (xcopy /Q /E /Y /I assets ..\bin\Debug-windows-x86_64\Sandbox\assets &gt; nul) ELSE (xcopy /Q /Y /I assets ..\bin\Debug-windows-x86_64\Sandbox\assets &gt; nul)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>DT_PLATFORM_WINDOWS;DT_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include;src;vendor\fmt\include;vendor\glm;vendor\imgui;vendor\spdlog\include;vendor\utfcpp\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/utf-8 /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST assets\ (xcopy /Q /E /Y /I assets ..\bin\Release-windows-x86_64\Sandbox\assets &gt; nul) ELSE (xcopy /Q /Y /I assets ..\bin\Release-windows-x86_64\Sandbox\assets &gt; nul)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>DT_PLATFORM_WINDOWS;DT_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>include;src;vendor\fmt\include;vendor\glm;vendor\imgui;vendor\spdlog\include;vendor\utfcpp\source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/utf-8 /Zc:__cplusplus %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <ExternalWarningLevel>Level3</ExternalWarningLevel>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <PostBuildEvent>
+      <Command>IF EXIST assets\ (xcopy /Q /E /Y /I assets ..\bin\Dist-windows-x86_64\Sandbox\assets &gt; nul) ELSE (xcopy /Q /Y /I assets ..\bin\Dist-windows-x86_64\Sandbox\assets &gt; nul)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="include\DestinyEngine.hpp" />
+    <ClInclude Include="src\Destiny\Application.hpp" />
+    <ClInclude Include="src\Destiny\EntryPoint.hpp" />
+    <ClInclude Include="src\Destiny\Events\Event.hpp" />
+    <ClInclude Include="src\Destiny\Events\EventListener.hpp" />
+    <ClInclude Include="src\Destiny\Events\KeyboardEvent.hpp" />
+    <ClInclude Include="src\Destiny\Events\MouseEvent.hpp" />
+    <ClInclude Include="src\Destiny\Events\WindowEvent.hpp" />
+    <ClInclude Include="src\Destiny\Exception.hpp" />
+    <ClInclude Include="src\Destiny\ImGui\ImGuiLayer.hpp" />
+    <ClInclude Include="src\Destiny\Input.hpp" />
+    <ClInclude Include="src\Destiny\KeyCodes.hpp" />
+    <ClInclude Include="src\Destiny\Layer\Layer.hpp" />
+    <ClInclude Include="src\Destiny\Layer\LayerStack.hpp" />
+    <ClInclude Include="src\Destiny\Log.hpp" />
+    <ClInclude Include="src\Destiny\Macros.hpp" />
+    <ClInclude Include="src\Destiny\MouseCodes.hpp" />
+    <ClInclude Include="src\Destiny\Platform\D3D11\D3D11Buffer.hpp" />
+    <ClInclude Include="src\Destiny\Platform\D3D11\D3D11Context.hpp" />
+    <ClInclude Include="src\Destiny\Platform\D3D11\D3D11Exception.hpp" />
+    <ClInclude Include="src\Destiny\Platform\D3D11\DxgiInfoManager.hpp" />
+    <ClInclude Include="src\Destiny\Platform\Windows\Win32Exception.hpp" />
+    <ClInclude Include="src\Destiny\Platform\Windows\Win32KeyCodes.hpp" />
+    <ClInclude Include="src\Destiny\Platform\Windows\Win32MouseCodes.hpp" />
+    <ClInclude Include="src\Destiny\Platform\Windows\WindowsInput.hpp" />
+    <ClInclude Include="src\Destiny\Platform\Windows\WindowsWindow.hpp" />
+    <ClInclude Include="src\Destiny\Renderer\Buffer.hpp" />
+    <ClInclude Include="src\Destiny\Renderer\GraphicsContext.hpp" />
+    <ClInclude Include="src\Destiny\Window.hpp" />
+    <ClInclude Include="src\dtpch.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Destiny\Application.cpp" />
+    <ClCompile Include="src\Destiny\Exception.cpp" />
+    <ClCompile Include="src\Destiny\ImGui\ImGuiBuild.cpp" />
+    <ClCompile Include="src\Destiny\ImGui\ImGuiLayer.cpp" />
+    <ClCompile Include="src\Destiny\Layer\Layer.cpp" />
+    <ClCompile Include="src\Destiny\Layer\LayerStack.cpp" />
+    <ClCompile Include="src\Destiny\Log.cpp" />
+    <ClCompile Include="src\Destiny\Platform\D3D11\D3D11Buffer.cpp" />
+    <ClCompile Include="src\Destiny\Platform\D3D11\D3D11Context.cpp" />
+    <ClCompile Include="src\Destiny\Platform\D3D11\D3D11Exception.cpp" />
+    <ClCompile Include="src\Destiny\Platform\D3D11\DxgiInfoManager.cpp" />
+    <ClCompile Include="src\Destiny\Platform\Windows\Win32Exception.cpp" />
+    <ClCompile Include="src\Destiny\Platform\Windows\WindowsInput.cpp" />
+    <ClCompile Include="src\Destiny\Platform\Windows\WindowsWindow.cpp" />
+    <ClCompile Include="src\Destiny\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\dtpch.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ShaderCompiler Include="src\Shaders\test_shader.glsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="vendor\fmt\fmt.vcxproj">
+      <Project>{4C73880B-B87C-887C-41F8-9E7CAD00947C}</Project>
+    </ProjectReference>
+    <ProjectReference Include="vendor\imgui\ImGui.vcxproj">
+      <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
+    </ProjectReference>
+    <ProjectReference Include="vendor\spdlog\spdlog.vcxproj">
+      <Project>{8EAD431C-7A4F-6EF2-630A-82464F4BF542}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="ShaderCompiler.targets" />
+  </ImportGroup>
+</Project>

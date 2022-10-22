@@ -18,7 +18,7 @@
 #include "D3D11Exception.hpp"
 
 Destiny::D3D11Exception::D3D11Exception(
-    uint16_t line, const char *file, HRESULT hr,
+    uint64_t line, const char *file, HRESULT hr,
     std::vector<std::string> infoMsgs /*= {}*/)
     : Win32Exception(line, file, hr) {
   for (const std::string &msg : infoMsgs) {
@@ -54,7 +54,7 @@ const char *Destiny::D3D11Exception::what() const noexcept {
 }
 
 Destiny::D3D11DeviceRemovedException::D3D11DeviceRemovedException(
-    uint16_t line, const char *file, HRESULT reason)
+    uint64_t line, const char *file, HRESULT reason)
     : D3D11Exception(line, file, reason) {}
 
 char const *Destiny::D3D11DeviceRemovedException::what() const noexcept {
@@ -71,7 +71,7 @@ const char *Destiny::D3D11DeviceRemovedException::getType() const {
 }
 
 Destiny::D3D11InfoOnlyException::D3D11InfoOnlyException(
-    uint16_t line, const char *file, std::vector<std::string> infoMsgs /*= {}*/)
+    uint64_t line, const char *file, std::vector<std::string> infoMsgs /*= {}*/)
     : Exception(line, file) {
   for (const std::string &msg : infoMsgs) {
     m_Info += msg;

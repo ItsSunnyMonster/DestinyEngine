@@ -36,7 +36,7 @@ processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #include <d3d11.h>
 #include <commctrl.h>
 #include <wrl.h>
-#include <dt_dxgidebug.h>
+#include <dxgidebug.h>
 
 #endif // DT_PLATFORM_WINDOWS
 

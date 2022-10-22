@@ -17,10 +17,10 @@
 
 #include "Exception.hpp"
 
-Destiny::Exception::Exception(uint16_t line, const char *file)
+Destiny::Exception::Exception(uint64_t line, const char *file)
     : Exception(line, file, "No message provided.") {}
 
-Destiny::Exception::Exception(uint16_t line, const char *file, const char *msg)
+Destiny::Exception::Exception(uint64_t line, const char *file, const char *msg)
     : m_Line(line), m_File(file), m_Msg(msg) {}
 
 char const *Destiny::Exception::what() const noexcept {
@@ -32,7 +32,7 @@ char const *Destiny::Exception::what() const noexcept {
 
 const char *Destiny::Exception::getType() const { return "Destiny Exception"; }
 
-uint16_t Destiny::Exception::getLine() const { return m_Line; }
+uint64_t Destiny::Exception::getLine() const { return m_Line; }
 
 const std::string &Destiny::Exception::getFile() const { return m_File; }
 

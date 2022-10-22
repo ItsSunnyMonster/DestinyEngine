@@ -17,6 +17,7 @@
 
 #pragma once
 
+#include <dtpch.hpp>
 #include "Destiny/KeyCodes.hpp"
 #include "Destiny/MouseCodes.hpp"
 

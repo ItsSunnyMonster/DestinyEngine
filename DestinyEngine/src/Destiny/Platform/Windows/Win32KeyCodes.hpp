@@ -17,6 +17,8 @@
 
 #pragma once
 
+#include <dtpch.hpp>
+
 namespace Destiny {
 using Win32KeyCode = WPARAM;
 

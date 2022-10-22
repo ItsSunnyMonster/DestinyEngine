@@ -50,7 +50,7 @@ bool Destiny::WindowsInput::_isKeyPressed(KeyCode keyCode) {
       Application::get()->getWindow()->getNativeWindow()) {
     return false;
   }
-  SHORT keyState = GetAsyncKeyState(keyMapDTToWin32(keyCode));
+  SHORT keyState = GetAsyncKeyState((int)keyMapDTToWin32(keyCode));
   return (1 << 15) & keyState;
 }
 
@@ -59,7 +59,7 @@ bool Destiny::WindowsInput::_isMouseButtonPressed(MouseCode button) {
       Application::get()->getWindow()->getNativeWindow()) {
     return false;
   }
-  return GetAsyncKeyState(mouseMapDTToWin32(button));
+  return GetAsyncKeyState((int)mouseMapDTToWin32(button));
 }
 
 std::pair<float, float> Destiny::WindowsInput::_getMousePosition() {

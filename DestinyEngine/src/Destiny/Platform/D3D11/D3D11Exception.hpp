@@ -17,13 +17,14 @@
 
 #pragma once
 
+#include <dtpch.hpp>
 #include "Destiny/Platform/Windows/Win32Exception.hpp"
 #include "DxgiInfoManager.hpp"
 
 namespace Destiny {
 class D3D11Exception : public Win32Exception {
 public:
-  D3D11Exception(uint16_t line, const char *file, HRESULT hr,
+  D3D11Exception(uint64_t line, const char *file, HRESULT hr,
                  std::vector<std::string> infoMsgs = {});
   const char *getType() const override;
   const std::string &getErrorInfo() const;
@@ -36,7 +37,7 @@ private:
 
 class D3D11DeviceRemovedException : public D3D11Exception {
 public:
-  D3D11DeviceRemovedException(uint16_t, const char *, HRESULT);
+  D3D11DeviceRemovedException(uint64_t, const char *, HRESULT);
 
   const char *what() const noexcept override;
   const char *getType() const override;
@@ -49,7 +50,7 @@ private:
 
 class D3D11InfoOnlyException : public Exception {
 public:
-  D3D11InfoOnlyException(uint16_t line, const char *file,
+  D3D11InfoOnlyException(uint64_t line, const char *file,
                          std::vector<std::string> infoMsgs = {});
 
   const char *getType() const override;

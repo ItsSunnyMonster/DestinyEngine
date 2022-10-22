@@ -17,6 +17,7 @@
 
 #pragma once
 
+#include <dtpch.hpp>
 #include "Destiny/Renderer/GraphicsContext.hpp"
 #include "DxgiInfoManager.hpp"
 
