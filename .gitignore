@@ -463,3 +463,6 @@ bin-int/
 *.sln
 *.vcxproj
 *.vcxproj.filters
+DestinyEngine/ShaderCompiler.props
+DestinyEngine/ShaderCompiler.xml
+DestinyEngine/ShaderCompiler.targets
