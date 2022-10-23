@@ -39,6 +39,9 @@
     <ClInclude Include="include\DestinyEngine.hpp">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="src\Dependencies.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
     <ClInclude Include="src\Destiny\Application.hpp">
       <Filter>src\Destiny</Filter>
     </ClInclude>

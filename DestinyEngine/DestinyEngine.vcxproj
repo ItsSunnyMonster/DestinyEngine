@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="include\DestinyEngine.hpp" />
+    <ClInclude Include="src\Dependencies.hpp" />
     <ClInclude Include="src\Destiny\Application.hpp" />
     <ClInclude Include="src\Destiny\EntryPoint.hpp" />
     <ClInclude Include="src\Destiny\Events\Event.hpp" />

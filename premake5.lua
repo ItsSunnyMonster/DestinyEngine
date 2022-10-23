@@ -30,13 +30,5 @@ filter "configurations:Dist"
     defines { "DT_DIST" }
     optimize "On"
 
-newoption {
-    trigger = "build-dll",
-    description = "Builds Destiny Engine as a DLL instead of a static library."
-}
-
-filter "options:build-dll"
-    defines { "DT_DLL" }
-
 include "DestinyEngine"
 include "Sandbox"

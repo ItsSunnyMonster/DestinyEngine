@@ -14,6 +14,4 @@
 // This should be after everything
 #include <Destiny/EntryPoint.hpp>
 
-#ifndef DT_DLL
-#include "../Dependencies.hpp"
-#endif
+#include <Dependencies.hpp>
